@@ -51,9 +51,13 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 
 ```
 paktolos/
-├── index.html   # Sayfa içeriği ve yapısı
-├── style.css    # Tasarım sistemi ve tüm stiller
-├── script.js    # Etkileşimler (oran açıklamalarını aç/kapat)
+├── index.html      # Ana sayfa (açılış ekranı dahil)
+├── sirketler.html  # Şirket listesi: arama ve sektör filtresi
+├── sirket.html     # Şirket detayı (sirket.html?kod=THYAO)
+├── ogren.html      # Finansal tablo rehberi: bilanço, gelir tablosu, nakit akışı, oranlar
+├── style.css       # Tasarım sistemi ve tüm stiller
+├── script.js       # Sayfaların etkileşimleri
+├── sirketler.js    # Şirket listesi ve sektöre özel analiz notları
 ├── README.md
 └── LICENSE
 ```
@@ -67,9 +71,12 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Tasarım sistemi (renk, tipografi, spacing) tanımlandı
 - [x] İlk sayfa: hero + ilkeler + etkileşimli oran açıklama demosu
 - [x] Dosyaları ayır (style.css, script.js)
-- [ ] GitHub Pages üzerinden yayınla
-- [ ] Öğrenme modülü prototipi (ikinci sayfa)
-- [ ] Gerçek BIST verisiyle örnek entegrasyon
+- [x] GitHub Pages üzerinden yayınla
+- [x] Açılış ekranı ve sayfalar arası menü
+- [x] Şirketler listesi (başlangıç listesi) ve şirket detay sayfası
+- [x] Finansal tablo rehberi (Öğren)
+- [ ] Resmi veri kaynağı: tam şirket listesi ve mali tablolar (KAP)
+- [ ] Güncel fiyatlar (lisanslı veri sağlayıcı gerekiyor)
 
 ## Geliştirici Notu
 

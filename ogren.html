@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finansal Tabloları Okumak — Paktolos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <a href="index.html" class="logo">PAKTOLOS</a>
+      <nav class="nav">
+        <a href="sirketler.html">Şirketler</a>
+        <a href="ogren.html" aria-current="page">Öğren</a>
+      </nav>
+    </header>
+
+    <section class="page-intro">
+      <h1>Finansal tabloları okumak</h1>
+      <p>Her halka açık şirket, üç ayda bir mali tablolarını Kamuyu Aydınlatma Platformu'nda (KAP) yayınlar. Bu tablolar şirketin ne sahip olduğunu, ne kazandığını ve parasının nereye gittiğini anlatır.</p>
+    </section>
+
+    <ul class="toc">
+      <li><a href="#bilanco">Bilanço</a></li>
+      <li><a href="#gelir-tablosu">Gelir Tablosu</a></li>
+      <li><a href="#nakit-akis">Nakit Akışı</a></li>
+      <li><a href="#oranlar">Temel Oranlar</a></li>
+    </ul>
+
+    <!-- 01 — BİLANÇO -->
+    <section class="lesson" id="bilanco">
+      <span class="lesson-number">01</span>
+      <h2>Bilanço</h2>
+      <p>Belirli bir gündeki fotoğraftır: şirketin sahip oldukları (varlıklar) ve bunların nasıl finanse edildiği (borçlar ve özkaynak).</p>
+
+      <div class="formula">Varlıklar = Yükümlülükler + Özkaynaklar</div>
+
+      <details class="concept">
+        <summary>Dönen ve duran varlıklar</summary>
+        <div class="concept-body">
+          <p><strong>Dönen varlıklar</strong> bir yıl içinde nakde dönmesi beklenenlerdir: kasa ve banka, müşterilerden alacaklar, stoklar.</p>
+          <p><strong>Duran varlıklar</strong> uzun süre kullanılanlardır: fabrikalar, makineler, binalar, iştirakler.</p>
+          <p>Bir havayolunun duran varlıkları (uçaklar) çok büyüktür; bir yazılım şirketinin ise küçüktür. Sektörü bilmeden oranları yorumlamak yanıltır.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Kısa ve uzun vadeli yükümlülükler</summary>
+        <div class="concept-body">
+          <p><strong>Kısa vadeli yükümlülükler</strong> bir yıl içinde ödenmesi gereken borçlardır: tedarikçi borçları, kısa vadeli krediler.</p>
+          <p><strong>Uzun vadeli yükümlülükler</strong> bir yıldan uzun vadeli borçlardır.</p>
+          <p>Kısa vadeli borçların dönen varlıklardan fazla olması, şirketin önümüzdeki yıl nakit bulmakta zorlanabileceğine işaret edebilir.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Özkaynaklar</summary>
+        <div class="concept-body">
+          <p>Ortakların şirkete koyduğu sermaye ve yıllar içinde dağıtılmayıp şirkette bırakılan kârlardır. Kabaca: tüm borçlar ödendiğinde ortaklara kalan kısım.</p>
+          <p>Özkaynaklar "defter değeri" olarak da anılır ve PD/DD oranının paydasıdır.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- 02 — GELİR TABLOSU -->
+    <section class="lesson" id="gelir-tablosu">
+      <span class="lesson-number">02</span>
+      <h2>Gelir Tablosu</h2>
+      <p>Bir dönem boyunca çekilen filmdir: şirket ne sattı, bunun için ne harcadı ve sonunda ne kadar kâr etti.</p>
+
+      <details class="concept">
+        <summary>Hasılattan net kâra</summary>
+        <div class="concept-body">
+          <div class="formula">Hasılat − Satışların maliyeti = Brüt kâr</div>
+          <div class="formula">Brüt kâr − Faaliyet giderleri = Esas faaliyet kârı</div>
+          <div class="formula">… − Finansman gideri − Vergi = Net dönem kârı</div>
+          <p>Her basamak ayrı bir soruyu cevaplar: ürün kârlı mı (brüt), şirket verimli yönetiliyor mu (faaliyet), borç yükü ne kadar ağır (finansman)?</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>FAVÖK nedir?</summary>
+        <div class="concept-body">
+          <p><strong>Faiz, Amortisman ve Vergi Öncesi Kâr.</strong> Şirketin ana işinden, borç yapısı ve muhasebe tercihlerinden bağımsız olarak ne kadar kazandığını gösterir.</p>
+          <p>Farklı borç seviyelerindeki şirketleri karşılaştırmak için kullanışlıdır; ama makine ve tesis yenileme ihtiyacını (amortisman) görmezden geldiği için tek başına yeterli değildir.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Tek seferlik kalemlere dikkat</summary>
+        <div class="concept-body">
+          <p>Bir arsa satışı ya da kur farkı geliri net kârı bir dönemliğine şişirebilir. Kârın ana faaliyetlerden mi yoksa tekrarlanmayacak kalemlerden mi geldiğine bakın.</p>
+          <p>Yüksek enflasyon dönemlerinde Türkiye'de şirketler enflasyon muhasebesi (TMS 29) uygular; "net parasal pozisyon kazancı/kaybı" satırı kârı belirgin şekilde etkileyebilir.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- 03 — NAKİT AKIŞI -->
+    <section class="lesson" id="nakit-akis">
+      <span class="lesson-number">03</span>
+      <h2>Nakit Akış Tablosu</h2>
+      <p>Kâr bir muhasebe kavramıdır; nakit ise gerçekten kasaya giren paradır. Bu tablo ikisi arasındaki farkı gösterir.</p>
+
+      <details class="concept">
+        <summary>Üç bölüm</summary>
+        <div class="concept-body">
+          <p><strong>İşletme faaliyetleri:</strong> ana işten gelen nakit. Sağlıklı bir şirkette genelde pozitiftir.</p>
+          <p><strong>Yatırım faaliyetleri:</strong> makine, tesis, şirket alımı. Büyüyen şirketlerde genelde negatiftir.</p>
+          <p><strong>Finansman faaliyetleri:</strong> borç alma/ödeme, temettü dağıtımı.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Serbest nakit akışı</summary>
+        <div class="concept-body">
+          <div class="formula">İşletme nakit akışı − Yatırım harcamaları = Serbest nakit akışı</div>
+          <p>Şirketin işini sürdürdükten sonra elinde kalan paradır; temettü, borç ödemesi ya da yeni yatırım bu paradan yapılır.</p>
+          <p>Net kâr sürekli artarken serbest nakit akışı negatif kalıyorsa, kârın neden nakde dönüşmediğini sormak gerekir.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- 04 — TEMEL ORANLAR -->
+    <section class="lesson" id="oranlar">
+      <span class="lesson-number">04</span>
+      <h2>Temel Oranlar</h2>
+      <p>Oranlar, farklı büyüklükteki şirketleri karşılaştırılabilir hale getirir. Hiçbir oranın evrensel bir "iyi" değeri yoktur — her zaman aynı sektördeki şirketlerle ve şirketin kendi geçmişiyle karşılaştırın.</p>
+
+      <details class="concept">
+        <summary>F/K — Fiyat / Kazanç</summary>
+        <div class="concept-body">
+          <div class="formula">Piyasa değeri ÷ Son 12 ay net kâr</div>
+          <p>Yatırımcıların şirketin bir yıllık kârı için kaç katı ödemeye razı olduğunu gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> Düşük F/K ucuzluğa işaret edebilir, ama kârın düşeceği beklentisini de yansıtıyor olabilir. Zarar eden şirkette F/K hesaplanamaz.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>PD/DD — Piyasa Değeri / Defter Değeri</summary>
+        <div class="concept-body">
+          <div class="formula">Piyasa değeri ÷ Özkaynaklar</div>
+          <p>Piyasanın şirkete, bilançodaki özkaynağının kaç katı değer biçtiğini gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> 1'in altı, şirketin defter değerinin altında işlem gördüğü anlamına gelir. Bankalar ve holdingler için özellikle önemlidir.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>FD/FAVÖK — Firma Değeri / FAVÖK</summary>
+        <div class="concept-body">
+          <div class="formula">(Piyasa değeri + Net borç) ÷ FAVÖK</div>
+          <p>F/K'ya benzer, ama borcu da hesaba katar. Borç seviyeleri farklı şirketleri karşılaştırmak için daha adildir.</p>
+          <p><strong>Nasıl okunur:</strong> Bankalar için kullanılmaz.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Özkaynak Kârlılığı (ROE)</summary>
+        <div class="concept-body">
+          <div class="formula">Net kâr ÷ Ortalama özkaynaklar</div>
+          <p>Ortakların koyduğu her 100 TL'nin yılda kaç TL kâr ürettiğini gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> Enflasyonun yüksek olduğu dönemlerde ROE'yi enflasyonla karşılaştırmak gerekir; %30 ROE, %50 enflasyonda reel olarak değer kaybı demektir.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Net Kâr Marjı</summary>
+        <div class="concept-body">
+          <div class="formula">Net kâr ÷ Hasılat</div>
+          <p>Her 100 TL'lik satıştan kaç TL'nin kâr olarak kaldığını gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> Perakendede %2–4 normal olabilirken, yazılımda %20 üzeri görülebilir. Sektör içinde karşılaştırın.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Cari Oran</summary>
+        <div class="concept-body">
+          <div class="formula">Dönen varlıklar ÷ Kısa vadeli yükümlülükler</div>
+          <p>Şirketin bir yıl içinde ödemesi gereken borçları, bir yıl içinde nakde dönecek varlıklarıyla karşılayıp karşılayamadığını gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> 1'in üzeri genelde rahatlatıcıdır. Perakende gibi bazı sektörlerde 1'in altı iş modelinin doğal sonucudur.</p>
+        </div>
+      </details>
+
+      <details class="concept">
+        <summary>Net Borç / FAVÖK</summary>
+        <div class="concept-body">
+          <div class="formula">(Finansal borçlar − Nakit) ÷ FAVÖK</div>
+          <p>Şirketin net borcunu, mevcut faaliyet kârıyla kabaca kaç yılda ödeyebileceğini gösterir.</p>
+          <p><strong>Nasıl okunur:</strong> Yükseldikçe faiz ve kur değişimlerine karşı hassasiyet artar. Negatif değer, şirketin borcundan fazla nakdi olduğu anlamına gelir.</p>
+        </div>
+      </details>
+    </section>
+
+    <footer>
+      <p>Paktolos © 2026 — Eğitim amaçlıdır, yatırım tavsiyesi değildir.</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

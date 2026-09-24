@@ -52,6 +52,9 @@ body {
 }
 
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: var(--space-xl) 0 var(--space-md);
 }
 
@@ -60,6 +63,26 @@ header {
   font-weight: 600;
   letter-spacing: 0.5px;
   color: var(--color-text-secondary);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.nav a {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  padding: var(--space-xxs) 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-accent);
 }
 
 .hero {
@@ -233,6 +256,467 @@ footer p {
   color: var(--color-text-tertiary);
 }
 
+
+/* ============================================
+   AÇILIŞ EKRANI
+   JS olmasa da CSS animasyonuyla kendiliğinden kaybolur.
+   ============================================ */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  background: var(--color-primary);
+  color: var(--color-secondary);
+  animation: splash-out 0.5s ease 1.8s forwards;
+}
+
+.splash-mark {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  opacity: 0;
+  animation: fade-up 0.6s ease 0.2s forwards;
+}
+
+.splash-line {
+  width: 0;
+  height: 2px;
+  background: var(--color-accent);
+  animation: line-grow 0.8s ease 0.5s forwards;
+}
+
+.splash-tagline {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  color: rgba(245,245,240,0.6);
+  opacity: 0;
+  animation: fade-up 0.6s ease 0.9s forwards;
+}
+
+.splash.hide {
+  animation: splash-out 0.3s ease forwards;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes line-grow {
+  to { width: 48px; }
+}
+
+@keyframes splash-out {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash { animation-delay: 0.8s; }
+  .splash-mark, .splash-tagline { animation-duration: 0.01s; animation-delay: 0s; }
+  .splash-line { animation-duration: 0.01s; animation-delay: 0s; }
+}
+
+/* ============================================
+   ANA SAYFA — BÖLÜM KARTLARI
+   ============================================ */
+.sections {
+  padding: var(--space-xxl) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.section-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.section-card {
+  display: block;
+  padding: var(--space-lg);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-2px);
+}
+
+.section-card h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: var(--space-xxs);
+}
+
+.section-card p {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.section-card .arrow {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ============================================
+   İÇ SAYFALAR — ORTAK
+   ============================================ */
+.page-intro {
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.page-intro h1 {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+  margin-bottom: var(--space-xs);
+}
+
+.page-intro p {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+.notice {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.stat-grid + .notice {
+  margin: var(--space-sm) 0 0;
+}
+
+.notice a {
+  color: var(--color-text-primary);
+}
+
+.back-link {
+  display: inline-block;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  margin-top: var(--space-xs);
+}
+
+.back-link:hover {
+  color: var(--color-text-primary);
+}
+
+.block {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.block h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+}
+
+.block > p {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+.check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.check-list li {
+  position: relative;
+  padding-left: var(--space-lg);
+  font-size: 15px;
+}
+
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* ============================================
+   ŞİRKETLER LİSTESİ
+   ============================================ */
+.search {
+  width: 100%;
+  padding: var(--space-xs) var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font: inherit;
+  font-size: 16px; /* iOS'ta yakınlaştırmayı önler */
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--color-accent);
+}
+
+.filters {
+  display: flex;
+  gap: var(--space-xxs);
+  overflow-x: auto;
+  padding-bottom: var(--space-xxs);
+  margin-bottom: var(--space-sm);
+  scrollbar-width: none;
+}
+
+.filters::-webkit-scrollbar { display: none; }
+
+.chip {
+  flex-shrink: 0;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 100px;
+  cursor: pointer;
+}
+
+.chip.active {
+  color: var(--color-secondary);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.company-list {
+  list-style: none;
+}
+
+.company-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.company-row:hover .company-code {
+  color: var(--color-accent);
+}
+
+.company-code {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.company-name {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.company-price {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.empty {
+  padding: var(--space-xl) 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ŞİRKET DETAY
+   ============================================ */
+.company-head {
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.company-head .sector {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--color-text-tertiary);
+}
+
+.company-head h1 {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  font-weight: 700;
+  margin: var(--space-xxs) 0;
+}
+
+.company-head p {
+  font-size: 16px;
+  color: var(--color-text-secondary);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+}
+
+.stat {
+  padding: var(--space-sm);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+}
+
+/* ============================================
+   ÖĞREN — FİNANSAL TABLO REHBERİ
+   ============================================ */
+.toc {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xxs);
+  margin-bottom: var(--space-lg);
+}
+
+.toc a {
+  display: inline-block;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  background: var(--color-surface);
+  border-radius: 100px;
+}
+
+.toc a:hover {
+  color: var(--color-text-primary);
+}
+
+.lesson {
+  padding: var(--space-xl) 0;
+  border-top: 1px solid var(--color-border);
+  scroll-margin-top: var(--space-md);
+}
+
+.lesson-number {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.lesson h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  margin: var(--space-xxs) 0 var(--space-sm);
+}
+
+.lesson > p {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.concept {
+  border-top: 1px solid var(--color-border);
+}
+
+.concept summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm) 0;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.concept summary::-webkit-details-marker { display: none; }
+
+.concept summary::after {
+  content: "+";
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--color-text-tertiary);
+}
+
+.concept[open] summary::after {
+  content: "−";
+}
+
+.concept-body {
+  padding-bottom: var(--space-md);
+  font-size: 15px;
+  color: var(--color-text-secondary);
+}
+
+.concept-body p + p {
+  margin-top: var(--space-xs);
+}
+
+.formula {
+  display: block;
+  margin: var(--space-xs) 0;
+  padding: var(--space-xs) var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+}
+
+.concept-body strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+/* ============================================
+   MOBİL
+   ============================================ */
 @media (max-width: 600px) {
   .hero h1 { font-size: 32px; }
+  .page-intro h1 { font-size: 28px; }
+  .section-cards { grid-template-columns: 1fr; }
 }
