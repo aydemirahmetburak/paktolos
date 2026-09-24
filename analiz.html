@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bir hisseyi yedi adımda değerlendirmeyi örnek bir şirket üzerinden öğren; oranları kendin hesapla.">
+<title>Adım Adım Analiz — Paktolos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">PAKTOLOS</a>
+      <nav class="nav">
+        <a href="ogren.html">Öğren</a>
+        <a href="analiz.html" aria-current="page">Analiz</a>
+        <a href="sektorler.html">Sektörler</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="page-hero">
+      <div class="container narrow">
+        <span class="eyebrow reveal">Adım adım analiz</span>
+        <h1 class="reveal">Bir hisseyi<br>yedi adımda oku.</h1>
+        <p class="lead reveal">Profesyonel analistlerin izlediği yolun sade bir versiyonu. Her adımda neye bakacağını, rakamı nerede bulacağını ve nasıl yorumlayacağını, hayali bir şirket üzerinden göreceksin.</p>
+
+        <div class="example-company reveal">
+          <div class="example-badge">Ö</div>
+          <div>
+            <strong>Örnek A.Ş.</strong>
+            Ev aletleri üreten hayali bir şirket. Rakamlar milyon TL; yalnızca öğretmek için uyduruldu.
+          </div>
+        </div>
+
+        <nav class="chapter-nav reveal" aria-label="Bölümler">
+          <a href="#adimlar">Yedi adım</a>
+          <a href="#hesapla">Kendin hesapla</a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="chapter" id="adimlar">
+      <div class="container narrow">
+        <ol class="steps">
+
+          <li class="step-item reveal">
+            <span class="step-num">1</span>
+            <div>
+              <h3>Şirketi tanı</h3>
+              <p>Rakamlara bakmadan önce şirketin ne sattığını, kime sattığını ve parayı nasıl kazandığını anla. Rakamlar ancak bu hikâyeyle birlikte anlam kazanır.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Nerede bulursun?</b>KAP'ta şirketin faaliyet raporu ve şirketin yatırımcı ilişkileri sayfası.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Buzdolabı ve çamaşır makinesi üretiyor. Satışlarının yaklaşık %40'ı ihracat. Hammaddesi büyük ölçüde çelik ve plastik.</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">2</span>
+            <div>
+              <h3>Büyüyor mu?</h3>
+              <p>Satışların (hasılat) ve net kârın bir önceki yılın aynı dönemine göre ne kadar değiştiğine bak. Tek bir yıl yerine birkaç yılın eğilimi daha çok şey anlatır.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Nerede bulursun?</b>Gelir tablosu. KAP'taki raporlarda cari dönem ve önceki dönem yan yana verilir.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Hasılat 8.000 → 10.000 (%25 artış). Net kâr 800 → 1.000 (%25 artış). Aynı dönemde enflasyon %25'in üzerindeyse, reel olarak büyüme yok demektir.</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">3</span>
+            <div>
+              <h3>Kârlı mı?</h3>
+              <p>Satışların ne kadarının kâra dönüştüğüne ve ortakların sermayesinin ne kadar verimli kullanıldığına bak.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Neye bakarsın?</b>Brüt kâr marjı, net kâr marjı ve özkaynak kârlılığı (ROE).</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Brüt marj %30 (3.000 ÷ 10.000). Net marj %10 (1.000 ÷ 10.000). ROE %20 (1.000 ÷ 5.000).</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">4</span>
+            <div>
+              <h3>Borcu taşınabilir mi?</h3>
+              <p>Borç kendi başına kötü değildir; önemli olan şirketin onu rahatça taşıyıp taşıyamadığıdır.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Neye bakarsın?</b>Net borç / FAVÖK ve cari oran. Rakamlar bilançoda ve gelir tablosunda.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Finansal borç 3.000, nakit 1.000 → net borç 2.000. FAVÖK 2.000 → Net borç / FAVÖK = 1,0. Cari oran 1,6 (4.000 ÷ 2.500).</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">5</span>
+            <div>
+              <h3>Kâr nakde dönüşüyor mu?</h3>
+              <p>Kâğıt üzerindeki kârın gerçekten kasaya girip girmediğini kontrol et.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Nerede bulursun?</b>Nakit akış tablosu: işletme faaliyetlerinden nakit akışı ve yatırım harcamaları.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>İşletme nakit akışı 1.300, net kârdan (1.000) yüksek — iyi bir işaret. Yatırım harcaması 500 → serbest nakit akışı 800.</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">6</span>
+            <div>
+              <h3>Piyasa ne kadar değer biçiyor?</h3>
+              <p>Şimdi şirketin piyasa değerini, ürettiği kâr ve sahip olduğu özkaynakla karşılaştır.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Nerede bulursun?</b>Piyasa değeri borsa uygulamanda. Kâr ve özkaynak mali tablolarda.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Piyasa değeri 8.000. F/K = 8,0 (8.000 ÷ 1.000). PD/DD = 1,6 (8.000 ÷ 5.000). FD/FAVÖK = 5,0 ((8.000 + 2.000) ÷ 2.000).</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="step-item reveal">
+            <span class="step-num">7</span>
+            <div>
+              <h3>Karşılaştır ve riskleri düşün</h3>
+              <p>Hiçbir oran tek başına bir şey söylemez. Aynı sektördeki şirketlerle ve şirketin kendi geçmişiyle kıyasla. Sonra "ne ters gidebilir?" diye sor.</p>
+              <div class="step-meta">
+                <div class="step-row"><b>Neye bakarsın?</b>Sektördeki benzer şirketlerin aynı oranları, şirketin son 3–5 yılı ve faaliyet raporundaki risk bölümü.</div>
+                <div class="step-row example"><b>Örnek A.Ş.</b>Benzer şirketlerin F/K'sı 6 ile 12 arasındaysa, 8,0 bu aralığın ortasındadır. Bu "ucuz" ya da "pahalı" demek değildir; yalnızca nerede durduğunu gösterir. Riskler: çelik fiyatları, ihracat pazarlarındaki talep, kur.</div>
+              </div>
+            </div>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- HESAPLAYICI -->
+    <section class="section section-dark" id="hesapla">
+      <div class="container">
+        <div class="center">
+          <span class="eyebrow reveal">Kendin hesapla</span>
+          <h2 class="headline reveal">Rakamları gir.<br>Oranlar kendiliğinden gelsin.</h2>
+          <p class="lead reveal">KAP'taki mali tablolardan ve borsa uygulamandan aldığın rakamları gir. Tüm değerleri aynı birimde yaz (örneğin milyon TL). Ondalık için virgül kullan.</p>
+        </div>
+
+        <div class="calc reveal">
+          <form class="calc-inputs" id="calc-form" autocomplete="off" onsubmit="return false">
+            <label class="field"><span>Piyasa değeri <small>· borsa uygulaması</small></span><input inputmode="decimal" name="pd"></label>
+            <label class="field"><span>Net kâr, son 12 ay <small>· gelir tablosu</small></span><input inputmode="decimal" name="netKar"></label>
+            <label class="field"><span>Hasılat, son 12 ay <small>· gelir tablosu</small></span><input inputmode="decimal" name="hasilat"></label>
+            <label class="field"><span>FAVÖK, son 12 ay <small>· gelir tablosu + amortisman</small></span><input inputmode="decimal" name="favok"></label>
+            <label class="field"><span>Özkaynaklar <small>· bilanço</small></span><input inputmode="decimal" name="ozkaynak"></label>
+            <label class="field"><span>Finansal borçlar <small>· bilanço, kısa + uzun vadeli</small></span><input inputmode="decimal" name="borc"></label>
+            <label class="field"><span>Nakit ve nakit benzerleri <small>· bilanço</small></span><input inputmode="decimal" name="nakit"></label>
+            <label class="field"><span>Dönen varlıklar <small>· bilanço</small></span><input inputmode="decimal" name="donen"></label>
+            <label class="field"><span>Kısa vadeli yükümlülükler <small>· bilanço</small></span><input inputmode="decimal" name="kv"></label>
+            <div class="calc-buttons">
+              <button type="button" class="button" id="calc-example">Örnek A.Ş. ile doldur</button>
+              <button type="button" class="button button-secondary" id="calc-clear">Temizle</button>
+            </div>
+          </form>
+
+          <div class="calc-results" id="calc-results" aria-live="polite"></div>
+        </div>
+
+        <p class="calc-disclaimer center">Hesaplama yalnızca senin cihazında yapılır; girdiğin rakamlar hiçbir yere gönderilmez. Sonuçlar yatırım tavsiyesi değildir.</p>
+      </div>
+    </section>
+
+    <a href="sektorler.html" class="next">
+      <div class="container">
+        <span class="eyebrow">Sıradaki</span>
+        <h2>Sektörlere göre farklar ›</h2>
+      </div>
+    </a>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
+      <p>© 2026 Paktolos</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -2,6 +2,8 @@
 
 **Paktolos**, Borsa İstanbul'da işlem gören hisse senetlerini analiz etmeyi bireysel yatırımcılara öğreten bir web platformudur. Yatırım tavsiyesi vermez — finansal oranları ve şirket analizini anlaşılır, etkileşimli bir şekilde öğretir.
 
+Paktolos **veri yayınlamaz.** Kullanıcı mali tabloları KAP'tan, fiyat ve piyasa değerini kendi borsa uygulamasından alır; Paktolos bu rakamların nasıl okunacağını öğretir.
+
 > 🚧 **Durum:** Aktif geliştirme aşamasında. Bu repo, projenin mimarisini ve geliştirme sürecini şeffaf şekilde belgelemek için tutuluyor.
 
 ---
@@ -26,13 +28,15 @@ Paktolos bu boşluğu dolduruyor: **yatırım kararını vermiyor, kararı vereb
 
 Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla birebir örtüşüyor:
 
-- Minimalist, dikkat dağıtmayan arayüz
+- Minimalist, dikkat dağıtmayan arayüz; apple.com'dan ilham alan akışkan geçişler
+- Kaydırdıkça beliren bölümler, yumuşak açılan paneller, sayfalar arası geçiş efekti
+- "Azaltılmış hareket" tercihine saygı
 - Bilgi yalnızca ihtiyaç duyulduğunda görünür (katmanlı bilgi mimarisi)
 - 8pt grid sistemi, sistem yazı tipi (Apple cihazlarda SF Pro)
 - Braun'dan ilham alan sade renk paleti
 - Her etkileşim anlamlı ve amaçlı
 
-Renkler, boşluklar, tipografi ve köşe yuvarlaklıkları `style.css` dosyasının başında CSS değişkenleri (`--color-*`, `--space-*`, `--radius-*`) olarak tanımlı. Yeni bileşenler bu değişkenleri kullanmalı.
+Renkler, boşluklar, yazı ölçeği, köşe yuvarlaklıkları ve hareket eğrileri `style.css` dosyasının başında CSS değişkenleri (`--color-*`, `--space-*`, `--text-*`, `--radius-*`, `--ease*`) olarak tanımlı. Yeni bileşenler bu değişkenleri kullanmalı.
 
 ## Teknik Yaklaşım (Web)
 
@@ -51,9 +55,12 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 
 ```
 paktolos/
-├── index.html   # Sayfa içeriği ve yapısı
-├── style.css    # Tasarım sistemi ve tüm stiller
-├── script.js    # Etkileşimler (oran açıklamalarını aç/kapat)
+├── index.html      # Ana sayfa: açılış ekranı, ilkeler, öğrenme yolu, demo
+├── ogren.html      # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
+├── analiz.html     # Yedi adımda analiz (Örnek A.Ş.) ve oran hesaplayıcı
+├── sektorler.html  # Sektöre göre farklı okuma: banka, holding, GYO, perakende, sanayi, ulaştırma
+├── style.css       # Tasarım sistemi ve tüm stiller
+├── script.js       # Açılış ekranı, kaydırma efektleri, demo ve hesaplayıcı
 ├── README.md
 └── LICENSE
 ```
@@ -65,11 +72,14 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 ## Yol Haritası
 
 - [x] Tasarım sistemi (renk, tipografi, spacing) tanımlandı
-- [x] İlk sayfa: hero + ilkeler + etkileşimli oran açıklama demosu
 - [x] Dosyaları ayır (style.css, script.js)
-- [ ] GitHub Pages üzerinden yayınla
-- [ ] Öğrenme modülü prototipi (ikinci sayfa)
-- [ ] Gerçek BIST verisiyle örnek entegrasyon
+- [x] GitHub Pages üzerinden yayınla
+- [x] Açılış ekranı ve apple.com tarzı akışkan tasarım
+- [x] Öğren: mali tablolar ve temel oranlar
+- [x] Adım adım analiz ve oran hesaplayıcı
+- [x] Sektörlere göre analiz rehberi
+- [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
+- [ ] Kısa testler: "Bu oranı yorumlayabilir misin?"
 
 ## Geliştirici Notu
 
