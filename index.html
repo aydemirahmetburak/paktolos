@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Borsa İstanbul hisselerini analiz etmeyi öğreten, yatırım tavsiyesi vermeyen eğitim platformu.">
 <title>Paktolos — Borsa İstanbul Analiz Eğitimi</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -14,92 +15,161 @@
     <div class="splash-tagline">Sayıları okumayı öğren</div>
   </div>
 
-  <div class="container">
-
-    <header>
+  <header class="nav-bar">
+    <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>
       <nav class="nav">
-        <a href="sirketler.html">Şirketler</a>
         <a href="ogren.html">Öğren</a>
+        <a href="analiz.html">Analiz</a>
+        <a href="sektorler.html">Sektörler</a>
       </nav>
-    </header>
+    </div>
+  </header>
+
+  <main>
 
     <section class="hero">
-      <div class="badge">
-        <span class="dot"></span>
-        Aktif geliştirme aşamasında
-      </div>
-      <h1>Fiyatı zaten<br>biliyorsun. <span class="accent">Peki<br>ne anlama geldiğini?</span></h1>
-      <p>Paktolos, Borsa İstanbul hisselerini analiz etmeyi öğreten bir eğitim platformu. Yatırım tavsiyesi vermez — sayıları nasıl okuyacağını öğretir.</p>
-    </section>
-
-    <section class="sections">
-      <div class="section-label">Keşfet</div>
-      <div class="section-cards">
-        <a href="sirketler.html" class="section-card">
-          <h2>Şirketler</h2>
-          <p>Borsa İstanbul şirketlerini bul, her biri için nelere bakman gerektiğini gör.</p>
-          <span class="arrow">→</span>
-        </a>
-        <a href="ogren.html" class="section-card">
-          <h2>Finansal Tablolar</h2>
-          <p>Bilanço, gelir tablosu, nakit akışı ve temel oranlar — adım adım.</p>
-          <span class="arrow">→</span>
-        </a>
+      <div class="container">
+        <h1 class="reveal">Fiyatı zaten biliyorsun.<br><span class="accent">Peki ne anlama geldiğini?</span></h1>
+        <p class="lead reveal" style="--delay: 0.15s">Paktolos, Borsa İstanbul'daki bir hisseyi nasıl değerlendireceğini sıfırdan öğretir. Yatırım tavsiyesi vermez — sayıları okumayı öğretir.</p>
+        <div class="actions reveal" style="--delay: 0.3s">
+          <a href="ogren.html" class="button">Öğrenmeye başla</a>
+          <a href="analiz.html" class="link-more">Adım adım analiz</a>
+        </div>
       </div>
     </section>
 
-    <section class="principles">
-      <div class="section-label">Temel İlkeler</div>
-      <ul class="principle-list">
-        <li class="principle">
-          <span class="principle-number">01</span>
-          <span class="principle-text">Hiçbir zaman "al" ya da "sat" demeyiz — yalnızca anlamayı öğretiriz.</span>
-        </li>
-        <li class="principle">
-          <span class="principle-number">02</span>
-          <span class="principle-text">F/K, PD/DD gibi oranların gerçekte ne anlattığını sade dille açıklarız.</span>
-        </li>
-        <li class="principle">
-          <span class="principle-number">03</span>
-          <span class="principle-text">Aracı kurum uygulamalarının yerini almayız, onları anlamlandırırız.</span>
-        </li>
-      </ul>
-    </section>
-
-    <section class="demo">
-      <div class="section-label">Etkileşimli Önizleme</div>
-      <div class="demo-card">
-        <div class="demo-header">
-          <span class="demo-symbol">THYAO</span>
-          <span class="demo-price">₺325,50</span>
+    <section class="section section-dark">
+      <div class="container">
+        <h2 class="headline reveal">Al ya da sat demiyoruz.<br>Anlamanı sağlıyoruz.</h2>
+        <p class="lead reveal">Karar senin. Biz o kararı verebilmen için gereken bilgiyi, en sade haliyle anlatıyoruz.</p>
+        <div class="principle-grid">
+          <div class="principle reveal">
+            <span class="principle-number">01</span>
+            <h3>Tavsiye yok</h3>
+            <p>Hiçbir şirket için "al" ya da "sat" demeyiz. Yalnızca nasıl düşüneceğini gösteririz.</p>
+          </div>
+          <div class="principle reveal" style="--delay: 0.1s">
+            <span class="principle-number">02</span>
+            <h3>Sade dil</h3>
+            <p>F/K, PD/DD, FAVÖK… Her kavramı, hiç bilmeyen birine anlatır gibi açıklarız.</p>
+          </div>
+          <div class="principle reveal" style="--delay: 0.2s">
+            <span class="principle-number">03</span>
+            <h3>Kendin yap</h3>
+            <p>Verileri KAP'tan ya da kullandığın borsa uygulamasından alır, yorumu kendin yaparsın.</p>
+          </div>
         </div>
-
-        <div class="demo-metric" onclick="toggleExplain('pe')">
-          <span class="demo-metric-label">F/K Oranı</span>
-          <span class="demo-metric-value">12,5</span>
-        </div>
-        <p class="demo-explanation" id="explain-pe">
-          Fiyatın, şirketin hisse başına kazancına oranı. 12,5 demek, bu kazanç seviyesini "satın almak" için yatırımcının 12,5 yıllık kazanca eş değer ödediği anlamına gelir. Sektör ortalamasıyla karşılaştırmak, ucuz mu pahalı mı olduğunu anlamana yardım eder.
-        </p>
-
-        <div class="demo-metric" onclick="toggleExplain('roe')">
-          <span class="demo-metric-label">Özkaynak Karlılığı (ROE)</span>
-          <span class="demo-metric-value">%18,5</span>
-        </div>
-        <p class="demo-explanation" id="explain-roe">
-          Şirketin, ortakların koyduğu sermayeyi ne kadar verimli kâra çevirdiğini gösterir. %18,5, her 100 TL özkaynak için 18,5 TL net kâr üretildiği anlamına gelir — sektöre göre yüksek ya da düşük olabilir.
-        </p>
-
-        <div class="demo-hint">Bir metriğe dokun, ne anlama geldiğini öğren ↑<br>Değerler örnek amaçlıdır.</div>
       </div>
     </section>
 
-    <footer>
-      <p>Paktolos © 2026 — Eğitim amaçlıdır, yatırım tavsiyesi değildir.</p>
-    </footer>
+    <section class="section section-light">
+      <div class="container">
+        <div class="center">
+          <span class="eyebrow reveal">Öğrenme yolu</span>
+          <h2 class="headline reveal">Dört adımda bir hisseyi okumak.</h2>
+          <p class="lead reveal">Sırayla ilerle ya da doğrudan merak ettiğin bölüme geç.</p>
+        </div>
+        <div class="path">
+          <a href="ogren.html#bilanco" class="path-card reveal">
+            <span class="step">01</span>
+            <h3>Mali tablolar</h3>
+            <p>Bilanço, gelir tablosu ve nakit akışı neyi anlatır?</p>
+            <span class="link-more">Başla</span>
+          </a>
+          <a href="ogren.html#oranlar" class="path-card reveal" style="--delay: 0.1s">
+            <span class="step">02</span>
+            <h3>Temel oranlar</h3>
+            <p>F/K, PD/DD, ROE ve diğerleri — nasıl hesaplanır, nasıl yorumlanır?</p>
+            <span class="link-more">Keşfet</span>
+          </a>
+          <a href="analiz.html" class="path-card reveal">
+            <span class="step">03</span>
+            <h3>Adım adım analiz</h3>
+            <p>Örnek bir şirket üzerinden yedi adımda değerlendirme — ve kendi hesaplayıcın.</p>
+            <span class="link-more">Uygula</span>
+          </a>
+          <a href="sektorler.html" class="path-card reveal" style="--delay: 0.1s">
+            <span class="step">04</span>
+            <h3>Sektörler</h3>
+            <p>Bir bankayı bir perakendeciyle aynı gözle okuyamazsın. Farklar neler?</p>
+            <span class="link-more">İncele</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-  </div>
+    <section class="section">
+      <div class="container center">
+        <span class="eyebrow reveal">Etkileşimli önizleme</span>
+        <h2 class="headline reveal">Bir sayıya dokun.<br>Ne anlattığını gör.</h2>
+
+        <div class="demo-card reveal">
+          <div class="demo-header">
+            <span class="demo-symbol">Örnek A.Ş.</span>
+            <span class="demo-tag">Hayali şirket</span>
+          </div>
+
+          <button type="button" class="demo-metric" aria-expanded="false" aria-controls="explain-pe" onclick="toggleExplain('pe')">
+            <span class="demo-metric-label">F/K Oranı</span>
+            <span class="demo-metric-value">8,0</span>
+          </button>
+          <div class="demo-explanation" id="explain-pe">
+            <p>Fiyatın, şirketin yıllık net kârına oranı. 8,0 demek: bugünkü kâr sabit kalsaydı, şirketin piyasa değerini kazanması 8 yıl sürerdi. Tek başına ucuz ya da pahalı demek değildir — aynı sektördeki şirketlerle karşılaştırmak gerekir.</p>
+          </div>
+
+          <button type="button" class="demo-metric" aria-expanded="false" aria-controls="explain-roe" onclick="toggleExplain('roe')">
+            <span class="demo-metric-label">Özkaynak Kârlılığı (ROE)</span>
+            <span class="demo-metric-value">%20,0</span>
+          </button>
+          <div class="demo-explanation" id="explain-roe">
+            <p>Ortakların şirkete koyduğu her 100 TL'nin bir yılda 20 TL net kâr ürettiğini gösterir. Enflasyonun yüksek olduğu dönemlerde bu oranı enflasyonla da karşılaştırmak gerekir.</p>
+          </div>
+
+          <button type="button" class="demo-metric" aria-expanded="false" aria-controls="explain-nd" onclick="toggleExplain('nd')">
+            <span class="demo-metric-label">Net Borç / FAVÖK</span>
+            <span class="demo-metric-value">1,0</span>
+          </button>
+          <div class="demo-explanation" id="explain-nd">
+            <p>Şirketin net borcunu, bugünkü faaliyet kârıyla yaklaşık 1 yılda kapatabileceğini gösterir. Bu oran yükseldikçe şirket faiz ve kur değişimlerine karşı daha hassas hale gelir.</p>
+          </div>
+
+          <div class="demo-hint">Bir satıra dokun ↑</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light">
+      <div class="container center">
+        <span class="eyebrow reveal">Veriler nerede?</span>
+        <h2 class="headline reveal">Rakamları sen bul.<br>Anlamını biz anlatalım.</h2>
+        <p class="lead reveal">Paktolos veri yayınlamaz. Öğrendiklerini, zaten kullandığın resmi kaynaklardaki rakamlara uygularsın.</p>
+        <div class="source-grid">
+          <div class="source-card reveal">
+            <span class="eyebrow">Mali tablolar</span>
+            <h3>KAP</h3>
+            <p>Kamuyu Aydınlatma Platformu (kap.org.tr). Halka açık her şirket bilanço, gelir tablosu ve nakit akışını üç ayda bir burada yayınlar.</p>
+          </div>
+          <div class="source-card reveal" style="--delay: 0.1s">
+            <span class="eyebrow">Fiyat ve piyasa değeri</span>
+            <h3>Borsa uygulaman</h3>
+            <p>Aracı kurumunun uygulaması hissenin güncel fiyatını ve piyasa değerini gösterir. Oranları hesaplamak için ihtiyacın olan tek piyasa verisi budur.</p>
+          </div>
+        </div>
+        <div class="actions reveal">
+          <a href="analiz.html#hesapla" class="button">Hesaplayıcıyı dene</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
+      <p>© 2026 Paktolos</p>
+    </div>
+  </footer>
 
   <script src="script.js"></script>
 
