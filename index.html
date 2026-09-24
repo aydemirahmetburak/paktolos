@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paktolos — Borsa İstanbul Analiz Eğitimi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <header>
+      <div class="logo">PAKTOLOS</div>
+    </header>
+
+    <section class="hero">
+      <div class="badge">
+        <span class="dot"></span>
+        Aktif geliştirme aşamasında
+      </div>
+      <h1>Fiyatı zaten<br>biliyorsun. <span class="accent">Peki<br>ne anlama geldiğini?</span></h1>
+      <p>Paktolos, Borsa İstanbul hisselerini analiz etmeyi öğreten bir eğitim platformu. Yatırım tavsiyesi vermez — sayıları nasıl okuyacağını öğretir.</p>
+    </section>
+
+    <section class="principles">
+      <div class="section-label">Temel İlkeler</div>
+      <ul class="principle-list">
+        <li class="principle">
+          <span class="principle-number">01</span>
+          <span class="principle-text">Hiçbir zaman "al" ya da "sat" demeyiz — yalnızca anlamayı öğretiriz.</span>
+        </li>
+        <li class="principle">
+          <span class="principle-number">02</span>
+          <span class="principle-text">F/K, PD/DD gibi oranların gerçekte ne anlattığını sade dille açıklarız.</span>
+        </li>
+        <li class="principle">
+          <span class="principle-number">03</span>
+          <span class="principle-text">Aracı kurum uygulamalarının yerini almayız, onları anlamlandırırız.</span>
+        </li>
+      </ul>
+    </section>
+
+    <section class="demo">
+      <div class="section-label">Etkileşimli Önizleme</div>
+      <div class="demo-card">
+        <div class="demo-header">
+          <span class="demo-symbol">THYAO</span>
+          <span class="demo-price">₺325,50</span>
+        </div>
+
+        <div class="demo-metric" onclick="toggleExplain('pe')">
+          <span class="demo-metric-label">F/K Oranı</span>
+          <span class="demo-metric-value">12,5</span>
+        </div>
+        <p class="demo-explanation" id="explain-pe">
+          Fiyatın, şirketin hisse başına kazancına oranı. 12,5 demek, bu kazanç seviyesini "satın almak" için yatırımcının 12,5 yıllık kazanca eş değer ödediği anlamına gelir. Sektör ortalamasıyla karşılaştırmak, ucuz mu pahalı mı olduğunu anlamana yardım eder.
+        </p>
+
+        <div class="demo-metric" onclick="toggleExplain('roe')">
+          <span class="demo-metric-label">Özkaynak Karlılığı (ROE)</span>
+          <span class="demo-metric-value">%18,5</span>
+        </div>
+        <p class="demo-explanation" id="explain-roe">
+          Şirketin, ortakların koyduğu sermayeyi ne kadar verimli kâra çevirdiğini gösterir. %18,5, her 100 TL özkaynak için 18,5 TL net kâr üretildiği anlamına gelir — sektöre göre yüksek ya da düşük olabilir.
+        </p>
+
+        <div class="demo-hint">Bir metriğe dokun, ne anlama geldiğini öğren ↑</div>
+      </div>
+    </section>
+
+    <footer>
+      <p>Paktolos © 2026 — Eğitim amaçlıdır, yatırım tavsiyesi değildir.</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
