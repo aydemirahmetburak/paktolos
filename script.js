@@ -908,9 +908,10 @@ const SPOT_SIMGE = {
   ders: '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/>',
   arac: '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>',
   sektor: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
-  sayfa: '<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4"/>'
+  sayfa: '<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4"/>',
+  soru: '<path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/>'
 };
-const SPOT_GRUP = { kavram: 'Kavramlar', ders: 'Dersler', arac: 'Araçlar', sektor: 'Sektörler', sayfa: 'Sayfalar' };
+const SPOT_GRUP = { kavram: 'Kavramlar', soru: 'Sorular', ders: 'Dersler', arac: 'Araçlar', sektor: 'Sektörler', sayfa: 'Sayfalar' };
 const SPOT_ONERI = ['Enflasyon', 'F/K oranı', 'Kredi notu', 'Bileşik getiri', 'Temettü', 'Bilanço'];
 
 // Veri dosyası sayfada yoksa ilk aramada yüklenir
@@ -930,10 +931,13 @@ async function spotDiziniHazirla() {
   const bekle = [];
   if (typeof SOZLUK === 'undefined') bekle.push(scriptYukle('sozluk-veri.js'));
   if (typeof ARAMA_DIZINI === 'undefined') bekle.push(scriptYukle('arama-veri.js'));
+  if (typeof SORULAR_KUTUPHANE === 'undefined') bekle.push(scriptYukle('sorular-veri.js'));
   await Promise.all(bekle);
   spotDizin = [
     ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'sozluk.html#' + t.id,
       anahtar: KATEGORILER[t.kategori], metin: t.aciklama })),
+    ...SORULAR_KUTUPHANE.map(q => ({ tur: 'soru', baslik: q.soru, aciklama: q.kisa, href: 'sorular.html#' + q.id,
+      anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' ') })),
     ...ARAMA_DIZINI
   ].map(item => ({
     ...item,
@@ -1163,6 +1167,148 @@ function initStory() {
   }
 }
 
+// ============================================
+// AKLINA TAKILAN (soru kütüphanesi)
+// ============================================
+
+const OKUNAN_SORU_KEY = 'paktolos-sorular';
+
+function initQuestions() {
+  const list = document.getElementById('qa-list');
+  if (!list || typeof SORULAR_KUTUPHANE === 'undefined') return;
+
+  const search = document.getElementById('qa-search');
+  const filters = document.getElementById('qa-filters');
+  const empty = document.getElementById('qa-empty');
+  const bar = document.getElementById('qa-bar');
+  const kavramlar = typeof SOZLUK !== 'undefined' ? new Map(SOZLUK.map(t => [t.id, t.terim])) : new Map();
+  let okunan = new Set(store.get(OKUNAN_SORU_KEY, []));
+  let aktif = 'tum';
+
+  const chevron = () => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.innerHTML = '<path d="m6 9 6 6 6-6"/>';
+    return el('span', { className: 'qa-chevron', 'aria-hidden': 'true' }, svg);
+  };
+
+  function kart(q, query) {
+    const d = el('details', { className: 'qa' + (q.kategori === 'haber' ? ' news' : ''), id: q.id },
+      el('summary', {},
+        q.kategori === 'haber' ? el('span', { className: 'qa-badge' }, 'Haber') : null,
+        el('span', { className: 'qa-q' }, vurgula(q.soru, query)),
+        chevron()),
+      el('div', { className: 'qa-content' },
+        el('div', { className: 'qa-short' }, el('span', { className: 'qa-label' }, 'Kısaca'), q.kisa),
+        el('span', { className: 'qa-label' }, 'Nasıl düşünmeli?'),
+        el('ol', { className: 'qa-steps' }, ...q.adimlar.map(a => el('li', {}, a))),
+        q.dikkat ? el('div', { className: 'qa-caution' }, el('span', {}, el('b', {}, 'Dikkat: '), q.dikkat)) : null,
+        el('div', { className: 'qa-foot' },
+          el('span', { className: 'qa-label', style: 'width:100%' }, 'İlgili kavramlar'),
+          ...q.ilgili.filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'sozluk.html#' + id }, kavramlar.get(id))),
+          el('div', { className: 'qa-actions' },
+            q.arac ? el('a', { className: 'button', href: q.arac.href }, q.arac.ad) : null,
+            q.ders ? el('a', { className: 'link-more', href: q.ders.href }, q.ders.ad) : null,
+            el('button', { type: 'button', className: 'qa-share', dataset: { id: q.id } }, 'Bağlantıyı paylaş')))
+      ));
+    d.addEventListener('toggle', () => {
+      if (!d.open) return;
+      okunan.add(q.id);
+      store.set(OKUNAN_SORU_KEY, [...okunan]);
+      history.replaceState(null, '', '#' + q.id);
+    });
+    return d;
+  }
+
+  // Konu filtresi
+  [['tum', 'Tümü'], ...Object.entries(SORU_KATEGORILERI)].forEach(([key, ad]) => {
+    const b = el('button', { type: 'button', role: 'tab', textContent: ad });
+    b.setAttribute('aria-selected', key === aktif);
+    b.addEventListener('click', () => {
+      aktif = key;
+      filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+      b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      render();
+    });
+    filters.appendChild(b);
+  });
+
+  function render() {
+    const query = sadelestir(search.value.trim());
+    let sorular = SORULAR_KUTUPHANE.filter(q => aktif === 'tum' || q.kategori === aktif);
+    if (query) {
+      const puan = q => {
+        const s = sadelestir(q.soru);
+        if (s.includes(query)) return 3;
+        if (sadelestir(q.kisa).includes(query)) return 2;
+        const kav = q.ilgili.map(id => kavramlar.get(id) || '').join(' ');
+        if (sadelestir(q.adimlar.join(' ') + ' ' + kav).includes(query)) return 1;
+        return 0;
+      };
+      sorular = sorular.map(q => [q, puan(q)]).filter(([, p]) => p > 0).sort((a, b) => b[1] - a[1]).map(([q]) => q);
+      list.replaceChildren(...(sorular.length ? [el('section', { className: 'qa-group' },
+        el('h2', { className: 'qa-group-title' }, sorular.length + ' soru'), ...sorular.map(q => kart(q, query)))] : []));
+    } else {
+      const gruplar = Object.keys(SORU_KATEGORILERI).map(k => [k, sorular.filter(q => q.kategori === k)]).filter(([, g]) => g.length);
+      list.replaceChildren(...gruplar.map(([k, g]) => el('section', { className: 'qa-group' },
+        el('h2', { className: 'qa-group-title' }, SORU_KATEGORILERI[k], el('small', {}, g.length + ' soru')),
+        ...g.map(q => kart(q, '')))));
+    }
+    empty.hidden = sorular.length > 0;
+  }
+
+  let zaman;
+  search.addEventListener('input', () => { clearTimeout(zaman); zaman = setTimeout(render, 80); });
+  search.addEventListener('keydown', e => { if (e.key === 'Escape') { search.value = ''; render(); } });
+
+  list.addEventListener('click', async e => {
+    const b = e.target.closest('.qa-share');
+    if (!b) return;
+    const q = SORULAR_KUTUPHANE.find(x => x.id === b.dataset.id);
+    const url = location.origin + location.pathname + '#' + q.id;
+    if (navigator.share) {
+      try { await navigator.share({ title: q.soru, text: q.kisa, url }); } catch (err) { /* vazgeçildi */ }
+      return;
+    }
+    try { await navigator.clipboard.writeText(url); showToast('Bağlantı kopyalandı'); } catch (err) { showToast(url); }
+  });
+
+  // Arama çubuğu üste yapışınca cam zemin
+  const updateStuck = () => bar.classList.toggle('stuck', bar.getBoundingClientRect().top <= document.querySelector('.nav-bar').offsetHeight + 0.5);
+  window.addEventListener('scroll', updateStuck, { passive: true });
+  updateStuck();
+
+  // sorular.html#kart-borcu gibi bağlantılar ilgili soruyu açar
+  function hashAc() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    let d = document.getElementById(id);
+    if (!d || !d.classList.contains('qa')) {
+      if (!SORULAR_KUTUPHANE.some(q => q.id === id)) return;
+      // filtre ya da arama gizliyorsa sıfırla
+      search.value = ''; aktif = 'tum';
+      filters.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-selected', i === 0));
+      render();
+      d = document.getElementById(id);
+    }
+    d.open = true;
+    requestAnimationFrame(() => d.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
+  }
+  window.addEventListener('hashchange', hashAc);
+
+  render();
+  hashAc();
+}
+
+// Ana sayfa: popüler sorular
+function initHomeQuestions() {
+  const kap = document.getElementById('home-questions');
+  if (!kap || typeof SORULAR_KUTUPHANE === 'undefined') return;
+  const secilen = ['kart-borcu', 'zam-fakir', 'altin-doviz-mevduat', 'baz-puan'];
+  kap.replaceChildren(...secilen.map(id => SORULAR_KUTUPHANE.find(q => q.id === id)).filter(Boolean).map(q =>
+    el('a', { href: 'sorular.html#' + q.id }, el('span', {}, q.soru), el('span', { className: 'arrow', 'aria-hidden': 'true' }, '›'))));
+}
+
 initSplash();
 initNav();
 initReveal();
@@ -1174,3 +1320,5 @@ initSpotlight();
 initThemeSwitch();
 initInstall();
 initStory();
+initQuestions();
+initHomeQuestions();

@@ -6,16 +6,17 @@ ICON = {
   'araclar': '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>',
   'sektorler': '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
   'sozluk': '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>',
+  'sorular': '<path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/>',
   'test': '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>',
 }
 # Bilgisayarda üst menü (yer var, hepsi görünür)
 NAV = [('ogren.html', 'Öğren'), ('analiz.html', 'Analiz'), ('sektorler.html', 'Sektörler'),
-       ('araclar.html', 'Araçlar'), ('sozluk.html', 'Sözlük'), ('test.html', 'Test')]
+       ('araclar.html', 'Araçlar'), ('sorular.html', 'Sorular'), ('sozluk.html', 'Sözlük'), ('test.html', 'Test')]
 # Telefonda alt sekme çubuğu (en fazla 5)
-TABS = [('ogren.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'araclar'), ('sektorler.html', 'Sektörler', 'sektorler'),
+TABS = [('ogren.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'araclar'), ('sorular.html', 'Sorular', 'sorular'),
         ('sozluk.html', 'Sözlük', 'sozluk'), ('test.html', 'Test', 'test')]
 # Sekme çubuğunda yeri olmayan sayfalar hangi sekmenin altında sayılır
-SEKME_GRUBU = {'analiz.html': 'ogren.html'}
+SEKME_GRUBU = {'analiz.html': 'ogren.html', 'sektorler.html': 'ogren.html'}
 PAGES = [(f, t, ICON[i]) for f, t, i in TABS]
 
 SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'

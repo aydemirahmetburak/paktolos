@@ -1195,7 +1195,9 @@ footer p + p {
 .segmented,
 .tool-inputs,
 .tool-results,
-.tool-card {
+.tool-card,
+.qa,
+.qa-teaser a {
   position: relative;
   background: var(--glass-bg);
   box-shadow: var(--glass-shadow);
@@ -1241,6 +1243,8 @@ footer p + p {
 .tool-inputs::after,
 .tool-results::after,
 .tool-card::after,
+.qa::after,
+.qa-teaser a::after,
 .glass-dark::after,
 .principle::after,
 .demo-card::after,
@@ -3582,6 +3586,284 @@ body.glossary-in-view .letter-index {
 }
 
 /* ============================================
+   AKLINA TAKILAN (soru kütüphanesi)
+   ============================================ */
+.qa-body {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-section);
+}
+
+.qa-group + .qa-group {
+  margin-top: var(--space-xxl);
+}
+
+.qa-group-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.qa-group-title small {
+  font-size: var(--text-small);
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--color-text-tertiary);
+}
+
+.qa {
+  margin-bottom: var(--space-xs);
+  border-radius: var(--radius-xl);
+  scroll-margin-top: calc(var(--nav-height) + 150px);
+}
+
+.qa summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  cursor: pointer;
+  list-style: none;
+  border-radius: inherit;
+}
+
+.qa summary::-webkit-details-marker { display: none; }
+
+.qa summary:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.qa-q { flex: 1; }
+
+.qa-chevron {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(var(--ink),0.06);
+  transition: transform var(--duration) var(--ease-out), background var(--duration-fast) var(--ease);
+}
+
+.qa-chevron svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: var(--color-text-secondary);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.qa[open] .qa-chevron {
+  transform: rotate(180deg);
+  background: rgba(255,107,53,0.14);
+}
+
+.qa-badge {
+  flex-shrink: 0;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  background: rgba(255,107,53,0.12);
+  border-radius: var(--radius-sm);
+}
+
+.qa.news .qa-q {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.qa::details-content {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    height var(--duration) var(--ease-out),
+    opacity var(--duration) var(--ease-out),
+    content-visibility var(--duration) allow-discrete;
+}
+
+.qa[open]::details-content {
+  height: auto;
+  opacity: 1;
+}
+
+.qa-content {
+  padding: 0 var(--space-lg) var(--space-lg);
+}
+
+.qa-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.qa-short {
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: 17px;
+  line-height: 1.55;
+  background: rgba(255,107,53,0.08);
+  border-radius: var(--radius-lg);
+}
+
+.qa-short .qa-label { color: var(--color-accent); }
+
+.qa-steps {
+  list-style: none;
+  counter-reset: adim;
+  display: grid;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.qa-steps li {
+  position: relative;
+  padding-left: 40px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  counter-increment: adim;
+}
+
+.qa-steps li::before {
+  content: counter(adim);
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: rgba(255,107,53,0.12);
+  border-radius: 50%;
+}
+
+.qa-caution {
+  display: flex;
+  gap: var(--space-xs);
+  padding: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-lg);
+  font-size: 15px;
+  line-height: 1.5;
+  border-left: 3px solid var(--color-accent);
+  background: rgba(var(--ink),0.04);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.qa-caution b { font-weight: 600; }
+
+.qa-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xxs);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(var(--ink),0.08);
+}
+
+.qa-chip {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  background: rgba(var(--glass-rgb),0.7);
+  border-radius: var(--radius-pill);
+  box-shadow: inset 0 0 0 1px rgba(var(--ink),0.08);
+  transition: background var(--duration-fast) var(--ease);
+}
+
+.qa-chip:hover { background: var(--surface-raised); }
+
+.qa-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  margin-top: var(--space-xs);
+}
+
+.qa-actions .button {
+  padding: 9px 18px;
+  font-size: 15px;
+}
+
+.qa-share {
+  margin-left: auto;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.qa-share:hover { color: var(--color-text-primary); }
+
+/* Ana sayfa: popüler sorular */
+.qa-teaser {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  margin-top: var(--space-xxl);
+  text-align: left;
+}
+
+.qa-teaser a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) var(--space-lg);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-radius: var(--radius-xl);
+  transition: transform var(--duration) var(--ease-out), box-shadow var(--duration) var(--ease-out);
+}
+
+.qa-teaser a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glass-shadow-hover);
+}
+
+.qa-teaser .arrow {
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+@media (max-width: 734px) {
+  .qa summary { padding: var(--space-md); font-size: 17px; }
+  .qa-content { padding: 0 var(--space-md) var(--space-md); }
+  .qa-teaser { grid-template-columns: 1fr; }
+  .qa-group-title { font-size: 21px; }
+}
+
+/* ============================================
    MOBİL
    ============================================ */
 @media (max-width: 734px) {
@@ -3673,6 +3955,8 @@ body.glossary-in-view .letter-index {
 [data-theme="dark"] .tool-inputs::after,
 [data-theme="dark"] .tool-results::after,
 [data-theme="dark"] .tool-card::after,
+[data-theme="dark"] .qa::after,
+[data-theme="dark"] .qa-teaser a::after,
 [data-theme="dark"] .tabbar::after,
 [data-theme="dark"] .sheet-panel::after {
   background: linear-gradient(145deg,

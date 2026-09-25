@@ -66,10 +66,12 @@ paktolos/
 ├── sektorler.html       # Sektöre göre farklı okuma
 ├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 ├── araclar.js           # Araçların hesaplamaları ve grafik bileşeni
+├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
 ├── test.html            # Kendini sına
 ├── sozluk-veri.js       # Sözlükteki kavramlar
 ├── test-veri.js         # Test soruları
+├── sorular-veri.js      # "Aklına takılan" soruları ve cevapları
 ├── arama-veri.js        # Site geneli arama dizini (sayfa ve bölümler)
 ├── style.css            # Tasarım sistemi, cam katmanı, karanlık mod
 ├── script.js            # Tüm etkileşimler
@@ -85,7 +87,8 @@ paktolos/
 ## İçerik Ekleme
 
 - **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
-- **Yeni soru:** `test-veri.js` içindeki `SORULAR` listesine ekle.
+- **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle.
+- **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
 - **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--chart-1` ve `--chart-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
@@ -109,7 +112,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Paktolos'un hikâyesi
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
-- [ ] "Aklına takılan" soru kütüphanesi
+- [x] "Aklına takılan" soru kütüphanesi (25 soru, 5 konu)
 - [ ] Dersler, Karnem ve günün sorusu
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme
