@@ -37,7 +37,7 @@ function sayiAlani(etiket, { min, max, step, value, birim = '', ondalik = 0 }) {
   });
   kutu.addEventListener('input', () => {
     const n = parseTr(kutu.value);
-    if (n === null || n < 0) return;
+    if (n === null || n < Math.min(0, min)) return;
     deger = n;
     kaydirici.value = Math.min(max, Math.max(min, n));
     doldur(); bildir();
@@ -46,7 +46,7 @@ function sayiAlani(etiket, { min, max, step, value, birim = '', ondalik = 0 }) {
   kutu.addEventListener('keydown', e => {
     if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
     e.preventDefault();
-    deger = Math.max(0, +(deger + (e.key === 'ArrowUp' ? 1 : -1) * step).toFixed(4));
+    deger = Math.max(Math.min(0, min), +(deger + (e.key === 'ArrowUp' ? 1 : -1) * step).toFixed(4));
     kutu.value = sayiYaz(deger, ondalik);
     kaydirici.value = deger;
     doldur(); bildir();
@@ -58,6 +58,8 @@ function sayiAlani(etiket, { min, max, step, value, birim = '', ondalik = 0 }) {
       el('span', { className: 'num-head' }, etiket, el('span', { className: 'num-input' }, kutu, birim ? el('span', {}, birim) : null)),
       kaydirici),
     get: () => deger,
+    // Dışarıdan değer ver (ör. senaryo); dinleyicileri tetiklemez
+    set: v => { deger = v; kutu.value = sayiYaz(v, ondalik); kaydirici.value = Math.min(max, Math.max(min, v)); doldur(); },
     on: fn => dinleyiciler.push(fn)
   };
 }

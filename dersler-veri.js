@@ -188,5 +188,36 @@ const DERSLER = [
       ] }
     ],
     bag: { kavramlar: ['fk', 'pddd', 'piyasa-degeri', 'dongusellik'], ders: { ad: 'Bir hisseyi yedi adımda oku', href: 'analiz.html' } }
+  },
+  {
+    id: 'uc-tablo', yol: 'borsa', sure: 6,
+    baslik: 'Üç tablo nasıl bağlanır?',
+    ozet: 'Gelir tablosu, bilanço ve nakit akışı: tek hikâyenin üç bölümü.',
+    kartlar: [
+      { tur: 'metin', baslik: 'Üç ayrı belge değil, tek hikâye.',
+        metin: 'Gelir tablosu bir yılda ne kazanıldığını, nakit akışı kasaya gerçekte ne girip çıktığını, bilanço ise yıl sonunda elde ne kaldığını anlatır. Birinde değişen bir rakam, diğer ikisine de yansır.' },
+      { tur: 'metin', baslik: 'Birinci bağ: net kâr özkaynağa akar.',
+        metin: 'Gelir tablosunun son satırı net kârdır. Kârın ortaklara dağıtılmayan kısmı şirkette kalır ve bilançodaki özkaynağı büyütür. Zarar ise özkaynağı küçültür.' },
+      { tur: 'soru', soru: 'Şirket yılı 800 milyon TL net kârla kapattı ve 200 milyon TL temettü dağıttı. Başka bir değişiklik yoksa özkaynak nasıl değişir?',
+        secenekler: ['800 milyon TL artar', '600 milyon TL artar', '200 milyon TL azalır', 'Değişmez'],
+        dogru: 1,
+        aciklama: 'Dağıtılmayan kâr özkaynağa eklenir: 800 − 200 = 600 milyon TL artış.' },
+      { tur: 'metin', baslik: 'İkinci bağ: kâr, nakit değildir.',
+        metin: 'Satış yapıldığı an kâra yazılır, ama müşteri parayı aylar sonra ödeyebilir. Amortisman ise kârı düşürür ama kasadan para çıkarmaz. Nakit akışı tablosu bu farkları düzelterek net kârdan kasaya giren gerçek paraya ulaşır.' },
+      { tur: 'ornek', baslik: 'Laboratuvarda dene',
+        metin: 'Şirket laboratuvarında müşterilerin 60 yerine 150 günde ödemesine izin verdiğinde net kâr kuruşu kuruşuna aynı kalır. Ama işletme faaliyetlerinden nakit akışı eksiye döner ve şirket açığı kapatmak için borçlanmak zorunda kalır.' },
+      { tur: 'soru', soru: 'Bir şirketin kârı arttı ama kasasındaki nakit azaldı. Bunun olası nedeni hangisidir?',
+        secenekler: ['Muhasebe hatası yapılmıştır', 'Alacaklar ve stoklar büyümüş, satışlar henüz tahsil edilmemiştir', 'Amortisman artmıştır', 'Bu imkânsızdır'],
+        dogru: 1,
+        aciklama: 'Kâr tahakkuk esasına, nakit ise tahsilata bakar. Tahsil edilmemiş satışlar ve depoda bekleyen stok, kârda görünür ama kasada görünmez.' },
+      { tur: 'metin', baslik: 'Üçüncü bağ: nakit bilançoya iner.',
+        metin: 'Nakit akışı tablosunun son satırı, dönem sonu nakittir. Bu rakam bilançonun varlıklar tarafındaki "nakit ve nakit benzerleri" satırıyla birebir aynıdır. Bu yüzden bilanço her zaman denk kalır.' },
+      { tur: 'ozet', maddeler: [
+        'Net kâr − dağıtılan temettü = özkaynaktaki artış',
+        'Kâr ile nakit farklıdır; farkı alacaklar, stoklar ve amortisman yaratır.',
+        'Nakit akışının son satırı, bilançodaki nakittir.'
+      ] }
+    ],
+    bag: { kavramlar: ['gelir-tablosu', 'nakit-akisi', 'bilanco', 'amortisman'], arac: { ad: 'Şirket laboratuvarı', href: 'lab.html' } }
   }
 ];

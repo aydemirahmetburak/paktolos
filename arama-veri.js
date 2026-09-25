@@ -26,6 +26,12 @@ const ARAMA_DIZINI = [
   { tur: 'arac', baslik: 'Oran hesaplayıcı', aciklama: 'KAP rakamlarını gir, yedi oranı anında gör', href: 'analiz.html#hesapla',
     anahtar: 'hesapla hesaplayıcı fk pd dd roe cari oran net borç favök' },
 
+  // Laboratuvar ve check-up
+  { tur: 'arac', baslik: 'Şirket laboratuvarı', aciklama: 'Kolları çevir, üç mali tablonun birlikte değişimini canlı izle', href: 'lab.html',
+    anahtar: 'şirket laboratuvarı simülasyon gelir tablosu bilanço nakit akışı senaryo borç faiz temettü favök f/k pd/dd' },
+  { tur: 'arac', baslik: 'Finansal check-up', aciklama: 'Bütçe, acil durum fonu, kart borcu ve birikim: dört göstergede durumun', href: 'checkup.html',
+    anahtar: 'check up kontrol bütçe acil durum fonu kart borcu borç yükü birikim oranı maaş gelir gider sağlık' },
+
   // Araçlar
   { tur: 'arac', baslik: 'Kredi hesaplayıcı', aciklama: 'Aylık taksit, toplam faiz ve ödeme tablosu', href: 'araclar.html#kredi',
     anahtar: 'kredi taksit faiz ihtiyaç kredisi konut kredisi taşıt vade ödeme planı' },
