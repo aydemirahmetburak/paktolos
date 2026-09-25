@@ -198,7 +198,707 @@ function initCalculator() {
   update();
 }
 
+// ============================================
+// ORTAK YARDIMCILAR
+// ============================================
+
+// Tarayıcı hafızası: gizli sekmede ya da kapalıysa sessizce vazgeçer
+const store = {
+  get(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v === null ? fallback : JSON.parse(v);
+    } catch (e) { return fallback; }
+  },
+  set(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch (e) { /* yok say */ }
+  }
+};
+
+// Küçük DOM yardımcısı: el('p', { className: 'x' }, 'metin', çocuk...)
+function el(tag, props = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(props)) {
+    if (v === null || v === undefined) continue;
+    if (k === 'dataset') Object.assign(node.dataset, v);
+    else if (k === 'style') node.style.cssText = v;
+    else if (k in node) node[k] = v;
+    else node.setAttribute(k, v);
+  }
+  node.append(...children.filter(c => c !== null && c !== undefined));
+  return node;
+}
+
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isPhone = () => window.matchMedia('(max-width: 734px)').matches;
+
+function formatTL(n) {
+  return Math.round(n).toLocaleString('tr-TR') + ' TL';
+}
+
+function showToast(text) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = text;
+  toast.classList.add('show');
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ============================================
+// SÖZLÜK
+// ============================================
+
+const OKUNAN_KEY = 'paktolos-okunan';
+const TR_ALFABE = 'ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
+
+// Türkçe karakterleri sadeleştirir; "sermaye" araması "Sermaye"yi,
+// "ozkaynak" araması "Özkaynak"ı bulur. Harf sayısı değişmez, bu yüzden
+// eşleşen yerin konumu orijinal metinde de aynıdır.
+const SADE = { 'ç': 'c', 'ğ': 'g', 'ı': 'i', 'ö': 'o', 'ş': 's', 'ü': 'u', 'â': 'a', 'î': 'i', 'û': 'u' };
+function sadelestir(text) {
+  return [...text].map(ch => {
+    const lower = ch.toLocaleLowerCase('tr');
+    return lower.length === 1 ? (SADE[lower] || lower) : ch.toLowerCase();
+  }).join('');
+}
+
+// Eşleşen kısmı <mark> ile işaretleyerek metni DOM'a çevirir
+function vurgula(text, query) {
+  if (!query) return document.createTextNode(text);
+  const i = sadelestir(text).indexOf(query);
+  if (i === -1) return document.createTextNode(text);
+  const frag = document.createDocumentFragment();
+  frag.append(text.slice(0, i), el('mark', {}, text.slice(i, i + query.length)), text.slice(i + query.length));
+  return frag;
+}
+
+function basHarf(terim) {
+  return terim[0].toLocaleUpperCase('tr');
+}
+
+function gununKavrami() {
+  const now = new Date();
+  const gun = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+  return SOZLUK[(gun * 37) % SOZLUK.length];
+}
+
+// Ana sayfadaki "günün kavramı" kartı
+function initHomeDaily() {
+  const card = document.getElementById('home-daily');
+  if (!card || typeof SOZLUK === 'undefined') return;
+  const t = gununKavrami();
+  document.getElementById('home-daily-term').textContent = t.terim;
+  document.getElementById('home-daily-short').textContent = t.kisa;
+  document.getElementById('home-daily-link').href = 'sozluk.html#' + t.id;
+}
+
+function initGlossary() {
+  const list = document.getElementById('glossary-list');
+  if (!list || typeof SOZLUK === 'undefined') return;
+
+  const byId = new Map(SOZLUK.map(t => [t.id, t]));
+  const sorted = [...SOZLUK].sort((a, b) => a.terim.localeCompare(b.terim, 'tr'));
+  const search = document.getElementById('glossary-search');
+  const filters = document.getElementById('glossary-filters');
+  const empty = document.getElementById('glossary-empty');
+  const letterIndex = document.getElementById('letter-index');
+  const bar = document.getElementById('glossary-bar');
+
+  let okunan = new Set(store.get(OKUNAN_KEY, []).filter(id => byId.has(id)));
+  let aktifKategori = 'tum';
+  let gorunen = sorted.map(t => t.id); // önceki/sonraki gezinmesi için
+
+  // ---- İlerleme ----
+  document.getElementById('total-count').textContent = SOZLUK.length;
+  function updateProgress() {
+    document.getElementById('read-count').textContent = okunan.size;
+    document.getElementById('progress-fill').style.width = (okunan.size / SOZLUK.length * 100) + '%';
+  }
+
+  function markRead(id) {
+    if (okunan.has(id)) return;
+    okunan.add(id);
+    store.set(OKUNAN_KEY, [...okunan]);
+    updateProgress();
+    const card = list.querySelector(`[data-id="${id}"]`);
+    if (card) card.classList.add('read');
+  }
+
+  // ---- Günün kavramı ----
+  const daily = gununKavrami();
+  document.getElementById('daily-term').textContent = daily.terim;
+  document.getElementById('daily-short').textContent = daily.kisa;
+  document.getElementById('daily-open').addEventListener('click', () => openTerm(daily.id));
+  document.getElementById('random-term').addEventListener('click', () => {
+    const okunmamis = SOZLUK.filter(t => !okunan.has(t.id));
+    const havuz = okunmamis.length ? okunmamis : SOZLUK;
+    openTerm(havuz[Math.floor(Math.random() * havuz.length)].id);
+  });
+
+  // ---- Konu filtresi ----
+  const secenekler = [['tum', 'Tümü'], ...Object.entries(KATEGORILER)];
+  secenekler.forEach(([key, ad]) => {
+    const b = el('button', { type: 'button', role: 'tab', textContent: ad });
+    b.setAttribute('aria-selected', key === aktifKategori);
+    b.addEventListener('click', () => {
+      aktifKategori = key;
+      filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+      b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      render();
+    });
+    filters.appendChild(b);
+  });
+
+  // ---- Liste ----
+  function termCard(t, query, i) {
+    return el('button', {
+      type: 'button',
+      className: 'term-card' + (okunan.has(t.id) ? ' read' : ''),
+      dataset: { id: t.id },
+      style: `--i: ${Math.min(i, 12)}`
+    },
+      el('span', { className: 'term-meta' }, KATEGORILER[t.kategori], el('span', { className: 'term-read', title: 'Henüz okunmadı' })),
+      el('span', { className: 'term-name' }, vurgula(t.terim, query)),
+      el('span', { className: 'term-short' }, vurgula(t.kisa, query))
+    );
+  }
+
+  function render() {
+    const query = sadelestir(search.value.trim());
+    let terimler = sorted.filter(t => aktifKategori === 'tum' || t.kategori === aktifKategori);
+
+    const groups = [];
+    if (query) {
+      // Aramada en ilgili sonuç en üstte: adın başı > adın içi > özet > açıklama
+      const puan = t => {
+        const ad = sadelestir(t.terim);
+        if (ad.startsWith(query)) return 4;
+        if (ad.includes(query)) return 3;
+        if (sadelestir(t.kisa).includes(query)) return 2;
+        if (sadelestir(t.aciklama + ' ' + t.ornek).includes(query)) return 1;
+        return 0;
+      };
+      terimler = terimler.map(t => [t, puan(t)]).filter(([, p]) => p > 0)
+        .sort((a, b) => b[1] - a[1] || a[0].terim.localeCompare(b[0].terim, 'tr')).map(([t]) => t);
+      if (terimler.length) groups.push([terimler.length + ' sonuç', terimler, null]);
+    } else {
+      for (const t of terimler) {
+        const h = basHarf(t.terim);
+        const last = groups[groups.length - 1];
+        if (last && last[2] === h) last[1].push(t);
+        else groups.push([h, [t], h]);
+      }
+    }
+
+    gorunen = terimler.map(t => t.id);
+    let i = 0;
+    list.replaceChildren(...groups.map(([baslik, items, harf]) =>
+      el('section', { className: 'letter-group' },
+        el('h2', { className: 'letter-heading', id: harf ? 'harf-' + harf : null }, baslik,
+          harf ? el('small', {}, items.length + ' kavram') : null),
+        el('div', { className: 'term-grid' }, ...items.map(t => termCard(t, query, i++)))
+      )
+    ));
+    empty.hidden = terimler.length > 0;
+
+    // Harf dizini yalnızca alfabetik görünümde anlamlı
+    const harfler = query ? [] : groups.map(g => g[2]);
+    letterIndex.replaceChildren(...harfler.map(h => el('a', { href: '#harf-' + h, textContent: h })));
+    letterIndex.hidden = harfler.length === 0;
+  }
+
+  list.addEventListener('click', e => {
+    const card = e.target.closest('.term-card');
+    if (card) openTerm(card.dataset.id);
+  });
+
+  let aramaZamani;
+  search.addEventListener('input', () => {
+    clearTimeout(aramaZamani);
+    aramaZamani = setTimeout(render, 80);
+  });
+  search.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { search.value = ''; render(); }
+    if (e.key === 'Enter') {
+      const first = list.querySelector('.term-card');
+      if (first) openTerm(first.dataset.id);
+    }
+  });
+
+  // "/" tuşu aramaya odaklanır
+  document.addEventListener('keydown', e => {
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName) && !sheet.open) {
+      e.preventDefault();
+      search.focus();
+      bar.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+    }
+  });
+
+  // Arama çubuğu üste yapışınca cam zemin alır
+  const navH = () => document.querySelector('.nav-bar').offsetHeight;
+  const updateStuck = () => bar.classList.toggle('stuck', bar.getBoundingClientRect().top <= navH() + 0.5);
+  window.addEventListener('scroll', updateStuck, { passive: true });
+  updateStuck();
+
+  // Harf dizini yalnızca liste görünürken belirir
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      document.body.classList.toggle('glossary-in-view', entry.isIntersecting);
+    }, { rootMargin: '-40% 0px -40% 0px' }).observe(list);
+  }
+
+  // Harf dizininde parmakla kaydırma (iOS Kişiler gibi)
+  function scrubTo(x, y) {
+    const a = document.elementFromPoint(x, y);
+    if (a && a.parentElement === letterIndex) {
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ block: 'start' });
+    }
+  }
+  letterIndex.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    e.preventDefault();
+    document.getElementById(a.getAttribute('href').slice(1))
+      .scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+  });
+  letterIndex.addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse') return;
+    letterIndex.classList.add('active');
+    letterIndex.setPointerCapture(e.pointerId);
+    scrubTo(e.clientX, e.clientY);
+  });
+  letterIndex.addEventListener('pointermove', e => {
+    if (letterIndex.classList.contains('active')) scrubTo(e.clientX, e.clientY);
+  });
+  const endScrub = () => letterIndex.classList.remove('active');
+  letterIndex.addEventListener('pointerup', endScrub);
+  letterIndex.addEventListener('pointercancel', endScrub);
+
+  // ---- Kavram penceresi ----
+  const sheet = document.getElementById('term-sheet');
+  const panel = document.getElementById('sheet-panel');
+  const content = document.getElementById('sheet-content');
+  const scroller = document.getElementById('sheet-scroll');
+  const prevBtn = document.getElementById('sheet-prev');
+  const nextBtn = document.getElementById('sheet-next');
+  let current = null;
+  let pushedHistory = false;
+  let ignorePop = false;
+  let lastFocus = null;
+
+  function fill(t) {
+    current = t.id;
+    document.getElementById('sheet-category').textContent = KATEGORILER[t.kategori];
+    document.getElementById('sheet-term').textContent = t.terim;
+    document.getElementById('sheet-short').textContent = t.kisa;
+    document.getElementById('sheet-explain').textContent = t.aciklama;
+    document.getElementById('sheet-example').textContent = t.ornek;
+    document.getElementById('sheet-evaluate').textContent = t.degerlendir;
+
+    const calc = document.getElementById('sheet-calc');
+    calc.hidden = !t.hesap;
+    calc.replaceChildren();
+    if (t.hesap) calc.appendChild(MINI_HESAP[t.hesap]());
+
+    const learn = document.getElementById('sheet-learn');
+    learn.hidden = !t.ogren;
+    if (t.ogren) learn.href = t.ogren;
+
+    document.getElementById('sheet-related').replaceChildren(...t.ilgili.map(id =>
+      el('button', { type: 'button', textContent: byId.get(id).terim, onclick: () => swap(id) })
+    ));
+
+    // Önceki/sonraki: ekranda görünen sıraya göre; kavram listede yoksa tam listeye göre
+    const sira = gorunen.includes(t.id) ? gorunen : sorted.map(x => x.id);
+    const i = sira.indexOf(t.id);
+    setNav(prevBtn, sira[i - 1]);
+    setNav(nextBtn, sira[i + 1]);
+
+    scroller.scrollTop = 0;
+    markRead(t.id);
+  }
+
+  function setNav(btn, id) {
+    btn.hidden = !id;
+    btn.dataset.id = id || '';
+    btn.querySelector('.sheet-nav-term').textContent = id ? byId.get(id).terim : '';
+  }
+
+  function openTerm(id, { push = true } = {}) {
+    const t = byId.get(id);
+    if (!t) return;
+    if (sheet.open) { swap(id); return; }
+    lastFocus = document.activeElement;
+    fill(t);
+    sheet.classList.remove('closing');
+    panel.style.transform = '';
+    sheet.showModal();
+    document.documentElement.style.overflow = 'hidden';
+    if (push) {
+      history.pushState({ sheet: id }, '', '#' + id);
+      pushedHistory = true;
+    }
+  }
+
+  function swap(id) {
+    if (id === current) return;
+    history.replaceState({ sheet: id }, '', '#' + id);
+    if (prefersReducedMotion()) { fill(byId.get(id)); return; }
+    content.classList.add('swapping');
+    setTimeout(() => {
+      fill(byId.get(id));
+      content.classList.remove('swapping');
+    }, 180);
+  }
+
+  function finishClose() {
+    sheet.classList.remove('closing');
+    panel.classList.remove('dragging');
+    panel.style.transform = '';
+    panel.style.transition = '';
+    if (sheet.open) sheet.close();
+    document.documentElement.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+  }
+
+  function closeSheet({ fromHistory = false, animated = true } = {}) {
+    if (!sheet.open || sheet.classList.contains('closing')) return;
+    if (!fromHistory) {
+      if (pushedHistory) { ignorePop = true; history.back(); }
+      else history.replaceState(null, '', location.pathname + location.search);
+    }
+    pushedHistory = false;
+    current = null;
+    if (!animated || prefersReducedMotion()) { finishClose(); return; }
+    sheet.classList.add('closing');
+    const done = () => { clearTimeout(fallback); finishClose(); };
+    const fallback = setTimeout(done, 450);
+    panel.addEventListener('animationend', done, { once: true });
+  }
+
+  document.getElementById('sheet-close').addEventListener('click', () => closeSheet());
+  sheet.addEventListener('cancel', e => { e.preventDefault(); closeSheet(); });
+  sheet.addEventListener('click', e => { if (e.target === sheet) closeSheet(); });
+  prevBtn.addEventListener('click', () => prevBtn.dataset.id && swap(prevBtn.dataset.id));
+  nextBtn.addEventListener('click', () => nextBtn.dataset.id && swap(nextBtn.dataset.id));
+  sheet.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowRight' && nextBtn.dataset.id) swap(nextBtn.dataset.id);
+    if (e.key === 'ArrowLeft' && prevBtn.dataset.id) swap(prevBtn.dataset.id);
+  });
+
+  document.getElementById('sheet-share').addEventListener('click', async () => {
+    const t = byId.get(current);
+    const url = location.origin + location.pathname + '#' + t.id;
+    if (navigator.share) {
+      try { await navigator.share({ title: t.terim + ' — Paktolos', text: t.kisa, url }); } catch (e) { /* vazgeçildi */ }
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      showToast('Bağlantı kopyalandı');
+    } catch (e) {
+      showToast(url);
+    }
+  });
+
+  // Tarayıcının geri tuşu pencereyi kapatır; adres çubuğundaki #kavram açar
+  window.addEventListener('popstate', () => {
+    if (ignorePop) { ignorePop = false; return; }
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (byId.has(id)) {
+      if (sheet.open) swap(id);
+      else openTerm(id, { push: false });
+    } else if (sheet.open) {
+      pushedHistory = false;
+      closeSheet({ fromHistory: true });
+    }
+  });
+
+  // Telefonda tutamaçtan aşağı çekerek kapatma
+  const grabZone = [document.getElementById('sheet-grabber')];
+  let drag = null;
+  panel.addEventListener('pointerdown', e => {
+    if (!isPhone() || !grabZone.some(z => z.contains(e.target))) return;
+    drag = { y: e.clientY, t: performance.now(), dy: 0 };
+    panel.classList.add('dragging');
+    panel.setPointerCapture(e.pointerId);
+  });
+  panel.addEventListener('pointermove', e => {
+    if (!drag) return;
+    drag.dy = Math.max(0, e.clientY - drag.y);
+    panel.style.transform = `translateY(${drag.dy}px)`;
+  });
+  const endDrag = () => {
+    if (!drag) return;
+    const hiz = drag.dy / (performance.now() - drag.t);
+    const kapat = drag.dy > 140 || hiz > 0.6;
+    drag = null;
+    panel.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+    if (kapat) {
+      panel.style.transform = 'translateY(100%)';
+      if (pushedHistory) { ignorePop = true; history.back(); }
+      else history.replaceState(null, '', location.pathname + location.search);
+      pushedHistory = false;
+      current = null;
+      setTimeout(finishClose, 300);
+    } else {
+      panel.style.transform = '';
+      setTimeout(() => { panel.style.transition = ''; panel.classList.remove('dragging'); }, 300);
+    }
+  };
+  panel.addEventListener('pointerup', endDrag);
+  panel.addEventListener('pointercancel', endDrag);
+
+  updateProgress();
+  render();
+
+  // Sayfa bir kavram bağlantısıyla açıldıysa (sozluk.html#enflasyon)
+  const ilk = decodeURIComponent(location.hash.slice(1));
+  if (byId.has(ilk)) openTerm(ilk, { push: false });
+}
+
+// ---- Sözlük içindeki mini hesaplayıcılar ----
+
+function slider(label, { min, max, step, value, format }) {
+  const input = el('input', { type: 'range', min, max, step, value });
+  const out = el('output', {});
+  const update = () => {
+    out.textContent = format(Number(input.value));
+    input.style.setProperty('--p', ((input.value - min) / (max - min) * 100) + '%');
+  };
+  input.addEventListener('input', update);
+  update();
+  input.setAttribute('aria-label', label);
+  return { node: el('label', { className: 'slider' }, el('span', { className: 'slider-head' }, label, out), input), input };
+}
+
+const yuzde = n => '%' + n.toLocaleString('tr-TR');
+
+function barsFor(values, gain) {
+  const max = Math.max(...values);
+  return values.map(v => el('span', { className: gain ? 'gain' : '', style: `height: ${Math.max(2, v / max * 100)}%` }));
+}
+
+const MINI_HESAP = {
+  reel() {
+    const nominal = slider('Yıllık getirin', { min: 0, max: 100, step: 1, value: 45, format: yuzde });
+    const enf = slider('Yıllık enflasyon', { min: 0, max: 100, step: 1, value: 35, format: yuzde });
+    const big = el('div', { className: 'calc-big' });
+    const text = el('p', {});
+    const update = () => {
+      const r = ((1 + nominal.input.value / 100) / (1 + enf.input.value / 100) - 1) * 100;
+      const abs = Math.abs(r).toLocaleString('tr-TR', { maximumFractionDigits: 1 });
+      big.textContent = (r < 0 ? '−%' : '%') + abs;
+      big.className = 'calc-big ' + (r > 0.05 ? 'positive' : r < -0.05 ? 'negative' : '');
+      text.textContent = r > 0.05 ? `Paranın alım gücü yılda yaklaşık %${abs} artıyor.`
+        : r < -0.05 ? `Hesabındaki rakam artsa da alım gücün yılda yaklaşık %${abs} azalıyor.`
+        : 'Getirin enflasyonu ancak karşılıyor; alım gücün yerinde sayıyor.';
+    };
+    [nominal, enf].forEach(s => s.input.addEventListener('input', update));
+    update();
+    return el('div', { className: 'mini-calc' }, el('h3', {}, 'Kendin dene: reel getiri'), nominal.node, enf.node,
+      el('div', { className: 'calc-answer' }, big, text));
+  },
+
+  bilesik() {
+    const anapara = slider('Başlangıç', { min: 1000, max: 100000, step: 1000, value: 10000, format: formatTL });
+    const oran = slider('Yıllık getiri', { min: 1, max: 100, step: 1, value: 40, format: yuzde });
+    const yil = slider('Süre', { min: 1, max: 30, step: 1, value: 10, format: n => n + ' yıl' });
+    const big = el('div', { className: 'calc-big' });
+    const text = el('p', {});
+    const bars = el('div', { className: 'bars', 'aria-hidden': 'true' });
+    const update = () => {
+      const P = Number(anapara.input.value), r = oran.input.value / 100, n = Number(yil.input.value);
+      const degerler = Array.from({ length: n + 1 }, (_, k) => P * (1 + r) ** k);
+      const toplam = degerler[n];
+      const basit = P * (1 + r * n);
+      big.textContent = formatTL(toplam);
+      text.textContent = `Bunun ${formatTL(toplam - basit)} kadarı "faizin faizi". Bu hesap enflasyonu dikkate almaz; gerçek kazancı görmek için reel getiriye bak.`;
+      bars.replaceChildren(...barsFor(degerler, true));
+    };
+    [anapara, oran, yil].forEach(s => s.input.addEventListener('input', update));
+    update();
+    return el('div', { className: 'mini-calc' }, el('h3', {}, 'Kendin dene: bileşik getiri'), anapara.node, oran.node, yil.node,
+      el('div', { className: 'calc-answer' }, big, text, bars));
+  },
+
+  alimgucu() {
+    const tutar = slider('Bugünkü tutar', { min: 1000, max: 100000, step: 1000, value: 10000, format: formatTL });
+    const enf = slider('Yıllık enflasyon', { min: 1, max: 100, step: 1, value: 40, format: yuzde });
+    const yil = slider('Süre', { min: 1, max: 10, step: 1, value: 5, format: n => n + ' yıl' });
+    const big = el('div', { className: 'calc-big negative' });
+    const text = el('p', {});
+    const bars = el('div', { className: 'bars', 'aria-hidden': 'true' });
+    const update = () => {
+      const P = Number(tutar.input.value), i = enf.input.value / 100, n = Number(yil.input.value);
+      const degerler = Array.from({ length: n + 1 }, (_, k) => P / (1 + i) ** k);
+      big.textContent = formatTL(degerler[n]);
+      text.textContent = `Yastık altında duran ${formatTL(P)}, ${n} yıl sonra bugünün ${formatTL(degerler[n])}'si kadar alışveriş yapabilir. Aynı sepeti alabilmek için ${formatTL(P * (1 + i) ** n)} gerekir.`;
+      bars.replaceChildren(...barsFor(degerler, false));
+    };
+    [tutar, enf, yil].forEach(s => s.input.addEventListener('input', update));
+    update();
+    return el('div', { className: 'mini-calc' }, el('h3', {}, 'Kendin dene: alım gücü'), tutar.node, enf.node, yil.node,
+      el('div', { className: 'calc-answer' }, big, text, bars));
+  }
+};
+
+// ============================================
+// KENDİNİ SINA
+// ============================================
+
+const TEST_EN_IYI_KEY = 'paktolos-test-en-iyi';
+
+function initQuiz() {
+  const quiz = document.getElementById('quiz');
+  if (!quiz || typeof SORULAR === 'undefined') return;
+
+  const card = document.getElementById('quiz-card');
+  const options = document.getElementById('quiz-options');
+  const feedback = document.getElementById('quiz-feedback');
+  const nextBtn = document.getElementById('quiz-next');
+  const result = document.getElementById('quiz-result');
+  const HARFLER = ['A', 'B', 'C', 'D'];
+
+  let index = 0;
+  let cevaplar = [];
+
+  function show(i) {
+    const q = SORULAR[i];
+    document.getElementById('quiz-count').textContent = `${i + 1} / ${SORULAR.length}`;
+    document.getElementById('quiz-situation').textContent = q.durum;
+    document.getElementById('quiz-data').replaceChildren(...q.veri.map(([k, v]) => el('div', {}, el('dt', {}, k), el('dd', {}, v))));
+    document.getElementById('quiz-question').textContent = q.soru;
+    options.replaceChildren(...q.secenekler.map((s, j) =>
+      el('button', { type: 'button', className: 'quiz-option', onclick: () => answer(j) },
+        el('span', { className: 'option-key' }, HARFLER[j]), el('span', {}, s))
+    ));
+    feedback.classList.remove('open');
+    nextBtn.disabled = true;
+    nextBtn.textContent = i === SORULAR.length - 1 ? 'Sonucu gör' : 'Sonraki soru';
+  }
+
+  function answer(j) {
+    if (cevaplar[index] !== undefined) return;
+    const q = SORULAR[index];
+    cevaplar[index] = j;
+    const dogru = j === q.dogru;
+
+    [...options.children].forEach((b, k) => {
+      b.disabled = true;
+      if (k === q.dogru) b.classList.add('correct');
+      else if (k === j) b.classList.add('wrong');
+      else b.classList.add('dim');
+    });
+
+    const verdict = document.getElementById('quiz-verdict');
+    verdict.textContent = dogru ? 'Doğru.' : `Doğru cevap: ${HARFLER[q.dogru]}`;
+    verdict.className = 'quiz-verdict ' + (dogru ? 'ok' : 'no');
+    document.getElementById('quiz-explain').textContent = q.aciklama;
+    const lesson = document.getElementById('quiz-lesson');
+    lesson.textContent = 'Tekrar bak: ' + q.ders.ad;
+    lesson.href = q.ders.href;
+
+    feedback.classList.add('open');
+    document.getElementById('quiz-track-fill').style.width = ((index + 1) / SORULAR.length * 100) + '%';
+    nextBtn.disabled = false;
+    nextBtn.focus({ preventScroll: true });
+  }
+
+  function next() {
+    if (cevaplar[index] === undefined) return;
+    if (index === SORULAR.length - 1) { finish(); return; }
+    index++;
+    if (prefersReducedMotion()) { show(index); return; }
+    card.classList.add('leaving');
+    setTimeout(() => {
+      show(index);
+      card.classList.remove('leaving');
+      card.classList.add('entering');
+      void card.offsetWidth; // yeni konumu uygula, sonra kaydırarak getir
+      card.classList.remove('entering');
+      const top = quiz.getBoundingClientRect().top;
+      if (top < 0) quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+  }
+
+  function finish() {
+    const skor = cevaplar.filter((c, i) => c === SORULAR[i].dogru).length;
+    const onceki = store.get(TEST_EN_IYI_KEY, null);
+    if (onceki === null || skor > onceki) store.set(TEST_EN_IYI_KEY, skor);
+
+    quiz.hidden = true;
+    result.hidden = false;
+
+    const [baslik, metin] =
+      skor === SORULAR.length ? ['Kusursuz.', 'Oranları sadece hesaplamıyor, yorumlayabiliyorsun. Bu, çoğu yatırımcının atlamadığı bir adım.'] :
+      skor >= 8 ? ['Çok iyi.', 'Sayıları okumayı biliyorsun. Kaçırdığın birkaç konuya aşağıdan tekrar bakabilirsin.'] :
+      skor >= 5 ? ['İyi bir başlangıç.', 'Temel fikirler oturmuş. Aşağıdaki konulara tekrar göz atıp yeniden dene.'] :
+      ['Her uzman bir yerden başladı.', 'Bu sorular kolay değil. Aşağıdaki konuları okuyup yeniden denediğinde farkı göreceksin.'];
+    document.getElementById('result-title').textContent = baslik;
+    document.getElementById('result-text').textContent = metin;
+    document.getElementById('result-best').textContent =
+      onceki !== null && skor > onceki ? `Yeni rekorun! Önceki en iyi skorun ${onceki}/${SORULAR.length} idi.` :
+      onceki !== null ? `En iyi skorun: ${Math.max(onceki, skor)}/${SORULAR.length}` : '';
+
+    const yanlislar = SORULAR.filter((q, i) => cevaplar[i] !== q.dogru);
+    const review = document.getElementById('review');
+    review.replaceChildren(...(yanlislar.length ? [el('p', { className: 'review-title' }, 'Tekrar bakmak isteyebileceğin konular')] : []),
+      ...yanlislar.map(q => el('a', { href: q.ders.href }, el('span', {}, q.ders.ad), el('span', {}, '›'))));
+
+    // Halka ve skor sayacı
+    const ring = document.getElementById('ring-fill');
+    const C = 2 * Math.PI * 52;
+    ring.style.strokeDashoffset = C;
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      ring.style.strokeDashoffset = C * (1 - skor / SORULAR.length);
+    }));
+    const scoreEl = document.getElementById('result-score');
+    if (prefersReducedMotion()) { scoreEl.textContent = skor; }
+    else {
+      const start = performance.now();
+      const tick = now => {
+        const p = Math.min(1, (now - start) / 1200);
+        scoreEl.textContent = Math.round(skor * (1 - (1 - p) ** 3));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+    result.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function restart() {
+    index = 0;
+    cevaplar = [];
+    document.getElementById('quiz-track-fill').style.width = '0';
+    result.hidden = true;
+    quiz.hidden = false;
+    show(0);
+    quiz.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  nextBtn.addEventListener('click', next);
+  document.getElementById('quiz-restart').addEventListener('click', restart);
+
+  // Klavye: 1–4 ya da A–D ile seç, Enter ile ilerle
+  document.addEventListener('keydown', e => {
+    if (quiz.hidden || e.metaKey || e.ctrlKey || e.altKey) return;
+    const k = e.key.toLocaleUpperCase('tr');
+    const j = '1234'.includes(k) ? Number(k) - 1 : HARFLER.indexOf(k);
+    if (j >= 0 && k !== '') answer(j);
+    if (e.key === 'Enter' && !nextBtn.disabled && document.activeElement !== nextBtn) next();
+  });
+
+  show(0);
+}
+
 initSplash();
 initNav();
 initReveal();
 initCalculator();
+initHomeDaily();
+initGlossary();
+initQuiz();

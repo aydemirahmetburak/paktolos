@@ -30,6 +30,8 @@ Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla 
 
 - Minimalist, dikkat dağıtmayan arayüz; apple.com'dan ilham alan akışkan geçişler
 - Kaydırdıkça beliren bölümler, yumuşak açılan paneller, sayfalar arası geçiş efekti
+- iOS tarzı cam yüzeyler: yarı saydam katmanlar, ışık kenarı, arkada süzülen sıcak renk ışımaları
+- Telefonda altta yüzen cam sekme çubuğu, alttan kayan ve aşağı çekilerek kapanan pencereler
 - "Azaltılmış hareket" tercihine saygı
 - Bilgi yalnızca ihtiyaç duyulduğunda görünür (katmanlı bilgi mimarisi)
 - 8pt grid sistemi, sistem yazı tipi (Apple cihazlarda SF Pro)
@@ -55,15 +57,25 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 
 ```
 paktolos/
-├── index.html      # Ana sayfa: açılış ekranı, ilkeler, öğrenme yolu, demo
+├── index.html      # Ana sayfa: açılış ekranı, ilkeler, öğrenme yolu, günün kavramı, demo
 ├── ogren.html      # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
 ├── analiz.html     # Yedi adımda analiz (Örnek A.Ş.) ve oran hesaplayıcı
 ├── sektorler.html  # Sektöre göre farklı okuma: banka, holding, GYO, perakende, sanayi, ulaştırma
-├── style.css       # Tasarım sistemi ve tüm stiller
-├── script.js       # Açılış ekranı, kaydırma efektleri, demo ve hesaplayıcı
+├── sozluk.html     # Finans sözlüğü: arama, konu filtresi, kavram penceresi, mini hesaplayıcılar
+├── test.html       # Kendini sına: 10 durumda oran yorumlama
+├── sozluk-veri.js  # Sözlükteki kavramlar
+├── test-veri.js    # Test soruları
+├── style.css       # Tasarım sistemi (cam katmanı dahil) ve tüm stiller
+├── script.js       # Tüm etkileşimler
 ├── README.md
 └── LICENSE
 ```
+
+## İçerik Ekleme
+
+- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine bir nesne ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir.
+- **Yeni soru:** `test-veri.js` içindeki `SORULAR` listesine ekle. `dogru`, doğru seçeneğin sırasıdır (0'dan başlar).
+- **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
 
 ## Yerelde Çalıştırma
 
@@ -72,14 +84,16 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 ## Yol Haritası
 
 - [x] Tasarım sistemi (renk, tipografi, spacing) tanımlandı
-- [x] Dosyaları ayır (style.css, script.js)
 - [x] GitHub Pages üzerinden yayınla
 - [x] Açılış ekranı ve apple.com tarzı akışkan tasarım
 - [x] Öğren: mali tablolar ve temel oranlar
 - [x] Adım adım analiz ve oran hesaplayıcı
 - [x] Sektörlere göre analiz rehberi
+- [x] Finans sözlüğü (67 kavram, mini hesaplayıcılar)
+- [x] Kendini sına: oran yorumlama testi
+- [x] iOS tarzı cam görünüm
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
-- [ ] Kısa testler: "Bu oranı yorumlayabilir misin?"
+- [ ] Sözlüğü genişletme
 
 ## Geliştirici Notu
 
