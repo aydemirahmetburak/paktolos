@@ -66,6 +66,8 @@ paktolos/
 ├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
 ├── sektorler.html       # Sektöre göre farklı okuma
 ├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
+├── lab.html             # Şirket laboratuvarı: hayali bir şirkette üç mali tabloyu canlı değiştir
+├── checkup.html         # Finansal check-up: bütçe, acil durum fonu, borç yükü, birikim oranı
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
 ├── test.html            # Kendini sına
@@ -81,6 +83,9 @@ paktolos/
 ├── script.js            # Ortak etkileşimler: arama, sözlük, sorular, tema, test
 ├── araclar.js           # Araç kutusu hesaplamaları ve grafik bileşeni
 ├── okul.js              # Dersler, günün sorusu ve Karnem
+├── lab-model.js         # Laboratuvarın muhasebe modeli (üç tablo birbirine bağlı)
+├── lab.js               # Laboratuvar arayüzü: kollar, senaryolar, canlı tablolar
+├── checkup.js           # Finansal check-up hesapları ve göstergeleri
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
@@ -92,7 +97,7 @@ paktolos/
 
 ## Kullanıcı Verisi
 
-Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri) yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
+Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri, denenen laboratuvar senaryoları) ve check-up'a girilen rakamlar yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
 
 ## İçerik Ekleme
 
@@ -101,6 +106,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
+- **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
 - **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
 - **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--chart-1` ve `--chart-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
 - **Renkler:** Doğrudan renk yazma; `--color-*` değişkenlerini ya da `rgba(var(--ink), 0.08)` gibi tema kanallarını kullan. Böylece karanlık mod kendiliğinden çalışır.
@@ -124,7 +130,9 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 - [x] "Aklına takılan" soru kütüphanesi (25 soru, 5 konu)
-- [x] Paktolos Okulu (6 ders), Karnem, rozetler ve günün sorusu
+- [x] Paktolos Okulu (7 ders), Karnem, rozetler ve günün sorusu
+- [x] Şirket laboratuvarı: 8 senaryo, canlı gelir tablosu, bilanço ve nakit akışı
+- [x] Finansal check-up: dört göstergede kişisel finans durumu
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme

@@ -18,10 +18,11 @@ TABS = [('dersler.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'arac
         ('sozluk.html', 'Sözlük', 'sozluk'), ('karnem.html', 'Karnem', 'karnem')]
 # Menüde yeri olmayan sayfalar hangi bölümün altında sayılır
 SEKME_GRUBU = {'ogren.html': 'dersler.html', 'analiz.html': 'dersler.html', 'sektorler.html': 'dersler.html',
-               'test.html': 'karnem.html'}
+               'test.html': 'karnem.html', 'lab.html': 'araclar.html', 'checkup.html': 'araclar.html'}
 # Alt bilgide tüm sayfalar
 ALT_MENU = [('dersler.html', 'Dersler'), ('ogren.html', 'Mali tablolar'), ('analiz.html', 'Analiz'),
-            ('sektorler.html', 'Sektörler'), ('araclar.html', 'Araçlar'), ('sorular.html', 'Sorular'),
+            ('sektorler.html', 'Sektörler'), ('lab.html', 'Şirket laboratuvarı'), ('araclar.html', 'Araçlar'),
+            ('checkup.html', 'Check-up'), ('sorular.html', 'Sorular'),
             ('sozluk.html', 'Sözlük'), ('test.html', 'Test'), ('karnem.html', 'Karnem')]
 PAGES = [(f, t, ICON[i]) for f, t, i in TABS]
 

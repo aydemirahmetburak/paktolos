@@ -11,8 +11,8 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <script src="tema.js"></script>
-<meta name="description" content="Paktolos Okulu: enflasyon, faiz, borç, bütçe, bilanço ve değerleme üzerine beş dakikalık etkileşimli dersler.">
-<title>Paktolos Okulu — Dersler</title>
+<meta name="description" content="Finansal check-up: altı rakamla bütçeni, acil durum fonunu, borç yükünü ve birikim oranını genel kurallarla karşılaştır.">
+<title>Finansal Check-up — Paktolos</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,8 +22,8 @@
       <a href="index.html" class="logo">PAKTOLOS</a>
       <div class="nav-end">
         <nav class="nav" aria-label="Ana menü">
-          <a href="dersler.html" aria-current="page">Öğren</a>
-          <a href="araclar.html">Araçlar</a>
+          <a href="dersler.html">Öğren</a>
+          <a href="araclar.html" aria-current="page">Araçlar</a>
           <a href="sorular.html">Sorular</a>
           <a href="sozluk.html">Sözlük</a>
           <a href="karnem.html">Karnem</a>
@@ -34,8 +34,8 @@
   </header>
 
   <nav class="tabbar" aria-label="Sekmeler">
-    <a href="dersler.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
-    <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
+    <a href="dersler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="araclar.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
     <a href="sorular.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/></svg>Sorular</a>
     <a href="sozluk.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/></svg>Sözlük</a>
     <a href="karnem.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.5 8.6l5.6.8-4 3.9.9 5.6L12 16.2l-5 2.7.9-5.6-4-3.9 5.6-.8z"/></svg>Karnem</a>
@@ -45,31 +45,22 @@
 
     <section class="page-hero">
       <div class="container">
-        <span class="eyebrow reveal">Paktolos Okulu</span>
-        <h1 class="reveal">Beş dakikalık dersler.<br>Ömür boyu işe yarayan bilgi.</h1>
-        <p class="lead reveal">Her ders birkaç kısa karttan oluşur. Okursun, arada küçük bir soruyla kendini denersin, sonunda öğrendiklerin özetlenir. İlerlemen bu cihazda saklanır; kaldığın yerden devam edebilirsin.</p>
-        <div class="school-progress reveal">
-          <div class="progress-text"><strong id="school-count">0</strong> / <span id="school-total">0</span> ders tamamlandı</div>
-          <div class="progress-track"><div class="progress-fill" id="school-fill"></div></div>
-        </div>
+        <span class="eyebrow reveal">Finansal check-up</span>
+        <h1 class="reveal">Paranın iki dakikalık<br>röntgeni.</h1>
+        <p class="lead reveal">Altı rakam gir; bütçenin, acil durum fonunun, borç yükünün ve birikiminin genel kurallara göre nerede durduğunu gör. İlk neye odaklanman gerektiğini ve bunun için hangi dersin, aracın ya da sorunun işine yarayacağını hemen öğren.</p>
       </div>
     </section>
 
-    <div class="container" id="tracks"></div>
-
-    <section class="container deeper">
-      <div class="track-head">
-        <h2>Daha derine</h2>
-        <p>Derslerden sonra konuları ayrıntılı işleyen sayfalar.</p>
-      </div>
-      <div class="tool-cards deeper-cards">
-        <a href="ogren.html" class="tool-card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg><strong>Mali tablolar ve oranlar</strong><span>Bilanço, gelir tablosu, nakit akışı, yedi oran</span></a>
-        <a href="lab.html" class="tool-card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3.5h5M10.5 3.5v5.2L5.3 17.6A2 2 0 0 0 7 20.5h10a2 2 0 0 0 1.7-2.9l-5.2-8.9V3.5"/><path d="M7.8 14h8.4"/></svg><strong>Şirket laboratuvarı</strong><span>Kolları çevir, üç tablo birlikte değişsin</span></a>
-        <a href="analiz.html" class="tool-card"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg><strong>Adım adım analiz</strong><span>Bir hisseyi yedi adımda oku</span></a>
-        <a href="sektorler.html" class="tool-card"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><strong>Sektörler</strong><span>Her sektör farklı okunur</span></a>
-        <a href="test.html" class="tool-card"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg><strong>Kendini sına</strong><span>On durumda oran yorumlama</span></a>
-      </div>
+    <section class="container checkup-wrap">
+      <div class="tool-grid reveal" id="checkup"></div>
     </section>
+
+    <a href="lab.html" class="next">
+      <div class="container">
+        <span class="eyebrow">Bir de şirketlere bak</span>
+        <h2>Şirket laboratuvarı ›</h2>
+      </div>
+    </a>
 
   </main>
 
@@ -101,10 +92,9 @@
     </div>
   </footer>
 
-  <script src="sozluk-veri.js"></script>
-  <script src="dersler-veri.js"></script>
   <script src="script.js"></script>
-  <script src="okul.js"></script>
+  <script src="araclar.js"></script>
+  <script src="checkup.js"></script>
 
 </body>
 </html>

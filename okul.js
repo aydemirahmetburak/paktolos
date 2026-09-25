@@ -391,6 +391,10 @@ const ROZETLER = [
     kosul: s => s.soru >= 10 },
   { id: 'oran-ustasi', ad: 'Oran ustası', aciklama: 'Testte 8 ya da üzeri yap', ikon: '<path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/>',
     kosul: s => s.test >= 8 },
+  { id: 'sirket-doktoru', ad: 'Şirket doktoru', aciklama: 'Laboratuvardaki 7 senaryoyu dene', ikon: '<path d="M9.5 3.5h5M10.5 3.5v5.2L5.3 17.6A2 2 0 0 0 7 20.5h10a2 2 0 0 0 1.7-2.9l-5.2-8.9V3.5"/><path d="M7.8 14h8.4"/>',
+    kosul: s => s.lab >= 7 },
+  { id: 'rontgen', ad: 'Röntgen', aciklama: 'Kendi finansal check-up\'ını yap', ikon: '<path d="M3.5 12h4l2-5 4 10 2-5h5"/>',
+    kosul: s => s.checkup },
   { id: 'hafta', ad: 'Bir hafta', aciklama: '7 gün üst üste günün sorusu', ikon: '<rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 9.5h16M8.5 3v4M15.5 3v4"/>',
     kosul: s => s.enUzunSeri >= 7 },
   { id: 'aliskanlik', ad: 'Alışkanlık', aciklama: '30 gün üst üste günün sorusu', ikon: '<path d="M12 2.5c.4 3-1.8 4.6-3.3 6.4C7.3 10.6 6.5 12.4 6.5 14.5a5.5 5.5 0 0 0 11 0c0-2.6-1.4-4.4-2.6-5.7-.2 1.4-.8 2.4-1.8 3 .3-3.2-.3-6.4-1.1-9.3z"/>',
@@ -409,6 +413,8 @@ function karneOzeti() {
     soru: store.get('paktolos-sorular', []).length,
     soruToplam: typeof SORULAR_KUTUPHANE !== 'undefined' ? SORULAR_KUTUPHANE.length : 0,
     test: store.get('paktolos-test-en-iyi', 0) || 0,
+    lab: store.get('paktolos-lab', []).length,
+    checkup: !!store.get('paktolos-checkup', null),
     seri: gunluk.seri,
     enUzunSeri: Math.max(kayitli.enUzun || 0, gunluk.seri)
   };
@@ -467,8 +473,8 @@ function initKarnem() {
   }
 
   document.getElementById('reset-progress').addEventListener('click', () => {
-    if (!confirm('Tüm ilerlemen (dersler, okunan kavram ve sorular, test skoru, günlük seri) bu cihazdan silinecek. Emin misin?')) return;
-    ['paktolos-dersler', 'paktolos-okunan', 'paktolos-sorular', 'paktolos-test-en-iyi', 'paktolos-gunluk']
+    if (!confirm('Tüm ilerlemen (dersler, okunan kavram ve sorular, test skoru, günlük seri, laboratuvar ve check-up kayıtları) bu cihazdan silinecek. Emin misin?')) return;
+    ['paktolos-dersler', 'paktolos-okunan', 'paktolos-sorular', 'paktolos-test-en-iyi', 'paktolos-gunluk', 'paktolos-lab', 'paktolos-checkup']
       .forEach(k => { try { localStorage.removeItem(k); } catch (e) { /* yok say */ } });
     ciz();
     initGununSorusu();
