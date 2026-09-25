@@ -55,6 +55,10 @@ const ARAMA_DIZINI = [
   // Sayfalar
   { tur: 'sayfa', baslik: 'Finans sözlüğü', aciklama: 'Günlük hayattan borsaya 67 kavram', href: 'sozluk.html',
     anahtar: 'sözlük kavram terim tanım' },
+  { tur: 'sayfa', baslik: 'Paktolos Okulu', aciklama: 'Beş dakikalık etkileşimli dersler', href: 'dersler.html',
+    anahtar: 'ders dersler okul öğren eğitim kurs' },
+  { tur: 'sayfa', baslik: 'Karnem', aciklama: 'İlerlemen, rozetlerin ve günün sorusu', href: 'karnem.html',
+    anahtar: 'karne ilerleme rozet seri günün sorusu' },
   { tur: 'sayfa', baslik: 'Aklına takılan', aciklama: 'Günlük hayatta en çok sorulan para soruları', href: 'sorular.html',
     anahtar: 'soru cevap sss sık sorulan kart borcu maaş birikim haber' },
   { tur: 'sayfa', baslik: 'Kendini sına', aciklama: 'On durumda oran yorumlama testi', href: 'test.html',

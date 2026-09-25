@@ -932,12 +932,15 @@ async function spotDiziniHazirla() {
   if (typeof SOZLUK === 'undefined') bekle.push(scriptYukle('sozluk-veri.js'));
   if (typeof ARAMA_DIZINI === 'undefined') bekle.push(scriptYukle('arama-veri.js'));
   if (typeof SORULAR_KUTUPHANE === 'undefined') bekle.push(scriptYukle('sorular-veri.js'));
+  if (typeof DERSLER === 'undefined') bekle.push(scriptYukle('dersler-veri.js'));
   await Promise.all(bekle);
   spotDizin = [
     ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'sozluk.html#' + t.id,
       anahtar: KATEGORILER[t.kategori], metin: t.aciklama })),
     ...SORULAR_KUTUPHANE.map(q => ({ tur: 'soru', baslik: q.soru, aciklama: q.kisa, href: 'sorular.html#' + q.id,
       anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' ') })),
+    ...DERSLER.map(d => ({ tur: 'ders', baslik: 'Ders: ' + d.baslik, aciklama: d.ozet, href: 'dersler.html#' + d.id,
+      anahtar: d.kartlar.map(k => k.baslik || '').join(' ') })),
     ...ARAMA_DIZINI
   ].map(item => ({
     ...item,

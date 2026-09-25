@@ -7,23 +7,29 @@ ICON = {
   'sektorler': '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
   'sozluk': '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>',
   'sorular': '<path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/>',
+  'karnem': '<path d="M12 3.5 14.5 8.6l5.6.8-4 3.9.9 5.6L12 16.2l-5 2.7.9-5.6-4-3.9 5.6-.8z"/>',
   'test': '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>',
 }
-# Bilgisayarda üst menü (yer var, hepsi görünür)
-NAV = [('ogren.html', 'Öğren'), ('analiz.html', 'Analiz'), ('sektorler.html', 'Sektörler'),
-       ('araclar.html', 'Araçlar'), ('sorular.html', 'Sorular'), ('sozluk.html', 'Sözlük'), ('test.html', 'Test')]
+# Bilgisayarda üst menü
+NAV = [('dersler.html', 'Öğren'), ('araclar.html', 'Araçlar'), ('sorular.html', 'Sorular'),
+       ('sozluk.html', 'Sözlük'), ('karnem.html', 'Karnem')]
 # Telefonda alt sekme çubuğu (en fazla 5)
-TABS = [('ogren.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'araclar'), ('sorular.html', 'Sorular', 'sorular'),
-        ('sozluk.html', 'Sözlük', 'sozluk'), ('test.html', 'Test', 'test')]
-# Sekme çubuğunda yeri olmayan sayfalar hangi sekmenin altında sayılır
-SEKME_GRUBU = {'analiz.html': 'ogren.html', 'sektorler.html': 'ogren.html'}
+TABS = [('dersler.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'araclar'), ('sorular.html', 'Sorular', 'sorular'),
+        ('sozluk.html', 'Sözlük', 'sozluk'), ('karnem.html', 'Karnem', 'karnem')]
+# Menüde yeri olmayan sayfalar hangi bölümün altında sayılır
+SEKME_GRUBU = {'ogren.html': 'dersler.html', 'analiz.html': 'dersler.html', 'sektorler.html': 'dersler.html',
+               'test.html': 'karnem.html'}
+# Alt bilgide tüm sayfalar
+ALT_MENU = [('dersler.html', 'Dersler'), ('ogren.html', 'Mali tablolar'), ('analiz.html', 'Analiz'),
+            ('sektorler.html', 'Sektörler'), ('araclar.html', 'Araçlar'), ('sorular.html', 'Sorular'),
+            ('sozluk.html', 'Sözlük'), ('test.html', 'Test'), ('karnem.html', 'Karnem')]
 PAGES = [(f, t, ICON[i]) for f, t, i in TABS]
 
 SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'
 
 def header(current):
-    cur = lambda f: ' aria-current="page"' if f == current else ''
     tab = SEKME_GRUBU.get(current, current)
+    cur = lambda f: ' aria-current="page"' if f == tab else ''
     tcur = lambda f: ' aria-current="page"' if f == tab else ''
     links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}</a>' for f, t in NAV)
     tabs = '\n'.join(f'    <a href="{f}"{tcur(f)}><svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
@@ -48,7 +54,7 @@ FOOTER = '''<footer>
       <div class="footer-top">
         <nav class="footer-links" aria-label="Alt menü">
           <a class="story-link" href="hikaye.html">Paktolos'un hikâyesi</a>
-''' + '\n'.join(f'          <a href="{f}">{t}</a>' for f, t in NAV) + '''
+''' + '\n'.join(f'          <a href="{f}">{t}</a>' for f, t in ALT_MENU) + '''
         </nav>
         <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
           <button type="button" role="radio" data-tema="auto">Otomatik</button>

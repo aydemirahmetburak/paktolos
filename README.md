@@ -61,20 +61,26 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 paktolos/
 ├── index.html           # Ana sayfa
 ├── hikaye.html          # Paktolos'un hikâyesi: Midas, nehir ve ilk para
-├── ogren.html           # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
+├── dersler.html         # Paktolos Okulu: etkileşimli dersler (menüde "Öğren")
+├── ogren.html           # Mali tablolar ve temel oranlar (ayrıntılı)
 ├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
 ├── sektorler.html       # Sektöre göre farklı okuma
 ├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
-├── araclar.js           # Araçların hesaplamaları ve grafik bileşeni
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
 ├── test.html            # Kendini sına
+├── karnem.html          # Karnem: ilerleme, rozetler, günün sorusu
+│
+├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
 ├── sozluk-veri.js       # Sözlükteki kavramlar
+├── sorular-veri.js      # "Aklına takılan" soruları
 ├── test-veri.js         # Test soruları
-├── sorular-veri.js      # "Aklına takılan" soruları ve cevapları
 ├── arama-veri.js        # Site geneli arama dizini (sayfa ve bölümler)
+│
 ├── style.css            # Tasarım sistemi, cam katmanı, karanlık mod
-├── script.js            # Tüm etkileşimler
+├── script.js            # Ortak etkileşimler: arama, sözlük, sorular, tema, test
+├── araclar.js           # Araç kutusu hesaplamaları ve grafik bileşeni
+├── okul.js              # Dersler, günün sorusu ve Karnem
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
@@ -84,9 +90,14 @@ paktolos/
 └── LICENSE
 ```
 
+## Kullanıcı Verisi
+
+Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri) yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
+
 ## İçerik Ekleme
 
 - **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
+- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer.
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
@@ -113,7 +124,8 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 - [x] "Aklına takılan" soru kütüphanesi (25 soru, 5 konu)
-- [ ] Dersler, Karnem ve günün sorusu
+- [x] Paktolos Okulu (6 ders), Karnem, rozetler ve günün sorusu
+- [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme
 
