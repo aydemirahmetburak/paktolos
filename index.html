@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#FFFFFF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paktolos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script src="tema.js"></script>
 <meta name="description" content="Borsa İstanbul hisselerini analiz etmeyi öğreten, yatırım tavsiyesi vermeyen eğitim platformu.">
 <title>Paktolos — Borsa İstanbul Analiz Eğitimi</title>
 <link rel="stylesheet" href="style.css">
@@ -12,20 +19,23 @@
 
   <div class="splash" id="splash" aria-hidden="true">
     <div class="splash-mark">PAKTOLOS</div>
-    <div class="splash-line"></div>
+    <svg class="splash-wave" viewBox="0 0 72 14" aria-hidden="true"><path d="M2 7 C 10 1, 18 13, 26 7 S 42 1, 50 7 S 62 13, 70 7"/></svg>
     <div class="splash-tagline">Sayıları okumayı öğren</div>
   </div>
 
   <header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>
-      <nav class="nav" aria-label="Ana menü">
-        <a href="ogren.html">Öğren</a>
-        <a href="analiz.html">Analiz</a>
-        <a href="sektorler.html">Sektörler</a>
-        <a href="sozluk.html">Sözlük</a>
-        <a href="test.html">Test</a>
-      </nav>
+      <div class="nav-end">
+        <nav class="nav" aria-label="Ana menü">
+          <a href="ogren.html">Öğren</a>
+          <a href="analiz.html">Analiz</a>
+          <a href="sektorler.html">Sektörler</a>
+          <a href="sozluk.html">Sözlük</a>
+          <a href="test.html">Test</a>
+        </nav>
+        <button type="button" class="search-trigger" aria-label="Sitede ara"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></button>
+      </div>
     </div>
   </header>
 
@@ -205,10 +215,46 @@
       </div>
     </section>
 
+    <section class="section">
+      <div class="container">
+        <div class="story-teaser">
+          <svg class="wave-mark reveal" viewBox="0 0 64 14" aria-hidden="true"><path d="M2 7 C 10 1, 18 13, 26 7 S 42 1, 50 7 S 58 11, 62 8"/></svg>
+          <span class="eyebrow reveal">Neden Paktolos?</span>
+          <h2 class="headline reveal">Midas'ın lanetinden<br>kurtulduğu nehir.</h2>
+          <blockquote class="reveal">Kral Midas dokunduğu her şeyi altına çevirdi; ama ekmeği de, şarabı da altın oldu. Kurtuluşu Paktolos'un sularında yıkanmaktı. Bu nehrin kıyısında, dünyanın ilk paraları basıldı.</blockquote>
+          <a href="hikaye.html" class="link-more reveal">Hikâyenin tamamı</a>
+        </div>
+
+        <div class="install-card glass reveal" id="install-card" hidden>
+          <img class="install-icon" src="icons/icon-192.png" alt="" width="72" height="72">
+          <div>
+            <h3>Paktolos cebinde.</h3>
+            <p id="install-steps" class="install-steps"></p>
+          </div>
+          <button type="button" class="button" id="install-button" hidden>Yükle</button>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
-    <div class="container">
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <nav class="footer-links" aria-label="Alt menü">
+          <a class="story-link" href="hikaye.html">Paktolos'un hikâyesi</a>
+          <a href="ogren.html">Öğren</a>
+          <a href="analiz.html">Analiz</a>
+          <a href="sektorler.html">Sektörler</a>
+          <a href="sozluk.html">Sözlük</a>
+          <a href="test.html">Test</a>
+        </nav>
+        <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
+          <button type="button" role="radio" data-tema="auto">Otomatik</button>
+          <button type="button" role="radio" data-tema="light">Açık</button>
+          <button type="button" role="radio" data-tema="dark">Koyu</button>
+        </div>
+      </div>
       <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
       <p>© 2026 Paktolos</p>
     </div>

@@ -32,6 +32,8 @@ Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla 
 - Kaydırdıkça beliren bölümler, yumuşak açılan paneller, sayfalar arası geçiş efekti
 - iOS tarzı cam yüzeyler: yarı saydam katmanlar, ışık kenarı, arkada süzülen sıcak renk ışımaları
 - Telefonda altta yüzen cam sekme çubuğu, alttan kayan ve aşağı çekilerek kapanan pencereler
+- Karanlık mod: telefonun ayarını izler; alt bilgiden elle de seçilebilir
+- Telefona uygulama olarak yüklenebilir, internet olmadan da açılır
 - "Azaltılmış hareket" tercihine saygı
 - Bilgi yalnızca ihtiyaç duyulduğunda görünür (katmanlı bilgi mimarisi)
 - 8pt grid sistemi, sistem yazı tipi (Apple cihazlarda SF Pro)
@@ -57,25 +59,34 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 
 ```
 paktolos/
-├── index.html      # Ana sayfa: açılış ekranı, ilkeler, öğrenme yolu, günün kavramı, demo
-├── ogren.html      # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
-├── analiz.html     # Yedi adımda analiz (Örnek A.Ş.) ve oran hesaplayıcı
-├── sektorler.html  # Sektöre göre farklı okuma: banka, holding, GYO, perakende, sanayi, ulaştırma
-├── sozluk.html     # Finans sözlüğü: arama, konu filtresi, kavram penceresi, mini hesaplayıcılar
-├── test.html       # Kendini sına: 10 durumda oran yorumlama
-├── sozluk-veri.js  # Sözlükteki kavramlar
-├── test-veri.js    # Test soruları
-├── style.css       # Tasarım sistemi (cam katmanı dahil) ve tüm stiller
-├── script.js       # Tüm etkileşimler
+├── index.html           # Ana sayfa
+├── hikaye.html          # Paktolos'un hikâyesi: Midas, nehir ve ilk para
+├── ogren.html           # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
+├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
+├── sektorler.html       # Sektöre göre farklı okuma
+├── sozluk.html          # Finans sözlüğü
+├── test.html            # Kendini sına
+├── sozluk-veri.js       # Sözlükteki kavramlar
+├── test-veri.js         # Test soruları
+├── arama-veri.js        # Site geneli arama dizini (sayfa ve bölümler)
+├── style.css            # Tasarım sistemi, cam katmanı, karanlık mod
+├── script.js            # Tüm etkileşimler
+├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
+├── sw.js                # Çevrimdışı destek (service worker)
+├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
+├── icon.svg, icons/     # Uygulama simgeleri
+├── araclar/             # Geliştirme yardımcıları
 ├── README.md
 └── LICENSE
 ```
 
 ## İçerik Ekleme
 
-- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine bir nesne ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir.
-- **Yeni soru:** `test-veri.js` içindeki `SORULAR` listesine ekle. `dogru`, doğru seçeneğin sırasıdır (0'dan başlar).
+- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
+- **Yeni soru:** `test-veri.js` içindeki `SORULAR` listesine ekle.
+- **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 araclar/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
+- **Renkler:** Doğrudan renk yazma; `--color-*` değişkenlerini ya da `rgba(var(--ink), 0.08)` gibi tema kanallarını kullan. Böylece karanlık mod kendiliğinden çalışır.
 
 ## Yerelde Çalıştırma
 
@@ -92,6 +103,11 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Finans sözlüğü (67 kavram, mini hesaplayıcılar)
 - [x] Kendini sına: oran yorumlama testi
 - [x] iOS tarzı cam görünüm
+- [x] Paktolos'un hikâyesi
+- [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
+- [ ] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi
+- [ ] "Aklına takılan" soru kütüphanesi
+- [ ] Dersler, Karnem ve günün sorusu
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme
 

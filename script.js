@@ -895,6 +895,270 @@ function initQuiz() {
   show(0);
 }
 
+// ============================================
+// SİTE GENELİ ARAMA (Spotlight)
+// ============================================
+
+const SPOT_SIMGE = {
+  kavram: '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>',
+  ders: '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/>',
+  arac: '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>',
+  sektor: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+  sayfa: '<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4"/>'
+};
+const SPOT_GRUP = { kavram: 'Kavramlar', ders: 'Dersler', arac: 'Araçlar', sektor: 'Sektörler', sayfa: 'Sayfalar' };
+const SPOT_ONERI = ['Enflasyon', 'F/K oranı', 'Kredi notu', 'Bileşik getiri', 'Temettü', 'Bilanço'];
+
+// Veri dosyası sayfada yoksa ilk aramada yüklenir
+function scriptYukle(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+let spotDizin = null;
+async function spotDiziniHazirla() {
+  if (spotDizin) return spotDizin;
+  const bekle = [];
+  if (typeof SOZLUK === 'undefined') bekle.push(scriptYukle('sozluk-veri.js'));
+  if (typeof ARAMA_DIZINI === 'undefined') bekle.push(scriptYukle('arama-veri.js'));
+  await Promise.all(bekle);
+  spotDizin = [
+    ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'sozluk.html#' + t.id,
+      anahtar: KATEGORILER[t.kategori], metin: t.aciklama })),
+    ...ARAMA_DIZINI
+  ].map(item => ({
+    ...item,
+    _baslik: sadelestir(item.baslik),
+    _anahtar: sadelestir((item.anahtar || '') + ' ' + item.aciklama),
+    _metin: sadelestir(item.metin || '')
+  }));
+  return spotDizin;
+}
+
+function spotAra(dizin, q) {
+  const puanla = it => {
+    if (it._baslik.startsWith(q)) return 6;
+    if (it._baslik.includes(q)) return 5;
+    if ((' ' + it._anahtar).includes(' ' + q)) return 4;
+    if (it._anahtar.includes(q)) return 3;
+    if (it._metin.includes(q)) return 1;
+    return 0;
+  };
+  return dizin.map(it => [it, puanla(it)]).filter(([, p]) => p > 0)
+    .sort((a, b) => b[1] - a[1] || a[0].baslik.localeCompare(b[0].baslik, 'tr'))
+    .map(([it]) => it);
+}
+
+function initSpotlight() {
+  const triggers = document.querySelectorAll('.search-trigger');
+  let dialog = null, input, results, secili = 0, gorunen = [];
+
+  function build() {
+    dialog = el('dialog', { className: 'spotlight', 'aria-label': 'Sitede ara' });
+    input = el('input', { type: 'search', placeholder: 'Kavram, ders ya da araç ara', autocomplete: 'off',
+      'aria-label': 'Sitede ara', 'aria-controls': 'spot-results', 'aria-autocomplete': 'list' });
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>';
+    results = el('div', { className: 'spot-results', id: 'spot-results', role: 'listbox' });
+    const panel = el('div', { className: 'spot-panel' },
+      el('label', { className: 'spot-field' }, icon, input,
+        el('button', { type: 'button', className: 'spot-close', textContent: 'Kapat', onclick: close })),
+      results,
+      el('div', { className: 'spot-foot' },
+        el('span', {}, el('kbd', {}, '↑'), ' ', el('kbd', {}, '↓'), ' gezin'),
+        el('span', {}, el('kbd', {}, '↵'), ' aç'),
+        el('span', {}, el('kbd', {}, 'esc'), ' kapat'))
+    );
+    dialog.appendChild(panel);
+    document.body.appendChild(dialog);
+
+    let zaman;
+    input.addEventListener('input', () => { clearTimeout(zaman); zaman = setTimeout(render, 60); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); select(secili + 1); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); select(secili - 1); }
+      if (e.key === 'Enter' && gorunen[secili]) { e.preventDefault(); go(gorunen[secili]); }
+    });
+    dialog.addEventListener('cancel', e => { e.preventDefault(); close(); });
+    dialog.addEventListener('click', e => { if (e.target === dialog) close(); });
+  }
+
+  function select(i) {
+    if (!gorunen.length) return;
+    secili = (i + gorunen.length) % gorunen.length;
+    results.querySelectorAll('.spot-item').forEach((a, k) => a.setAttribute('aria-selected', k === secili));
+    const aktif = results.querySelectorAll('.spot-item')[secili];
+    aktif.scrollIntoView({ block: 'nearest' });
+    input.setAttribute('aria-activedescendant', aktif.id);
+  }
+
+  function go(item) {
+    close();
+    location.href = item.href;
+  }
+
+  async function render() {
+    const dizin = await spotDiziniHazirla();
+    const q = sadelestir(input.value.trim());
+    secili = 0;
+    if (!q) {
+      gorunen = [];
+      results.replaceChildren(el('div', { className: 'spot-empty' },
+        el('p', {}, 'Aklına takılan bir kavramı yaz.'),
+        el('div', { className: 'spot-suggest' }, ...SPOT_ONERI.map(o =>
+          el('button', { type: 'button', textContent: o, onclick: () => { input.value = o; render(); input.focus(); } })))));
+      return;
+    }
+    const bulunan = spotAra(dizin, q).slice(0, 24);
+    if (!bulunan.length) {
+      gorunen = [];
+      results.replaceChildren(el('div', { className: 'spot-empty' }, el('p', {}, `"${input.value.trim()}" için sonuç bulunamadı.`)));
+      return;
+    }
+    // Gruplara ayır, her grupta en fazla 6 sonuç; gruplar ilk sonuca göre sıralanır
+    const gruplar = new Map();
+    for (const it of bulunan) {
+      if (!gruplar.has(it.tur)) gruplar.set(it.tur, []);
+      if (gruplar.get(it.tur).length < 6) gruplar.get(it.tur).push(it);
+    }
+    gorunen = [...gruplar.values()].flat();
+    let n = 0;
+    results.replaceChildren(...[...gruplar].flatMap(([tur, items]) => [
+      el('div', { className: 'spot-group', role: 'presentation' }, SPOT_GRUP[tur]),
+      ...items.map(it => {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.innerHTML = SPOT_SIMGE[it.tur];
+        const i = n++;
+        return el('a', { className: 'spot-item', href: it.href, id: 'spot-' + i, role: 'option', 'aria-selected': i === 0,
+          onclick: e => { e.preventDefault(); go(it); }, onmousemove: () => { if (secili !== i) select(i); } },
+          el('span', { className: 'spot-icon' }, svg),
+          el('span', { className: 'spot-text' },
+            el('span', { className: 'spot-title' }, vurgula(it.baslik, q)),
+            el('span', { className: 'spot-sub' }, it.aciklama)));
+      })
+    ]));
+    input.setAttribute('aria-activedescendant', 'spot-0');
+  }
+
+  function open() {
+    if (!dialog) build();
+    if (dialog.open) return;
+    dialog.classList.remove('closing');
+    dialog.showModal();
+    input.value = '';
+    render();
+    input.focus();
+  }
+
+  function close() {
+    if (!dialog || !dialog.open || dialog.classList.contains('closing')) return;
+    if (prefersReducedMotion()) { dialog.close(); return; }
+    dialog.classList.add('closing');
+    setTimeout(() => { dialog.close(); dialog.classList.remove('closing'); }, 190);
+  }
+
+  triggers.forEach(t => t.addEventListener('click', open));
+  document.addEventListener('keydown', e => {
+    const yaziyor = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); }
+    // Sözlük sayfasında "/" kendi aramasına gider
+    else if (e.key === '/' && !yaziyor && !document.getElementById('glossary-search') && !document.querySelector('dialog[open]')) {
+      e.preventDefault(); open();
+    }
+  });
+}
+
+// ============================================
+// TEMA SEÇİCİ (alt bilgide)
+// ============================================
+function initThemeSwitch() {
+  const sw = document.querySelector('.theme-switch');
+  if (!sw || !window.paktolosTema) return;
+  const buttons = sw.querySelectorAll('button');
+  const guncelle = () => buttons.forEach(b => b.setAttribute('aria-checked', b.dataset.tema === paktolosTema.get()));
+  buttons.forEach(b => b.addEventListener('click', () => { paktolosTema.set(b.dataset.tema); guncelle(); }));
+  guncelle();
+}
+
+// ============================================
+// UYGULAMA OLARAK YÜKLEME
+// ============================================
+function initInstall() {
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('sw.js').catch(() => { /* çevrimdışı destek olmadan da çalışır */ });
+  }
+
+  const card = document.getElementById('install-card');
+  if (!card) return;
+  const yuklu = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (yuklu) return; // zaten ana ekranda
+
+  const steps = document.getElementById('install-steps');
+  const button = document.getElementById('install-button');
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  steps.innerHTML = ios
+    ? 'Safari\'de <b>Paylaş</b> simgesine, ardından <b>Ana Ekrana Ekle</b>\'ye dokun.'
+    : 'Tarayıcı menüsünden <b>Ana ekrana ekle</b> ya da <b>Uygulamayı yükle</b> seçeneğini kullan.';
+  card.hidden = false;
+
+  let istem = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    istem = e;
+    button.hidden = false;
+    steps.textContent = 'Tek dokunuşla ana ekranına ekle; internet olmadan da açılır.';
+  });
+  button.addEventListener('click', async () => {
+    if (!istem) return;
+    istem.prompt();
+    await istem.userChoice;
+    istem = null;
+    button.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => { card.hidden = true; });
+}
+
+// ============================================
+// HİKÂYE — kaydırdıkça akan nehir
+// ============================================
+function initStory() {
+  const story = document.querySelector('.story');
+  const flow = document.querySelector('.river-flow');
+  if (!story || !flow) return;
+
+  const len = flow.getTotalLength();
+  flow.style.strokeDasharray = len;
+  flow.style.strokeDashoffset = len;
+
+  // Sahnelerdeki çizimlerin uzunluğunu ölç (çizilme efekti için)
+  document.querySelectorAll('.scene .draw').forEach(p => p.style.setProperty('--len', Math.ceil(p.getTotalLength())));
+
+  let bekliyor = false;
+  const guncelle = () => {
+    bekliyor = false;
+    const r = story.getBoundingClientRect();
+    const ilerleme = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+    flow.style.strokeDashoffset = len * (1 - ilerleme);
+  };
+  window.addEventListener('scroll', () => {
+    if (!bekliyor) { bekliyor = true; requestAnimationFrame(guncelle); }
+  }, { passive: true });
+  guncelle();
+
+  if (prefersReducedMotion()) {
+    document.querySelectorAll('.scene svg').forEach(svg => svg.pauseAnimations && svg.pauseAnimations());
+  }
+}
+
 initSplash();
 initNav();
 initReveal();
@@ -902,3 +1166,7 @@ initCalculator();
 initHomeDaily();
 initGlossary();
 initQuiz();
+initSpotlight();
+initThemeSwitch();
+initInstall();
+initStory();
