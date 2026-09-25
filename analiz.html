@@ -2,7 +2,8 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="description" content="Bir hisseyi yedi adımda değerlendirmeyi örnek bir şirket üzerinden öğren; oranları kendin hesapla.">
 <title>Adım Adım Analiz — Paktolos</title>
 <link rel="stylesheet" href="style.css">
@@ -12,13 +13,23 @@
   <header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>
-      <nav class="nav">
+      <nav class="nav" aria-label="Ana menü">
         <a href="ogren.html">Öğren</a>
         <a href="analiz.html" aria-current="page">Analiz</a>
         <a href="sektorler.html">Sektörler</a>
+        <a href="sozluk.html">Sözlük</a>
+        <a href="test.html">Test</a>
       </nav>
     </div>
   </header>
+
+  <nav class="tabbar" aria-label="Sekmeler">
+    <a href="ogren.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="analiz.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>Analiz</a>
+    <a href="sektorler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>Sektörler</a>
+    <a href="sozluk.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/></svg>Sözlük</a>
+    <a href="test.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg>Test</a>
+  </nav>
 
   <main>
 

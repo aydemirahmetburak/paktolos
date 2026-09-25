@@ -2,7 +2,8 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="description" content="Borsa İstanbul hisselerini analiz etmeyi öğreten, yatırım tavsiyesi vermeyen eğitim platformu.">
 <title>Paktolos — Borsa İstanbul Analiz Eğitimi</title>
 <link rel="stylesheet" href="style.css">
@@ -18,13 +19,23 @@
   <header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>
-      <nav class="nav">
+      <nav class="nav" aria-label="Ana menü">
         <a href="ogren.html">Öğren</a>
         <a href="analiz.html">Analiz</a>
         <a href="sektorler.html">Sektörler</a>
+        <a href="sozluk.html">Sözlük</a>
+        <a href="test.html">Test</a>
       </nav>
     </div>
   </header>
+
+  <nav class="tabbar" aria-label="Sekmeler">
+    <a href="ogren.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="analiz.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>Analiz</a>
+    <a href="sektorler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg>Sektörler</a>
+    <a href="sozluk.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/></svg>Sözlük</a>
+    <a href="test.html"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/></svg>Test</a>
+  </nav>
 
   <main>
 
@@ -100,6 +111,27 @@
     </section>
 
     <section class="section">
+      <div class="container">
+        <div class="center">
+          <span class="eyebrow reveal">Finans sözlüğü</span>
+          <h2 class="headline reveal">Her gün bir kavram.</h2>
+          <p class="lead reveal">Enflasyon, reel getiri, kredi notu, temettü… Her gün duyduğun kavramları sade bir dille, hayattan örneklerle öğren.</p>
+        </div>
+        <div class="daily-card home-daily reveal" id="home-daily">
+          <div class="daily-body">
+            <span class="daily-label">Günün kavramı</span>
+            <h3 class="daily-term" id="home-daily-term">Enflasyon</h3>
+            <p class="daily-short" id="home-daily-short">Fiyatların genel olarak sürekli yükselmesi; paranın değer kaybetmesi.</p>
+          </div>
+          <div class="daily-actions">
+            <a class="button" id="home-daily-link" href="sozluk.html#enflasyon">Oku</a>
+            <a class="button button-secondary" href="sozluk.html">Tüm sözlük</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light">
       <div class="container center">
         <span class="eyebrow reveal">Etkileşimli önizleme</span>
         <h2 class="headline reveal">Bir sayıya dokun.<br>Ne anlattığını gör.</h2>
@@ -139,7 +171,7 @@
       </div>
     </section>
 
-    <section class="section section-light">
+    <section class="section">
       <div class="container center">
         <span class="eyebrow reveal">Veriler nerede?</span>
         <h2 class="headline reveal">Rakamları sen bul.<br>Anlamını biz anlatalım.</h2>
@@ -162,6 +194,17 @@
       </div>
     </section>
 
+    <section class="section section-dark">
+      <div class="container center">
+        <span class="eyebrow reveal">Kendini sına</span>
+        <h2 class="headline reveal">Okumak bir şey.<br>Yorumlamak başka.</h2>
+        <p class="lead reveal">On kısa durum, on yorum. Bir şirketin rakamlarına bak, doğru yorumu bul — ve her cevaptan sonra nedenini öğren.</p>
+        <div class="actions reveal">
+          <a href="test.html" class="button">Teste başla</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer>
@@ -171,6 +214,7 @@
     </div>
   </footer>
 
+  <script src="sozluk-veri.js"></script>
   <script src="script.js"></script>
 
 </body>
