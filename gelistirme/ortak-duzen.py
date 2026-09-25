@@ -1,19 +1,31 @@
 # Tüm sayfalarda ortak üst menü, sekme çubuğu, alt bilgi ve <head> etiketleri.
 # Kullanım: python3 araclar/ortak-duzen.py *.html
 import re, sys
-PAGES = [
-  ('ogren.html', 'Öğren', '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/>'),
-  ('analiz.html', 'Analiz', '<path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/>'),
-  ('sektorler.html', 'Sektörler', '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>'),
-  ('sozluk.html', 'Sözlük', '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>'),
-  ('test.html', 'Test', '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>'),
-]
+ICON = {
+  'ogren': '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/>',
+  'araclar': '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>',
+  'sektorler': '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+  'sozluk': '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>',
+  'test': '<circle cx="12" cy="12" r="8.5"/><path d="M8.5 12.3l2.4 2.4 4.6-5"/>',
+}
+# Bilgisayarda üst menü (yer var, hepsi görünür)
+NAV = [('ogren.html', 'Öğren'), ('analiz.html', 'Analiz'), ('sektorler.html', 'Sektörler'),
+       ('araclar.html', 'Araçlar'), ('sozluk.html', 'Sözlük'), ('test.html', 'Test')]
+# Telefonda alt sekme çubuğu (en fazla 5)
+TABS = [('ogren.html', 'Öğren', 'ogren'), ('araclar.html', 'Araçlar', 'araclar'), ('sektorler.html', 'Sektörler', 'sektorler'),
+        ('sozluk.html', 'Sözlük', 'sozluk'), ('test.html', 'Test', 'test')]
+# Sekme çubuğunda yeri olmayan sayfalar hangi sekmenin altında sayılır
+SEKME_GRUBU = {'analiz.html': 'ogren.html'}
+PAGES = [(f, t, ICON[i]) for f, t, i in TABS]
+
 SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'
 
 def header(current):
     cur = lambda f: ' aria-current="page"' if f == current else ''
-    links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}</a>' for f, t, _ in PAGES)
-    tabs = '\n'.join(f'    <a href="{f}"{cur(f)}><svg viewBox="0 0 24 24" aria-hidden="true">{i}</svg>{t}</a>' for f, t, i in PAGES)
+    tab = SEKME_GRUBU.get(current, current)
+    tcur = lambda f: ' aria-current="page"' if f == tab else ''
+    links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}</a>' for f, t in NAV)
+    tabs = '\n'.join(f'    <a href="{f}"{tcur(f)}><svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
     return f'''<header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>
@@ -35,7 +47,7 @@ FOOTER = '''<footer>
       <div class="footer-top">
         <nav class="footer-links" aria-label="Alt menü">
           <a class="story-link" href="hikaye.html">Paktolos'un hikâyesi</a>
-''' + '\n'.join(f'          <a href="{f}">{t}</a>' for f, t, _ in PAGES) + '''
+''' + '\n'.join(f'          <a href="{f}">{t}</a>' for f, t in NAV) + '''
         </nav>
         <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
           <button type="button" role="radio" data-tema="auto">Otomatik</button>

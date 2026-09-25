@@ -11,6 +11,7 @@
 //   ilgili      ilgili kavramların id'leri
 //   hesap       (isteğe bağlı) kavramın içinde açılan mini hesaplayıcı
 //   ogren       (isteğe bağlı) sitede ayrıntılı anlatıldığı yer
+//   arac        (isteğe bağlı) kavramı deneyebileceğin araç { ad, href }
 //
 // Değişen oranlar (vergi oranları, sigorta limitleri vb.) bilerek
 // yazılmadı; bunlar mevzuatla güncellenir.
@@ -33,7 +34,8 @@ const SOZLUK = [
     aciklama: 'Bütçe, bir ay içinde ne kadar para kazanacağını ve bunu nereye harcayacağını önceden yazmaktır. Amaç kendini kısıtlamak değil, paranın nereye gittiğini bilmektir.',
     ornek: 'Yaygın bir başlangıç yöntemi 50/30/20 kuralıdır: gelirin yaklaşık yarısı zorunlu ihtiyaçlara (kira, fatura, market), %30\'u isteklere, %20\'si birikime ayrılır.',
     degerlendir: 'Oranlar herkese uymaz; kiranın gelirin yarısını aştığı bir şehirde bu kural işlemeyebilir. Asıl önemli olan, ay sonunda "para nereye gitti?" sorusunun cevabını bilmektir.',
-    ilgili: ['acil-durum-fonu', 'brut-net-maas', 'enflasyon']
+    ilgili: ['acil-durum-fonu', 'brut-net-maas', 'enflasyon'],
+    arac: { ad: 'Birikim hedefi aracı', href: 'araclar.html#hedef' }
   },
   {
     id: 'acil-durum-fonu', terim: 'Acil durum fonu', kategori: 'para',
@@ -41,7 +43,8 @@ const SOZLUK = [
     aciklama: 'İş kaybı, sağlık masrafı ya da bozulan bir beyaz eşya gibi plansız durumlarda borçlanmadan ayakta kalmanı sağlayan paradır. Genellikle 3 ila 6 aylık zorunlu giderin karşılığı kadar tutulması önerilir.',
     ornek: 'Aylık zorunlu giderin 20.000 TL ise, 60.000–120.000 TL arası bir acil durum fonu, işsiz kaldığında 3–6 ay kredi kartına yüklenmeden idare etmeni sağlar.',
     degerlendir: 'Bu para getiri için değil güvence için tutulur; bu yüzden hızlıca ve değer kaybetmeden çekilebilecek bir yerde olmalı. Borsa gibi fiyatı dalgalanan bir yatırımda tutulan para, tam ihtiyaç anında değer kaybetmiş olabilir.',
-    ilgili: ['likidite', 'vadeli-mevduat', 'butce']
+    ilgili: ['likidite', 'vadeli-mevduat', 'butce'],
+    arac: { ad: 'Birikim hedefi aracı', href: 'araclar.html#hedef' }
   },
   {
     id: 'brut-net-maas', terim: 'Brüt ve net maaş', kategori: 'para',
@@ -73,7 +76,8 @@ const SOZLUK = [
     aciklama: 'Bir ürünün peşin fiyatı 10.000 TL, 6 taksitli fiyatı 11.200 TL ise aradaki 1.200 TL vade farkıdır. Mağaza sana 6 ay boyunca borç vermiş ve bunun faizini fiyata eklemiştir.',
     ornek: 'Vade farksız taksit ise tersine işler: yüksek enflasyon döneminde parayı hemen değil aylar içinde ödemek, ödediğin paranın alım gücünün azalması sayesinde alıcının lehinedir.',
     degerlendir: 'Taksitli alışverişte "aylık ne kadar?" değil "toplam ne kadar?" diye sor. Vade farkını peşin fiyata bölerek ödediğin örtük faizi hesaplayabilirsin.',
-    ilgili: ['faiz', 'enflasyon', 'yillik-maliyet-orani']
+    ilgili: ['faiz', 'enflasyon', 'yillik-maliyet-orani'],
+    arac: { ad: 'Taksit mi, peşin mi? aracı', href: 'araclar.html#taksit' }
   },
   {
     id: 'bes', terim: 'Bireysel Emeklilik (BES)', kategori: 'para',
@@ -91,7 +95,8 @@ const SOZLUK = [
     aciklama: 'Bir süreliğine başkasının parasını kullanmanın bedelidir. Bankaya para yatırdığında banka sana faiz öder; kredi çektiğinde sen bankaya faiz ödersin.',
     ornek: '100.000 TL\'yi yıllık %40 faizle bir yıllığına yatırırsan, yıl sonunda brüt 40.000 TL faiz alırsın.',
     degerlendir: 'Faiz oranını tek başına değil enflasyonla birlikte düşün. %40 faiz, %50 enflasyonda paranın alım gücünü korumaya yetmez.',
-    ilgili: ['reel-getiri', 'bilesik-getiri', 'politika-faizi', 'kar-payi']
+    ilgili: ['reel-getiri', 'bilesik-getiri', 'politika-faizi', 'kar-payi'],
+    arac: { ad: 'Kredi hesaplayıcı', href: 'araclar.html#kredi' }
   },
   {
     id: 'reel-getiri', terim: 'Nominal ve reel getiri', kategori: 'faiz',
@@ -100,6 +105,7 @@ const SOZLUK = [
     ornek: 'Formül: (1 + nominal getiri) ÷ (1 + enflasyon) − 1. %45 faiz ve %35 enflasyonda reel getiri: 1,45 ÷ 1,35 − 1 ≈ %7,4. Basitçe çıkarmak (%10) yanıltıcıdır.',
     degerlendir: 'Bir yatırımın gerçekten kazandırıp kazandırmadığını anlamak için her zaman reel getiriye bak. Reel getiri negatifse, hesabındaki rakam artsa bile aslında fakirleşiyorsun.',
     ilgili: ['enflasyon', 'faiz', 'alim-gucu'],
+    arac: { ad: 'Birikim hedefi aracı', href: 'araclar.html#hedef' },
     hesap: 'reel'
   },
   {
@@ -109,6 +115,7 @@ const SOZLUK = [
     ornek: '10.000 TL, yıllık %40 bileşik getiriyle 3 yılda 27.440 TL olur. Basit faizle (kazancı yeniden yatırmadan) 22.000 TL olurdu. Aradaki 5.440 TL, faizin faizidir.',
     degerlendir: 'Bileşik etki borçta da çalışır: kredi kartı borcunu uzatmak, faizin faizini ödemek demektir. Birikimde ise erken başlamak, çok para yatırmaktan çoğu zaman daha etkilidir.',
     ilgili: ['faiz', 'reel-getiri', 'asgari-odeme'],
+    arac: { ad: 'Erken başlamanın gücü', href: 'araclar.html#erken' },
     hesap: 'bilesik'
   },
   {
@@ -149,7 +156,8 @@ const SOZLUK = [
     aciklama: 'Kredinin ilan edilen aylık faizi, toplam maliyetin yalnızca bir parçasıdır. Dosya masrafı, sigorta ve vergiler eklendiğinde ortaya çıkan gerçek maliyet, yıllık maliyet oranıyla gösterilir.',
     ornek: 'İki banka aynı aylık faizi ilan edebilir; ama masrafları farklıysa, birinin yıllık maliyet oranı diğerinden belirgin şekilde yüksek olabilir.',
     degerlendir: 'Kredileri faiz oranıyla değil, yıllık maliyet oranı ve toplam geri ödeme tutarıyla karşılaştır. Bankalar bu bilgiyi kredi öncesi bilgi formunda vermek zorundadır.',
-    ilgili: ['faiz', 'vade-farki', 'kredi-notu']
+    ilgili: ['faiz', 'vade-farki', 'kredi-notu'],
+    arac: { ad: 'Kredi hesaplayıcı', href: 'araclar.html#kredi' }
   },
   {
     id: 'asgari-odeme', terim: 'Asgari ödeme', kategori: 'faiz',
@@ -157,7 +165,8 @@ const SOZLUK = [
     aciklama: 'Kredi kartı ekstrendeki borcun tamamını değil, yalnızca asgari tutarı ödersen kartın gecikmeye düşmez. Ama kalan borca faiz işler ve bir sonraki ekstreye eklenir.',
     ornek: 'Her ay yalnızca asgariyi ödeyen biri, faizin faizini ödeyerek başlangıçtaki borcun çok daha fazlasını ödeyebilir ve borcu yıllarca sürebilir.',
     degerlendir: 'Asgari ödeme bir çözüm değil, bir erteleme aracıdır. Mümkünse borcun tamamını öde; ödeyemiyorsan faizi daha düşük bir krediyle kart borcunu kapatmayı değerlendir.',
-    ilgili: ['bilesik-getiri', 'kredi-notu', 'faiz']
+    ilgili: ['bilesik-getiri', 'kredi-notu', 'faiz'],
+    arac: { ad: 'Asgari ödeme simülatörü', href: 'araclar.html#asgari' }
   },
   {
     id: 'kredi-notu', terim: 'Kredi notu', kategori: 'faiz',
@@ -339,7 +348,8 @@ const SOZLUK = [
     aciklama: 'Her ay aynı tutarı yatırdığında, fiyat düşükken daha çok, yüksekken daha az birim alırsın. Böylece ortalama maliyetin zamana yayılır ve "doğru zamanı yakalama" baskısı azalır.',
     ornek: 'Her ay 2.000 TL ile fon alan biri, fonun fiyatı 20 TL iken 100 pay, 25 TL iken 80 pay alır.',
     degerlendir: 'Düzenli yatırım, piyasa zamanlamasına dayalı kararlara göre duygusal hataları azaltır. Ancak kötü bir yatırımı iyi yapmaz; neye yatırım yaptığın hâlâ önemlidir.',
-    ilgili: ['bilesik-getiri', 'yatirim-fonu', 'volatilite']
+    ilgili: ['bilesik-getiri', 'yatirim-fonu', 'volatilite'],
+    arac: { ad: 'Birikim hedefi aracı', href: 'araclar.html#hedef' }
   },
 
   // ---------- BORSA ----------

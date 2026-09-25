@@ -506,6 +506,10 @@ function initGlossary() {
     learn.hidden = !t.ogren;
     if (t.ogren) learn.href = t.ogren;
 
+    const tool = document.getElementById('sheet-tool');
+    tool.hidden = !t.arac;
+    if (t.arac) { tool.href = t.arac.href; tool.textContent = 'Kendin hesapla: ' + t.arac.ad; }
+
     document.getElementById('sheet-related').replaceChildren(...t.ilgili.map(id =>
       el('button', { type: 'button', textContent: byId.get(id).terim, onclick: () => swap(id) })
     ));

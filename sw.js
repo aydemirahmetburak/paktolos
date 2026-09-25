@@ -7,11 +7,11 @@
 // Yeni bir sayfa ya da dosya eklendiğinde DOSYALAR listesine ekle ve
 // SURUM değerini bir artır.
 
-const SURUM = 'paktolos-v1';
+const SURUM = 'paktolos-v2';
 const DOSYALAR = [
   './',
-  'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html',
-  'style.css', 'script.js', 'tema.js', 'sozluk-veri.js', 'test-veri.js', 'arama-veri.js',
+  'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html', 'araclar.html',
+  'style.css', 'script.js', 'tema.js', 'sozluk-veri.js', 'test-veri.js', 'arama-veri.js', 'araclar.js',
   'manifest.webmanifest', 'icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'
 ];
 

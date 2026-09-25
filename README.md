@@ -64,6 +64,8 @@ paktolos/
 ├── ogren.html           # Bilanço, gelir tablosu, nakit akışı ve temel oranlar
 ├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
 ├── sektorler.html       # Sektöre göre farklı okuma
+├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
+├── araclar.js           # Araçların hesaplamaları ve grafik bileşeni
 ├── sozluk.html          # Finans sözlüğü
 ├── test.html            # Kendini sına
 ├── sozluk-veri.js       # Sözlükteki kavramlar
@@ -75,7 +77,7 @@ paktolos/
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
 ├── icon.svg, icons/     # Uygulama simgeleri
-├── araclar/             # Geliştirme yardımcıları
+├── gelistirme/          # Geliştirme yardımcıları (ortak menü üretici)
 ├── README.md
 └── LICENSE
 ```
@@ -84,8 +86,9 @@ paktolos/
 
 - **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
 - **Yeni soru:** `test-veri.js` içindeki `SORULAR` listesine ekle.
-- **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 araclar/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
+- **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
+- **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--chart-1` ve `--chart-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
 - **Renkler:** Doğrudan renk yazma; `--color-*` değişkenlerini ya da `rgba(var(--ink), 0.08)` gibi tema kanallarını kullan. Böylece karanlık mod kendiliğinden çalışır.
 
 ## Yerelde Çalıştırma
@@ -105,7 +108,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] iOS tarzı cam görünüm
 - [x] Paktolos'un hikâyesi
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
-- [ ] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi
+- [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 - [ ] "Aklına takılan" soru kütüphanesi
 - [ ] Dersler, Karnem ve günün sorusu
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)

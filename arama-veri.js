@@ -26,6 +26,18 @@ const ARAMA_DIZINI = [
   { tur: 'arac', baslik: 'Oran hesaplayıcı', aciklama: 'KAP rakamlarını gir, yedi oranı anında gör', href: 'analiz.html#hesapla',
     anahtar: 'hesapla hesaplayıcı fk pd dd roe cari oran net borç favök' },
 
+  // Araçlar
+  { tur: 'arac', baslik: 'Kredi hesaplayıcı', aciklama: 'Aylık taksit, toplam faiz ve ödeme tablosu', href: 'araclar.html#kredi',
+    anahtar: 'kredi taksit faiz ihtiyaç kredisi konut kredisi taşıt vade ödeme planı' },
+  { tur: 'arac', baslik: 'Asgari ödeme simülatörü', aciklama: 'Hep asgariyi ödersem kart borcum ne zaman biter?', href: 'araclar.html#asgari',
+    anahtar: 'kredi kartı asgari ödeme kart borcu ekstre akdi faiz' },
+  { tur: 'arac', baslik: 'Taksit mi, peşin mi?', aciklama: 'Hangisi bugünün parasıyla gerçekten ucuz?', href: 'araclar.html#taksit',
+    anahtar: 'taksit peşin vade farkı alışveriş indirim' },
+  { tur: 'arac', baslik: 'Birikim hedefi', aciklama: 'Hedefe ulaşmak için her ay ne kadar ayırmalıyım?', href: 'araclar.html#hedef',
+    anahtar: 'birikim hedef tasarruf ev peşinat araba aylık enflasyon' },
+  { tur: 'arac', baslik: 'Erken başlamanın gücü', aciklama: '25 ile 35 yaşında başlamanın farkı', href: 'araclar.html#erken',
+    anahtar: 'erken başlamak bileşik getiri emeklilik birikim zaman' },
+
   // Sektörler
   { tur: 'sektor', baslik: 'Bankacılık', aciklama: 'PD/DD, ROE, net faiz marjı, takipteki krediler', href: 'sektorler.html#banka',
     anahtar: 'banka mevduat kredi sermaye yeterlilik akbnk garan isctr ykbnk' },
