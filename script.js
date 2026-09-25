@@ -506,6 +506,10 @@ function initGlossary() {
     learn.hidden = !t.ogren;
     if (t.ogren) learn.href = t.ogren;
 
+    const tool = document.getElementById('sheet-tool');
+    tool.hidden = !t.arac;
+    if (t.arac) { tool.href = t.arac.href; tool.textContent = 'Kendin hesapla: ' + t.arac.ad; }
+
     document.getElementById('sheet-related').replaceChildren(...t.ilgili.map(id =>
       el('button', { type: 'button', textContent: byId.get(id).terim, onclick: () => swap(id) })
     ));
@@ -895,6 +899,419 @@ function initQuiz() {
   show(0);
 }
 
+// ============================================
+// SİTE GENELİ ARAMA (Spotlight)
+// ============================================
+
+const SPOT_SIMGE = {
+  kavram: '<path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/>',
+  ders: '<path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/>',
+  arac: '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/>',
+  sektor: '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
+  sayfa: '<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4"/>',
+  soru: '<path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/>'
+};
+const SPOT_GRUP = { kavram: 'Kavramlar', soru: 'Sorular', ders: 'Dersler', arac: 'Araçlar', sektor: 'Sektörler', sayfa: 'Sayfalar' };
+const SPOT_ONERI = ['Enflasyon', 'F/K oranı', 'Kredi notu', 'Bileşik getiri', 'Temettü', 'Bilanço'];
+
+// Veri dosyası sayfada yoksa ilk aramada yüklenir
+function scriptYukle(src) {
+  return new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = resolve;
+    s.onerror = reject;
+    document.head.appendChild(s);
+  });
+}
+
+let spotDizin = null;
+async function spotDiziniHazirla() {
+  if (spotDizin) return spotDizin;
+  const bekle = [];
+  if (typeof SOZLUK === 'undefined') bekle.push(scriptYukle('sozluk-veri.js'));
+  if (typeof ARAMA_DIZINI === 'undefined') bekle.push(scriptYukle('arama-veri.js'));
+  if (typeof SORULAR_KUTUPHANE === 'undefined') bekle.push(scriptYukle('sorular-veri.js'));
+  if (typeof DERSLER === 'undefined') bekle.push(scriptYukle('dersler-veri.js'));
+  await Promise.all(bekle);
+  spotDizin = [
+    ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'sozluk.html#' + t.id,
+      anahtar: KATEGORILER[t.kategori], metin: t.aciklama })),
+    ...SORULAR_KUTUPHANE.map(q => ({ tur: 'soru', baslik: q.soru, aciklama: q.kisa, href: 'sorular.html#' + q.id,
+      anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' ') })),
+    ...DERSLER.map(d => ({ tur: 'ders', baslik: 'Ders: ' + d.baslik, aciklama: d.ozet, href: 'dersler.html#' + d.id,
+      anahtar: d.kartlar.map(k => k.baslik || '').join(' ') })),
+    ...ARAMA_DIZINI
+  ].map(item => ({
+    ...item,
+    _baslik: sadelestir(item.baslik),
+    _anahtar: sadelestir((item.anahtar || '') + ' ' + item.aciklama),
+    _metin: sadelestir(item.metin || '')
+  }));
+  return spotDizin;
+}
+
+function spotAra(dizin, q) {
+  const puanla = it => {
+    if (it._baslik.startsWith(q)) return 6;
+    if (it._baslik.includes(q)) return 5;
+    if ((' ' + it._anahtar).includes(' ' + q)) return 4;
+    if (it._anahtar.includes(q)) return 3;
+    if (it._metin.includes(q)) return 1;
+    return 0;
+  };
+  return dizin.map(it => [it, puanla(it)]).filter(([, p]) => p > 0)
+    .sort((a, b) => b[1] - a[1] || a[0].baslik.localeCompare(b[0].baslik, 'tr'))
+    .map(([it]) => it);
+}
+
+function initSpotlight() {
+  const triggers = document.querySelectorAll('.search-trigger');
+  let dialog = null, input, results, secili = 0, gorunen = [];
+
+  function build() {
+    dialog = el('dialog', { className: 'spotlight', 'aria-label': 'Sitede ara' });
+    input = el('input', { type: 'search', placeholder: 'Kavram, ders ya da araç ara', autocomplete: 'off',
+      'aria-label': 'Sitede ara', 'aria-controls': 'spot-results', 'aria-autocomplete': 'list' });
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>';
+    results = el('div', { className: 'spot-results', id: 'spot-results', role: 'listbox' });
+    const panel = el('div', { className: 'spot-panel' },
+      el('label', { className: 'spot-field' }, icon, input,
+        el('button', { type: 'button', className: 'spot-close', textContent: 'Kapat', onclick: close })),
+      results,
+      el('div', { className: 'spot-foot' },
+        el('span', {}, el('kbd', {}, '↑'), ' ', el('kbd', {}, '↓'), ' gezin'),
+        el('span', {}, el('kbd', {}, '↵'), ' aç'),
+        el('span', {}, el('kbd', {}, 'esc'), ' kapat'))
+    );
+    dialog.appendChild(panel);
+    document.body.appendChild(dialog);
+
+    let zaman;
+    input.addEventListener('input', () => { clearTimeout(zaman); zaman = setTimeout(render, 60); });
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      if (e.key === 'ArrowDown') { e.preventDefault(); select(secili + 1); }
+      if (e.key === 'ArrowUp') { e.preventDefault(); select(secili - 1); }
+      if (e.key === 'Enter' && gorunen[secili]) { e.preventDefault(); go(gorunen[secili]); }
+    });
+    dialog.addEventListener('cancel', e => { e.preventDefault(); close(); });
+    dialog.addEventListener('click', e => { if (e.target === dialog) close(); });
+  }
+
+  function select(i) {
+    if (!gorunen.length) return;
+    secili = (i + gorunen.length) % gorunen.length;
+    results.querySelectorAll('.spot-item').forEach((a, k) => a.setAttribute('aria-selected', k === secili));
+    const aktif = results.querySelectorAll('.spot-item')[secili];
+    aktif.scrollIntoView({ block: 'nearest' });
+    input.setAttribute('aria-activedescendant', aktif.id);
+  }
+
+  function go(item) {
+    close();
+    location.href = item.href;
+  }
+
+  async function render() {
+    const dizin = await spotDiziniHazirla();
+    const q = sadelestir(input.value.trim());
+    secili = 0;
+    if (!q) {
+      gorunen = [];
+      results.replaceChildren(el('div', { className: 'spot-empty' },
+        el('p', {}, 'Aklına takılan bir kavramı yaz.'),
+        el('div', { className: 'spot-suggest' }, ...SPOT_ONERI.map(o =>
+          el('button', { type: 'button', textContent: o, onclick: () => { input.value = o; render(); input.focus(); } })))));
+      return;
+    }
+    const bulunan = spotAra(dizin, q).slice(0, 24);
+    if (!bulunan.length) {
+      gorunen = [];
+      results.replaceChildren(el('div', { className: 'spot-empty' }, el('p', {}, `"${input.value.trim()}" için sonuç bulunamadı.`)));
+      return;
+    }
+    // Gruplara ayır, her grupta en fazla 6 sonuç; gruplar ilk sonuca göre sıralanır
+    const gruplar = new Map();
+    for (const it of bulunan) {
+      if (!gruplar.has(it.tur)) gruplar.set(it.tur, []);
+      if (gruplar.get(it.tur).length < 6) gruplar.get(it.tur).push(it);
+    }
+    gorunen = [...gruplar.values()].flat();
+    let n = 0;
+    results.replaceChildren(...[...gruplar].flatMap(([tur, items]) => [
+      el('div', { className: 'spot-group', role: 'presentation' }, SPOT_GRUP[tur]),
+      ...items.map(it => {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        svg.innerHTML = SPOT_SIMGE[it.tur];
+        const i = n++;
+        return el('a', { className: 'spot-item', href: it.href, id: 'spot-' + i, role: 'option', 'aria-selected': i === 0,
+          onclick: e => { e.preventDefault(); go(it); }, onmousemove: () => { if (secili !== i) select(i); } },
+          el('span', { className: 'spot-icon' }, svg),
+          el('span', { className: 'spot-text' },
+            el('span', { className: 'spot-title' }, vurgula(it.baslik, q)),
+            el('span', { className: 'spot-sub' }, it.aciklama)));
+      })
+    ]));
+    input.setAttribute('aria-activedescendant', 'spot-0');
+  }
+
+  function open() {
+    if (!dialog) build();
+    if (dialog.open) return;
+    dialog.classList.remove('closing');
+    dialog.showModal();
+    input.value = '';
+    render();
+    input.focus();
+  }
+
+  function close() {
+    if (!dialog || !dialog.open || dialog.classList.contains('closing')) return;
+    if (prefersReducedMotion()) { dialog.close(); return; }
+    dialog.classList.add('closing');
+    setTimeout(() => { dialog.close(); dialog.classList.remove('closing'); }, 190);
+  }
+
+  triggers.forEach(t => t.addEventListener('click', open));
+  document.addEventListener('keydown', e => {
+    const yaziyor = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); }
+    // Sözlük sayfasında "/" kendi aramasına gider
+    else if (e.key === '/' && !yaziyor && !document.getElementById('glossary-search') && !document.querySelector('dialog[open]')) {
+      e.preventDefault(); open();
+    }
+  });
+}
+
+// ============================================
+// TEMA SEÇİCİ (alt bilgide)
+// ============================================
+function initThemeSwitch() {
+  const sw = document.querySelector('.theme-switch');
+  if (!sw || !window.paktolosTema) return;
+  const buttons = sw.querySelectorAll('button');
+  const guncelle = () => buttons.forEach(b => b.setAttribute('aria-checked', b.dataset.tema === paktolosTema.get()));
+  buttons.forEach(b => b.addEventListener('click', () => { paktolosTema.set(b.dataset.tema); guncelle(); }));
+  guncelle();
+}
+
+// ============================================
+// UYGULAMA OLARAK YÜKLEME
+// ============================================
+function initInstall() {
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+    navigator.serviceWorker.register('sw.js').catch(() => { /* çevrimdışı destek olmadan da çalışır */ });
+  }
+
+  const card = document.getElementById('install-card');
+  if (!card) return;
+  const yuklu = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (yuklu) return; // zaten ana ekranda
+
+  const steps = document.getElementById('install-steps');
+  const button = document.getElementById('install-button');
+  const ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  steps.innerHTML = ios
+    ? 'Safari\'de <b>Paylaş</b> simgesine, ardından <b>Ana Ekrana Ekle</b>\'ye dokun.'
+    : 'Tarayıcı menüsünden <b>Ana ekrana ekle</b> ya da <b>Uygulamayı yükle</b> seçeneğini kullan.';
+  card.hidden = false;
+
+  let istem = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    istem = e;
+    button.hidden = false;
+    steps.textContent = 'Tek dokunuşla ana ekranına ekle; internet olmadan da açılır.';
+  });
+  button.addEventListener('click', async () => {
+    if (!istem) return;
+    istem.prompt();
+    await istem.userChoice;
+    istem = null;
+    button.hidden = true;
+  });
+  window.addEventListener('appinstalled', () => { card.hidden = true; });
+}
+
+// ============================================
+// HİKÂYE — kaydırdıkça akan nehir
+// ============================================
+function initStory() {
+  const story = document.querySelector('.story');
+  const flow = document.querySelector('.river-flow');
+  if (!story || !flow) return;
+
+  const len = flow.getTotalLength();
+  flow.style.strokeDasharray = len;
+  flow.style.strokeDashoffset = len;
+
+  // Sahnelerdeki çizimlerin uzunluğunu ölç (çizilme efekti için)
+  document.querySelectorAll('.scene .draw').forEach(p => p.style.setProperty('--len', Math.ceil(p.getTotalLength())));
+
+  let bekliyor = false;
+  const guncelle = () => {
+    bekliyor = false;
+    const r = story.getBoundingClientRect();
+    const ilerleme = Math.min(1, Math.max(0, (innerHeight * 0.6 - r.top) / r.height));
+    flow.style.strokeDashoffset = len * (1 - ilerleme);
+  };
+  window.addEventListener('scroll', () => {
+    if (!bekliyor) { bekliyor = true; requestAnimationFrame(guncelle); }
+  }, { passive: true });
+  guncelle();
+
+  if (prefersReducedMotion()) {
+    document.querySelectorAll('.scene svg').forEach(svg => svg.pauseAnimations && svg.pauseAnimations());
+  }
+}
+
+// ============================================
+// AKLINA TAKILAN (soru kütüphanesi)
+// ============================================
+
+const OKUNAN_SORU_KEY = 'paktolos-sorular';
+
+function initQuestions() {
+  const list = document.getElementById('qa-list');
+  if (!list || typeof SORULAR_KUTUPHANE === 'undefined') return;
+
+  const search = document.getElementById('qa-search');
+  const filters = document.getElementById('qa-filters');
+  const empty = document.getElementById('qa-empty');
+  const bar = document.getElementById('qa-bar');
+  const kavramlar = typeof SOZLUK !== 'undefined' ? new Map(SOZLUK.map(t => [t.id, t.terim])) : new Map();
+  let okunan = new Set(store.get(OKUNAN_SORU_KEY, []));
+  let aktif = 'tum';
+
+  const chevron = () => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.innerHTML = '<path d="m6 9 6 6 6-6"/>';
+    return el('span', { className: 'qa-chevron', 'aria-hidden': 'true' }, svg);
+  };
+
+  function kart(q, query) {
+    const d = el('details', { className: 'qa' + (q.kategori === 'haber' ? ' news' : ''), id: q.id },
+      el('summary', {},
+        q.kategori === 'haber' ? el('span', { className: 'qa-badge' }, 'Haber') : null,
+        el('span', { className: 'qa-q' }, vurgula(q.soru, query)),
+        chevron()),
+      el('div', { className: 'qa-content' },
+        el('div', { className: 'qa-short' }, el('span', { className: 'qa-label' }, 'Kısaca'), q.kisa),
+        el('span', { className: 'qa-label' }, 'Nasıl düşünmeli?'),
+        el('ol', { className: 'qa-steps' }, ...q.adimlar.map(a => el('li', {}, a))),
+        q.dikkat ? el('div', { className: 'qa-caution' }, el('span', {}, el('b', {}, 'Dikkat: '), q.dikkat)) : null,
+        el('div', { className: 'qa-foot' },
+          el('span', { className: 'qa-label', style: 'width:100%' }, 'İlgili kavramlar'),
+          ...q.ilgili.filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'sozluk.html#' + id }, kavramlar.get(id))),
+          el('div', { className: 'qa-actions' },
+            q.arac ? el('a', { className: 'button', href: q.arac.href }, q.arac.ad) : null,
+            q.ders ? el('a', { className: 'link-more', href: q.ders.href }, q.ders.ad) : null,
+            el('button', { type: 'button', className: 'qa-share', dataset: { id: q.id } }, 'Bağlantıyı paylaş')))
+      ));
+    d.addEventListener('toggle', () => {
+      if (!d.open) return;
+      okunan.add(q.id);
+      store.set(OKUNAN_SORU_KEY, [...okunan]);
+      history.replaceState(null, '', '#' + q.id);
+    });
+    return d;
+  }
+
+  // Konu filtresi
+  [['tum', 'Tümü'], ...Object.entries(SORU_KATEGORILERI)].forEach(([key, ad]) => {
+    const b = el('button', { type: 'button', role: 'tab', textContent: ad });
+    b.setAttribute('aria-selected', key === aktif);
+    b.addEventListener('click', () => {
+      aktif = key;
+      filters.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+      b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+      render();
+    });
+    filters.appendChild(b);
+  });
+
+  function render() {
+    const query = sadelestir(search.value.trim());
+    let sorular = SORULAR_KUTUPHANE.filter(q => aktif === 'tum' || q.kategori === aktif);
+    if (query) {
+      const puan = q => {
+        const s = sadelestir(q.soru);
+        if (s.includes(query)) return 3;
+        if (sadelestir(q.kisa).includes(query)) return 2;
+        const kav = q.ilgili.map(id => kavramlar.get(id) || '').join(' ');
+        if (sadelestir(q.adimlar.join(' ') + ' ' + kav).includes(query)) return 1;
+        return 0;
+      };
+      sorular = sorular.map(q => [q, puan(q)]).filter(([, p]) => p > 0).sort((a, b) => b[1] - a[1]).map(([q]) => q);
+      list.replaceChildren(...(sorular.length ? [el('section', { className: 'qa-group' },
+        el('h2', { className: 'qa-group-title' }, sorular.length + ' soru'), ...sorular.map(q => kart(q, query)))] : []));
+    } else {
+      const gruplar = Object.keys(SORU_KATEGORILERI).map(k => [k, sorular.filter(q => q.kategori === k)]).filter(([, g]) => g.length);
+      list.replaceChildren(...gruplar.map(([k, g]) => el('section', { className: 'qa-group' },
+        el('h2', { className: 'qa-group-title' }, SORU_KATEGORILERI[k], el('small', {}, g.length + ' soru')),
+        ...g.map(q => kart(q, '')))));
+    }
+    empty.hidden = sorular.length > 0;
+  }
+
+  let zaman;
+  search.addEventListener('input', () => { clearTimeout(zaman); zaman = setTimeout(render, 80); });
+  search.addEventListener('keydown', e => { if (e.key === 'Escape') { search.value = ''; render(); } });
+
+  list.addEventListener('click', async e => {
+    const b = e.target.closest('.qa-share');
+    if (!b) return;
+    const q = SORULAR_KUTUPHANE.find(x => x.id === b.dataset.id);
+    const url = location.origin + location.pathname + '#' + q.id;
+    if (navigator.share) {
+      try { await navigator.share({ title: q.soru, text: q.kisa, url }); } catch (err) { /* vazgeçildi */ }
+      return;
+    }
+    try { await navigator.clipboard.writeText(url); showToast('Bağlantı kopyalandı'); } catch (err) { showToast(url); }
+  });
+
+  // Arama çubuğu üste yapışınca cam zemin
+  const updateStuck = () => bar.classList.toggle('stuck', bar.getBoundingClientRect().top <= document.querySelector('.nav-bar').offsetHeight + 0.5);
+  window.addEventListener('scroll', updateStuck, { passive: true });
+  updateStuck();
+
+  // sorular.html#kart-borcu gibi bağlantılar ilgili soruyu açar
+  function hashAc() {
+    const id = decodeURIComponent(location.hash.slice(1));
+    if (!id) return;
+    let d = document.getElementById(id);
+    if (!d || !d.classList.contains('qa')) {
+      if (!SORULAR_KUTUPHANE.some(q => q.id === id)) return;
+      // filtre ya da arama gizliyorsa sıfırla
+      search.value = ''; aktif = 'tum';
+      filters.querySelectorAll('button').forEach((x, i) => x.setAttribute('aria-selected', i === 0));
+      render();
+      d = document.getElementById(id);
+    }
+    d.open = true;
+    requestAnimationFrame(() => d.scrollIntoView({ block: 'start', behavior: prefersReducedMotion() ? 'auto' : 'smooth' }));
+  }
+  window.addEventListener('hashchange', hashAc);
+
+  render();
+  hashAc();
+}
+
+// Ana sayfa: popüler sorular
+function initHomeQuestions() {
+  const kap = document.getElementById('home-questions');
+  if (!kap || typeof SORULAR_KUTUPHANE === 'undefined') return;
+  const secilen = ['kart-borcu', 'zam-fakir', 'altin-doviz-mevduat', 'baz-puan'];
+  kap.replaceChildren(...secilen.map(id => SORULAR_KUTUPHANE.find(q => q.id === id)).filter(Boolean).map(q =>
+    el('a', { href: 'sorular.html#' + q.id }, el('span', {}, q.soru), el('span', { className: 'arrow', 'aria-hidden': 'true' }, '›'))));
+}
+
 initSplash();
 initNav();
 initReveal();
@@ -902,3 +1319,9 @@ initCalculator();
 initHomeDaily();
 initGlossary();
 initQuiz();
+initSpotlight();
+initThemeSwitch();
+initInstall();
+initStory();
+initQuestions();
+initHomeQuestions();

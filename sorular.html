@@ -11,8 +11,8 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <script src="tema.js"></script>
-<meta name="description" content="Oranları gerçekten yorumlayabiliyor musun? On kısa soruyla kendini sına.">
-<title>Kendini Sına — Paktolos</title>
+<meta name="description" content="Kredi kartı borcu, birikim, maaş, borsa ve ekonomi haberleri: günlük hayatta en çok sorulan para soruları ve nasıl düşünüleceği.">
+<title>Aklına Takılan — Paktolos</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,9 +24,9 @@
         <nav class="nav" aria-label="Ana menü">
           <a href="dersler.html">Öğren</a>
           <a href="araclar.html">Araçlar</a>
-          <a href="sorular.html">Sorular</a>
+          <a href="sorular.html" aria-current="page">Sorular</a>
           <a href="sozluk.html">Sözlük</a>
-          <a href="karnem.html" aria-current="page">Karnem</a>
+          <a href="karnem.html">Karnem</a>
         </nav>
         <button type="button" class="search-trigger" aria-label="Sitede ara"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg></button>
       </div>
@@ -36,68 +36,45 @@
   <nav class="tabbar" aria-label="Sekmeler">
     <a href="dersler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
     <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
-    <a href="sorular.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/></svg>Sorular</a>
+    <a href="sorular.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/></svg>Sorular</a>
     <a href="sozluk.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/></svg>Sözlük</a>
-    <a href="karnem.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.5 8.6l5.6.8-4 3.9.9 5.6L12 16.2l-5 2.7.9-5.6-4-3.9 5.6-.8z"/></svg>Karnem</a>
+    <a href="karnem.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.5 8.6l5.6.8-4 3.9.9 5.6L12 16.2l-5 2.7.9-5.6-4-3.9 5.6-.8z"/></svg>Karnem</a>
   </nav>
 
   <main>
 
     <section class="page-hero">
-      <div class="container narrow">
-        <span class="eyebrow reveal">Kendini sına</span>
-        <h1 class="reveal">Bu oranı yorumlayabilir misin?</h1>
-        <p class="lead reveal">On kısa durum, on yorum. Ezber yok; her soruda bir şirketin rakamlarına bakıp doğru yorumu bulmaya çalış. Her cevaptan sonra nedenini göreceksin.</p>
+      <div class="container">
+        <span class="eyebrow reveal">Aklına takılan</span>
+        <h1 class="reveal">Her sorunun bir<br>düşünme yolu var.</h1>
+        <p class="lead reveal">Günlük hayatta en çok sorulan para soruları. Cevaplar sana ne yapman gerektiğini söylemez; karar verirken nasıl düşünmen gerektiğini adım adım gösterir.</p>
       </div>
     </section>
 
-    <section class="container narrow quiz-wrap">
-      <div class="quiz" id="quiz">
-
-        <div class="quiz-head">
-          <span class="quiz-count" id="quiz-count"></span>
-          <div class="quiz-track" aria-hidden="true"><div class="quiz-track-fill" id="quiz-track-fill"></div></div>
-        </div>
-
-        <div class="quiz-stage" id="quiz-stage">
-          <div class="quiz-card" id="quiz-card">
-            <p class="quiz-situation" id="quiz-situation"></p>
-            <dl class="quiz-data" id="quiz-data"></dl>
-            <h2 class="quiz-question" id="quiz-question"></h2>
-            <div class="quiz-options" id="quiz-options" role="group" aria-labelledby="quiz-question"></div>
-            <div class="quiz-feedback" id="quiz-feedback" aria-live="polite">
-              <div class="quiz-feedback-inner">
-                <p class="quiz-verdict" id="quiz-verdict"></p>
-                <p class="quiz-explain" id="quiz-explain"></p>
-                <a class="link-more" id="quiz-lesson"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="quiz-actions">
-          <button type="button" class="button" id="quiz-next" disabled>Sonraki soru</button>
-        </div>
+    <div class="glossary-bar" id="qa-bar">
+      <div class="container">
+        <label class="search-field">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <input type="search" id="qa-search" placeholder="Soru ara (ör. kredi kartı, enflasyon)" autocomplete="off" aria-label="Sorularda ara">
+        </label>
+        <div class="segmented" id="qa-filters" role="tablist" aria-label="Konular"></div>
       </div>
+    </div>
 
-      <div class="quiz-result" id="quiz-result" hidden>
-        <div class="result-ring">
-          <svg viewBox="0 0 120 120" aria-hidden="true">
-            <circle class="ring-bg" cx="60" cy="60" r="52"/>
-            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="52"/>
-          </svg>
-          <div class="ring-label"><strong id="result-score">0</strong><span>/ 10</span></div>
-        </div>
-        <h2 class="headline" id="result-title"></h2>
-        <p class="lead" id="result-text"></p>
-        <p class="result-best" id="result-best"></p>
-        <div class="review" id="review"></div>
-        <div class="actions">
-          <button type="button" class="button" id="quiz-restart">Yeniden başla</button>
-          <a href="sozluk.html" class="link-more">Sözlüğe göz at</a>
-        </div>
+    <section class="container qa-body">
+      <div id="qa-list" aria-live="polite"></div>
+      <div class="glossary-empty" id="qa-empty" hidden>
+        <p class="glossary-empty-title">Bu soruyu henüz eklemedik.</p>
+        <p>Başka kelimelerle aramayı dene ya da <a href="sozluk.html">sözlüğe</a> göz at.</p>
       </div>
     </section>
+
+    <a href="araclar.html" class="next">
+      <div class="container">
+        <span class="eyebrow">Rakamlarla görmek ister misin?</span>
+        <h2>Araç kutusunu aç ›</h2>
+      </div>
+    </a>
 
   </main>
 
@@ -127,7 +104,10 @@
     </div>
   </footer>
 
-  <script src="test-veri.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="sozluk-veri.js"></script>
+  <script src="sorular-veri.js"></script>
   <script src="script.js"></script>
 
 </body>
