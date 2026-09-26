@@ -26,6 +26,9 @@ ALT_MENU = [('dersler.html', 'Dersler'), ('ogren.html', 'Mali tablolar'), ('anal
             ('sozluk.html', 'Sözlük'), ('test.html', 'Test'), ('karnem.html', 'Karnem')]
 PAGES = [(f, t, ICON[i]) for f, t, i in TABS]
 
+# Logo: ilk Lidya sikkesinin damgalı arka yüzü (icon.svg ile aynı çizim)
+LOGO_MARK = '<svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg>'
+
 SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'
 
 def header(current):
@@ -37,7 +40,7 @@ def header(current):
     tabs = '\n'.join(f'    <a href="{f}"{cur(f)}>{hap(f, "tab-hap")}<svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
     return f'''<header class="nav-bar">
     <div class="container nav-inner">
-      <a href="index.html" class="logo">PAKTOLOS</a>
+      <a href="index.html" class="logo" aria-label="Paktolos ana sayfa">{LOGO_MARK}<span>PAKTOLOS</span></a>
       <div class="nav-end">
         <nav class="nav" aria-label="Ana menü">
 {links}
