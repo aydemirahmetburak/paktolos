@@ -31,9 +31,10 @@ SEARCH_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="1
 def header(current):
     tab = SEKME_GRUBU.get(current, current)
     cur = lambda f: ' aria-current="page"' if f == tab else ''
-    tcur = lambda f: ' aria-current="page"' if f == tab else ''
-    links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}</a>' for f, t in NAV)
-    tabs = '\n'.join(f'    <a href="{f}"{tcur(f)}><svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
+    # Etkin sekmenin işareti: sayfa geçişinde eski sekmeden yenisine kayar
+    hap = lambda f, sinif: f'<span class="{sinif}" aria-hidden="true"></span>' if f == tab else ''
+    links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}{hap(f, "nav-hap")}</a>' for f, t in NAV)
+    tabs = '\n'.join(f'    <a href="{f}"{cur(f)}>{hap(f, "tab-hap")}<svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
     return f'''<header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo">PAKTOLOS</a>

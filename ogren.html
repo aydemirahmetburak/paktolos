@@ -22,7 +22,7 @@
       <a href="index.html" class="logo">PAKTOLOS</a>
       <div class="nav-end">
         <nav class="nav" aria-label="Ana menü">
-          <a href="dersler.html" aria-current="page">Öğren</a>
+          <a href="dersler.html" aria-current="page">Öğren<span class="nav-hap" aria-hidden="true"></span></a>
           <a href="araclar.html">Araçlar</a>
           <a href="sorular.html">Sorular</a>
           <a href="sozluk.html">Sözlük</a>
@@ -34,14 +34,14 @@
   </header>
 
   <nav class="tabbar" aria-label="Sekmeler">
-    <a href="dersler.html" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="dersler.html" aria-current="page"><span class="tab-hap" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
     <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
     <a href="sorular.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/></svg>Sorular</a>
     <a href="sozluk.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 18.5l4.5-13 4.5 13"/><path d="M5.2 14h5.6"/><circle cx="17" cy="15.5" r="3"/><path d="M20 12.5v6"/></svg>Sözlük</a>
     <a href="karnem.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 14.5 8.6l5.6.8-4 3.9.9 5.6L12 16.2l-5 2.7.9-5.6-4-3.9 5.6-.8z"/></svg>Karnem</a>
   </nav>
 
-  <main>
+  <main data-okuma>
 
     <section class="page-hero">
       <div class="container">
@@ -66,19 +66,42 @@
         <h2 class="headline reveal">Bilanço</h2>
         <p class="lead reveal">Belirli bir günde çekilmiş bir fotoğraftır: şirketin sahip oldukları ve bunların nasıl finanse edildiği.</p>
 
-        <div class="balance reveal" role="img" aria-label="Bilanço: varlıklar, yükümlülükler ile özkaynakların toplamına eşittir">
-          <div class="balance-col">
-            <div class="balance-caption">Varlıklar</div>
-            <div class="balance-block dv">Dönen varlıklar<span>Nakit, alacak, stok</span></div>
-            <div class="balance-block drv">Duran varlıklar<span>Fabrika, makine, bina</span></div>
-          </div>
-          <div class="balance-col">
-            <div class="balance-caption">Kaynaklar</div>
-            <div class="balance-block kv">Kısa vadeli borç<span>1 yıl içinde</span></div>
-            <div class="balance-block uv">Uzun vadeli borç<span>1 yıldan uzun</span></div>
-            <div class="balance-block oz">Özkaynaklar<span>Ortakların payı</span></div>
-          </div>
+        <section class="akis" data-akis="terazi" aria-label="Bilanço terazisi">
+        <div class="akis-sahne"></div>
+        <div class="akis-adimlar">
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Bilanço bir terazidir</span>
+            <h3>İki kefe, tek kural.</h3>
+            <p>Sol kefede şirketin sahip oldukları, sağ kefede bunları kimin parasıyla edindiği durur. Örneğimiz hayali Nehir Mobilya; rakamlar milyon TL.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Dönen varlıklar</span>
+            <h3>Önce kasadakiler ve kısa sürede nakde dönecekler.</h3>
+            <p>Nakit, müşterilerden alacaklar ve depodaki stoklar. Bir yıl içinde paraya dönmeleri beklenir. Terazi sola eğiliyor.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Duran varlıklar</span>
+            <h3>Sonra fabrika, makineler, binalar.</h3>
+            <p>Yıllarca kullanılacak varlıklar. Nehir Mobilya'nın sahip olduklarının yarısından fazlası burada. Sol kefe iyice ağırlaştı.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Yükümlülükler</span>
+            <h3>Sağ kefe: bu varlıkların parasını kim verdi?</h3>
+            <p>Bir kısmını bankalar ve tedarikçiler. Bir yıl içinde ödenecekler kısa vadeli, daha uzun vadeliler uzun vadeli borçtur.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Özkaynak</span>
+            <h3>Geri kalanı ortakların parası.</h3>
+            <p>Ortakların koyduğu sermaye ve yıllar içinde şirkette bırakılan kârlar. Özkaynak eklenince terazi tam dengeye gelir. Bu bir tesadüf değil: özkaynak, varlıklardan borçlar çıkınca kalan kısımdır.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Kural</span>
+            <h3>Varlıklar = Yükümlülükler + Özkaynak</h3>
+            <p>Bir kefede değişen her şey diğerini de değiştirir. Şirket borç alıp kasaya koyarsa iki kefe birlikte ağırlaşır; zarar ederse hem varlıklar hem özkaynak azalır.</p>
+            <a class="qa-chip" href="lab.html">Şirket laboratuvarında dene ›</a>
+          </div></div>
         </div>
+      </section>
 
         <div class="formula reveal">Varlıklar = Yükümlülükler + Özkaynaklar</div>
 
@@ -120,6 +143,43 @@
         <h2 class="headline reveal">Gelir tablosu</h2>
         <p class="lead reveal">Bir dönem boyunca çekilmiş bir filmdir: şirket ne sattı, bunun için ne harcadı ve sonunda ne kadar kâr etti.</p>
 
+        <section class="akis" data-akis="yuz-lira" aria-label="100 liralık satışın yolculuğu">
+        <div class="akis-sahne"></div>
+        <div class="akis-adimlar">
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Gelir tablosu bir süzgeçtir</span>
+            <h3>Şirket 100 TL'lik satış yaptı.</h3>
+            <p>Bu paranın ne kadarı ortaklara kâr olarak kalır? Her kare 1 TL. Kaydır ve her basamakta neyin düştüğünü izle.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Brüt kâr</span>
+            <h3>70 TL ürünün kendisine gitti.</h3>
+            <p>Hammadde, işçilik, fabrikanın enerjisi: satışların maliyeti. Geriye kalan 30 TL brüt kârdır ve ürünün ne kadar kârlı olduğunu anlatır.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">FAVÖK</span>
+            <h3>10 TL şirketi ayakta tutmaya.</h3>
+            <p>Kira, maaşlar, pazarlama, yönetim. Kalan 20 TL; faiz, amortisman ve vergiden önceki kârdır: FAVÖK.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Esas faaliyet kârı</span>
+            <h3>5 TL makinelerin eskimesine.</h3>
+            <p>Amortisman kasadan para çıkarmaz ama makinelerin yıpranmasını gidere yazar. Kalan 15 TL, şirketin asıl işinden kazandığıdır.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Finansman gideri</span>
+            <h3>6 TL bankaya faiz.</h3>
+            <p>Borcun bedeli. Aynı işi yapan iki şirketten borcu fazla olanın kârı bu basamakta erir.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Net kâr</span>
+            <h3>Geriye 6,75 TL kaldı.</h3>
+            <p>Vergiden sonra her 100 TL'lik satıştan ortaklara 6,75 TL kalıyor; net kâr marjı %6,75. Hangi basamağın ne kadar yediği, şirketin nasıl bir iş yaptığını anlatır.</p>
+            <a class="qa-chip" href="sozluk.html#net-kar-marji">Net kâr marjı nedir? ›</a>
+          </div></div>
+        </div>
+      </section>
+
         <div class="reveal">
           <details class="concept">
             <summary>Hasılattan net kâra</summary>
@@ -158,6 +218,38 @@
         <h2 class="headline reveal">Nakit akışı</h2>
         <p class="lead reveal">Kâr bir muhasebe kavramıdır; nakit ise gerçekten kasaya giren paradır. Bu tablo ikisi arasındaki farkı gösterir.</p>
 
+        <section class="akis" data-akis="kar-nakit" aria-label="Kârdan nakde">
+        <div class="akis-sahne"></div>
+        <div class="akis-adimlar">
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Kâr ≠ nakit</span>
+            <h3>Şirket 100 milyon TL kâr etti.</h3>
+            <p>Gelir tablosu böyle diyor. Peki kasaya gerçekten 100 milyon TL girdi mi? Nakit akış tablosu kârdan başlar ve adım adım düzeltir.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Amortisman</span>
+            <h3>Önce para çıkmayan gider geri eklenir.</h3>
+            <p>Amortisman kârı 30 milyon TL azalttı ama kasadan tek kuruş çıkmadı. Bu yüzden nakde geri eklenir.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Alacaklar</span>
+            <h3>Satıldı, ama henüz tahsil edilmedi.</h3>
+            <p>Müşterilere vadeli satılan 45 milyon TL'lik ürün kâra yazıldı; parası ise hâlâ müşteride. Kasaya girmediği için düşülür.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">İşletme nakit akışı</span>
+            <h3>Depodaki stok da nakit bağlar.</h3>
+            <p>Stoklar 25 milyon TL arttı: para, rafta bekleyen ürüne dönüştü. Sonuçta 100 milyonluk kârın karşılığında ana işten kasaya 60 milyon TL girdi.</p>
+          </div></div>
+          <div class="akis-adim"><div>
+            <span class="akis-sayac">Serbest nakit akışı</span>
+            <h3>Makineler yenilenince geriye 20 milyon kalır.</h3>
+            <p>Yatırım harcaması düşülünce kalan 20 milyon TL serbest nakit akışıdır: temettü, borç ödemesi ya da büyüme bu paradan yapılır. Kâr artarken bu rakam eriyorsa nedenini sor.</p>
+            <a class="qa-chip" href="sozluk.html#serbest-nakit-akisi">Serbest nakit akışı nedir? ›</a>
+          </div></div>
+        </div>
+      </section>
+
         <div class="reveal">
           <details class="concept">
             <summary>Üç bölüm</summary>
@@ -186,6 +278,8 @@
         <span class="chapter-number reveal">04 — Temel oranlar</span>
         <h2 class="headline reveal">Oranlar, rakamları karşılaştırılabilir kılar.</h2>
         <p class="lead reveal">Hiçbir oranın evrensel bir "iyi" değeri yoktur. Her zaman aynı sektördeki şirketlerle ve şirketin kendi geçmişiyle karşılaştır.</p>
+
+        <div class="oran-tablo reveal"></div>
 
         <div class="reveal">
           <details class="concept">
@@ -292,6 +386,7 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="akis.js"></script>
 
 </body>
 </html>
