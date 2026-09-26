@@ -29,7 +29,10 @@ Paktolos bu boşluğu dolduruyor: **yatırım kararını vermiyor, kararı vereb
 Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla birebir örtüşüyor:
 
 - Minimalist, dikkat dağıtmayan arayüz; apple.com'dan ilham alan akışkan geçişler
-- Kaydırdıkça beliren bölümler, yumuşak açılan paneller, sayfalar arası geçiş efekti
+- "Damla" sayfa geçişi: yeni sayfa dokunulan noktadan genişleyen bir daire içinde açılır, menü yerinde kalır, etkin sekmenin işareti yeni sekmeye kayar; geri dönülünce hareket tersine işler
+- Kaydırdıkça ilerleyen infografikler: bilanço terazisi, 100 liralık satışın yolculuğu, kârdan nakde şelale, 1.000 liranın enflasyonla erimesi
+- Dokunarak keşfedilen tablolar: üç şirket altı oran karşılaştırması, sektör haritası
+- Başlıklar satır satır belirir; uzun sayfalarda okuma ilerleme çizgisi ve kalan süre
 - iOS tarzı cam yüzeyler: yarı saydam katmanlar, ışık kenarı, arkada süzülen sıcak renk ışımaları
 - Telefonda altta yüzen cam sekme çubuğu, alttan kayan ve aşağı çekilerek kapanan pencereler
 - Karanlık mod: telefonun ayarını izler; alt bilgiden elle de seçilebilir
@@ -86,6 +89,7 @@ paktolos/
 ├── lab-model.js         # Laboratuvarın muhasebe modeli (üç tablo birbirine bağlı)
 ├── lab.js               # Laboratuvar arayüzü: kollar, senaryolar, canlı tablolar
 ├── checkup.js           # Finansal check-up hesapları ve göstergeleri
+├── akis.js              # Kaydırmalı infografikler ve etkileşimli tablolar
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
@@ -107,6 +111,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
+- **Yeni kaydırmalı infografik:** HTML'de `<section class="akis" data-akis="ad">` içine boş bir `.akis-sahne` ve her adım için bir `.akis-adim` yaz. `akis.js` içindeki `SAHNELER`'e aynı adla, verilen kaba görseli çizip adım numarasına göre güncelleyen bir fonksiyon ekle. Sahne her adımda durumu baştan çizmeli; kullanıcı adım atlayabilir. Metin HTML'de durduğu için JS kapalıyken de okunur.
 - **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
 - **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--chart-1` ve `--chart-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
 - **Renkler:** Doğrudan renk yazma; `--color-*` değişkenlerini ya da `rgba(var(--ink), 0.08)` gibi tema kanallarını kullan. Böylece karanlık mod kendiliğinden çalışır.
@@ -133,6 +138,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Paktolos Okulu (7 ders), Karnem, rozetler ve günün sorusu
 - [x] Şirket laboratuvarı: 8 senaryo, canlı gelir tablosu, bilanço ve nakit akışı
 - [x] Finansal check-up: dört göstergede kişisel finans durumu
+- [x] "Damla" sayfa geçişi, kaydırmalı infografikler, etkileşimli oran tablosu ve sektör haritası
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme

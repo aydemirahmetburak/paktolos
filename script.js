@@ -36,8 +36,34 @@ function initNav() {
   update();
 }
 
-// Kaydırınca belirme
+// Sayfa geçişi için dokunulan noktayı kaydet (tema.js okur). Bu sayfadaki
+// son nokta da ayrıca saklanır; geri dönülünce daire oraya kapanır.
+function initGecisNoktasi() {
+  document.addEventListener('click', e => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a || a.target || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin || (url.pathname === location.pathname && url.hash)) return;
+    let x = e.clientX, y = e.clientY;
+    if (!x && !y) { const r = a.getBoundingClientRect(); x = r.left + r.width / 2; y = r.top + r.height / 2; }
+    const nokta = JSON.stringify({ x: x / innerWidth, y: y / innerHeight, t: Date.now() });
+    try {
+      sessionStorage.setItem('paktolos-gecis', nokta);
+      sessionStorage.setItem('paktolos-gecis:' + location.pathname, nokta);
+    } catch (_) { /* gizli sekme */ }
+  });
+}
+
+// Kaydırınca belirme. Sayfa geçişiyle gelindiyse ekranda zaten görünen
+// öğeler ikinci kez belirmez; girişi geçişin kendisi yapar (tema.js).
 function initReveal() {
+  // Büyük başlıklar satır satır, bir maskenin içinden yükselir
+  document.querySelectorAll('.headline.reveal, .page-hero h1.reveal').forEach(h => {
+    const satirlar = h.innerHTML.split(/<br\s*\/?>/i);
+    h.innerHTML = satirlar.map((s, i) => `<span class="satir"><span style="--i:${i}">${s.trim()}</span></span>`).join('');
+    h.classList.add('satirli');
+  });
+
   const items = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
     items.forEach(el => el.classList.add('visible'));
@@ -52,6 +78,36 @@ function initReveal() {
     });
   }, { rootMargin: '0px 0px -8% 0px' });
   items.forEach(el => observer.observe(el));
+}
+
+// Uzun sayfalarda okuma ilerlemesi: menünün altında ince bir çizgi ve
+// kaydırırken beliren "kalan süre". <main data-okuma> olan sayfalarda çalışır.
+function initOkuma() {
+  const main = document.querySelector('main[data-okuma]');
+  const bar = document.querySelector('.nav-bar');
+  if (!main || !bar) return;
+  const kelime = main.innerText.split(/\s+/).length;
+  const toplamDk = kelime / 190;
+  const cizgi = el('div', { className: 'okuma', 'aria-hidden': 'true' });
+  const sure = el('div', { className: 'okuma-sure', 'aria-hidden': 'true' });
+  bar.append(cizgi, sure);
+  let zaman = 0, bekleyen = false;
+  const guncelle = () => {
+    bekleyen = false;
+    const bas = main.offsetTop, son = main.offsetTop + main.offsetHeight - innerHeight;
+    const p = Math.max(0, Math.min(1, (scrollY - bas + innerHeight * 0.3) / Math.max(1, son - bas)));
+    cizgi.style.setProperty('--okuma', p.toFixed(4));
+    const kalan = Math.ceil(toplamDk * (1 - p));
+    sure.textContent = p > 0.98 ? 'Bitti' : kalan <= 1 ? '1 dk kaldı' : kalan + ' dk kaldı';
+  };
+  addEventListener('scroll', () => {
+    if (!bekleyen) { bekleyen = true; requestAnimationFrame(guncelle); }
+    if (scrollY > 200) sure.classList.add('gorunur');
+    clearTimeout(zaman);
+    zaman = setTimeout(() => sure.classList.remove('gorunur'), 1400);
+  }, { passive: true });
+  addEventListener('resize', guncelle);
+  guncelle();
 }
 
 // ============================================
@@ -926,8 +982,15 @@ function scriptYukle(src) {
 }
 
 let spotDizin = null;
-async function spotDiziniHazirla() {
-  if (spotDizin) return spotDizin;
+let spotHazirlaniyor = null;
+// Pencere açılırken ve yazarken aynı anda çağrılabilir; veri dosyaları
+// yalnızca bir kez yüklensin diye bekleyen iş paylaşılır.
+function spotDiziniHazirla() {
+  if (spotDizin) return Promise.resolve(spotDizin);
+  if (!spotHazirlaniyor) spotHazirlaniyor = spotDiziniKur().finally(() => { spotHazirlaniyor = null; });
+  return spotHazirlaniyor;
+}
+async function spotDiziniKur() {
   const bekle = [];
   if (typeof SOZLUK === 'undefined') bekle.push(scriptYukle('sozluk-veri.js'));
   if (typeof ARAMA_DIZINI === 'undefined') bekle.push(scriptYukle('arama-veri.js'));
@@ -1314,7 +1377,9 @@ function initHomeQuestions() {
 
 initSplash();
 initNav();
+initGecisNoktasi();
 initReveal();
+initOkuma();
 initCalculator();
 initHomeDaily();
 initGlossary();
