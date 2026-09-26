@@ -1,5 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="112" fill="#1C1C1E"/>
-  <path fill="#F5F5F0" fill-rule="evenodd" d="M180 98h92a92 92 0 0 1 0 184h-36v80h-56zM236 154v72h36a36 36 0 0 0 0-72z"/>
-  <path fill="none" stroke="#FF6B35" stroke-width="22" stroke-linecap="round" d="M148 406c36-30 72 30 108 0s72-30 108 0"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Paktolos: ilk Lidya sikkesinin damgalı arka yüzü -->
+  <path fill="#FF6B35" fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/>
 </svg>

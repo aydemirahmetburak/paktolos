@@ -45,6 +45,15 @@ Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla 
 
 Renkler, boşluklar, yazı ölçeği, köşe yuvarlaklıkları ve hareket eğrileri `style.css` dosyasının başında CSS değişkenleri (`--color-*`, `--space-*`, `--text-*`, `--radius-*`, `--ease*`) olarak tanımlı. Yeni bileşenler bu değişkenleri kullanmalı.
 
+## Logo
+
+Paktolos'un logosu, dünyanın ilk madeni paralarından birinin, Paktolos'un altınından basılan Lidya sikkesinin **arka yüzüdür**. Bu sikkelerin arka yüzünde, basım sırasında oluşan iki dikdörtgen damga izi bulunur. Paranın ön yüzünde fiyat yazar; Paktolos arka yüzüne, o fiyatın ardındaki rakamlara bakar.
+
+- İşaret tek bir SVG yolundan oluşur (`icon.svg`); damgalar boşluk olarak kesildiği için her zeminde çalışır.
+- Renk her zaman turuncu (`--color-accent`); uygulama simgelerinde kömür zemin üzerinde.
+- Menüdeki işaret `gelistirme/ortak-duzen.py` içindeki `LOGO_MARK`'tan gelir. Açılış ekranında sikke "darp edilir": pul düşer, iki damga vurulur.
+- Uygulama simgeleri (`icons/`) aynı çizimden üretilir; maskable simgede işaret güvenli alanın içinde kalır.
+
 ## Teknik Yaklaşım (Web)
 
 | Katman | Teknoloji |
@@ -93,7 +102,7 @@ paktolos/
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
-├── icon.svg, icons/     # Uygulama simgeleri
+├── icon.svg, icons/     # Logo ve uygulama simgeleri
 ├── gelistirme/          # Geliştirme yardımcıları (ortak menü üretici)
 ├── README.md
 └── LICENSE
