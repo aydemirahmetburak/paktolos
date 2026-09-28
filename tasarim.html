@@ -247,6 +247,12 @@
         </div>
       </section>
 
+      <section class="kat-bolum" id="grafik">
+        <h2>Grafik</h2>
+        <p>Grafik bir fikri anlatır, sayfayı süslemez. İnce çizgi, silik ızgara, tek eksen; en fazla iki seri ve doğrulanmış iki renk. Her grafikte ipucu (ölçü, değer, dönem, bağlam), klavyeyle ← → gezinme ve tablo görünümü vardır. Kod: grafik.js · grafikFigur().</p>
+        <div id="grafik-ornek" style="max-width: var(--width-article)"></div>
+      </section>
+
       <section class="kat-bolum" id="simgeler">
         <h2>Simgeler</h2>
         <p>Tek aile: 24 piksel ızgara, 1,5 piksel çizgi, yuvarlak uç, tek renk. Emoji arayüz simgesi olarak kullanılmaz.</p>
@@ -292,12 +298,22 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="grafik.js"></script>
   <script>
     // Katalog: renk ve boşluk örneklerini tokenlardan üret
     (() => {
       const RENK = ['--background', '--surface', '--surface-secondary', '--text-primary', '--text-secondary', '--text-muted', '--accent', '--positive', '--negative', '--caution', '--dark', '--brand', '--data-1', '--data-2', '--data-seq-1', '--data-seq-2', '--data-seq-3', '--data-seq-4', '--data-warm-1', '--data-neutral'];
       document.getElementById('renkler').append(...RENK.map(ad => el('div', { className: 'renk' }, el('i', { style: `background: var(${ad})` }), el('span', { className: 'kat-ad' }, ad))));
       document.getElementById('bosluklar').append(...[4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160, 192].map(n => el('div', {}, el('code', {}, n), el('i', { style: `width: var(--s-${n})` }))));
+      const yil = Array.from({ length: 11 }, (_, i) => i);
+      const bilesik = yil.map(i => 10000 * Math.pow(1.15, i)), basit = yil.map(i => 10000 * (1 + 0.15 * i));
+      document.getElementById('grafik-ornek').append(grafikFigur(
+        { baslik: '10.000 TL, yıllık %15 getiriyle', not: 'Bileşik getiri, zaman geçtikçe basit faizden ayrışır.', kaynak: 'Paktolos hesaplaması (örnek)' },
+        { tur: 'cizgi', etiketler: yil.map(i => i ? i + '. yıl' : 'Bugün'), xAdim: 2, sonEtiket: true,
+          seriler: [{ ad: 'Bileşik', renk: SERI[0], degerler: bilesik }, { ad: 'Basit', renk: SERI[1], degerler: basit }],
+          bicim: formatTL, baglam: i => i ? 'Fark: ' + formatTL(bilesik[i] - basit[i]) + ' "faizin faizi"' : 'Başlangıç',
+          aciklama: 'Basit ve bileşik getiri karşılaştırması' },
+        { baslik: ['Yıl', 'Bileşik', 'Basit'], satirlar: yil.map(i => [i, formatTL(bilesik[i]), formatTL(basit[i])]) }));
       document.getElementById('hareket-oynat').addEventListener('click', () => document.getElementById('hareket-kutu').classList.toggle('kat-oynat'));
     })();
   </script>

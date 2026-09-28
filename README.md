@@ -122,7 +122,8 @@ paktolos/
 ├── tasarim/             # Tasarım sistemi: tokenlar.css, bilesenler.css
 ├── style.css            # Sayfa stilleri
 ├── script.js            # Ortak etkileşimler: arama, sözlük, sorular, tema, test
-├── araclar.js           # Araç kutusu hesaplamaları ve grafik bileşeni
+├── grafik.js            # Veri görselleştirme sistemi: grafik(), grafikFigur(), tablo görünümü
+├── araclar.js           # Araç kutusu hesaplamaları
 ├── okul.js              # Dersler, günün sorusu ve Karnem
 ├── lab-model.js         # Laboratuvarın muhasebe modeli (üç tablo birbirine bağlı)
 ├── lab.js               # Laboratuvar arayüzü: kollar, senaryolar, canlı tablolar
@@ -154,7 +155,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 - **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
 - **Yeni kaydırmalı infografik:** HTML'de `<section class="akis" data-akis="ad">` içine boş bir `.akis-sahne` ve her adım için bir `.akis-adim` yaz. `akis.js` içindeki `SAHNELER`'e aynı adla, verilen kaba görseli çizip adım numarasına göre güncelleyen bir fonksiyon ekle. Sahne her adımda durumu baştan çizmeli; kullanıcı adım atlayabilir. Metin HTML'de durduğu için JS kapalıyken de okunur.
 - **Yeni bileşen:** önce `tasarim/bilesenler.css`'e, sonra `tasarim.html` kataloğuna ekle.
-- **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--data-1` ve `--data-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
+- **Grafikler:** `grafik.js` içindeki `grafik()` ya da başlık, not ve kaynakla sarılmış `grafikFigur()` bileşenini kullan; `baglam(i)` ile ipucuna anlam satırı ekle. Seri renkleri `SERI[0]` (`--data-1`) ve `SERI[1]` (`--data-2`); renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
 - **Renkler:** Doğrudan renk yazma; `tasarim/tokenlar.css` değişkenlerini kullan. Böylece karanlık mod kendiliğinden çalışır.
 
 ## Yerelde Çalıştırma
@@ -183,7 +184,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Tasarım sistemi v2: tokenlar, bileşen kütüphanesi, yeni bilgi mimarisi (Öğren, Ekonomi, Piyasalar, Rehberler, Araçlar)
 - [x] Ana sayfa: ekonomi ağı, dört gösterge, finansal temeller, "Faiz değişince ne olur?", veri hikâyesi, rehberler, araçlar
 - [x] Kavram sistemi: 67 kavram için katmanlı sayfa; 12 temel kavramda derin katman, kaynaklar ve etkileşimli görsel
-- [ ] Makale deneyimi ve veri görselleştirme sistemi
+- [x] Makale deneyimi (künye, bölüm sonu "Akılda kalsın", ilgili kavramlar, kaynakça) ve ortak veri görselleştirme sistemi
 - [ ] "Ekonomi nasıl çalışır?" etkileşimli haritası
 - [ ] Hesaplayıcılar, test ve arama yenilemesi; kaydedilenler ve ilerleme
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi

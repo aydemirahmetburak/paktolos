@@ -145,7 +145,7 @@
       sol.style.transform = `translateY(${-dy}px)`;
       sag.style.transform = `translateY(${dy}px)`;
       lv.toplam(L); lk.toplam(R);
-      const denge = L === R;
+      const denge = L === R && L > 0;
       durum.className = 'tz-durum' + (denge ? ' denge' : '');
       durum.textContent = L === 0 && R === 0 ? 'İki kefe de boş'
         : denge ? `Denge: ${tr(L)} = ${tr(R)}`

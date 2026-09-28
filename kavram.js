@@ -68,8 +68,8 @@
         ozet.replaceChildren('Yıllık ', el('b', {}, '%' + tr(e.get())), ' enflasyonda bugünkü 100 TL, 10 yıl sonra ', el('b', {}, tr(deger[10], 1) + ' TL'), ' değerinde mal alır.');
         grafik(grafikKap, {
           tur: 'cizgi', etiketler: deger.map((_, i) => i === 0 ? 'Bugün' : i + '. yıl'), xAdim: 2,
-          seriler: [{ ad: '100 TL\'nin alım gücü', renk: 'var(--data-1)', degerler: deger }],
-          bicim: v => tr(v, 1) + ' TL', aciklama: 'Yıllara göre 100 TL\'nin alım gücü'
+          seriler: [{ ad: '100 TL\'nin alım gücü', renk: SERI[0], degerler: deger }],
+          bicim: v => tr(v, 1) + ' TL', baglam: i => i ? 'Bugüne göre alım gücü kaybı: %' + tr(100 - deger[i], 0) : 'Başlangıç', aciklama: 'Yıllara göre 100 TL\'nin alım gücü'
         });
         tablo.replaceChildren(tabloGorunumu(['Yıl', 'Alım gücü'], deger.map((v, i) => [i, tr(v, 1) + ' TL'])));
       };
@@ -87,10 +87,10 @@
         grafik(grafikKap, {
           tur: 'cizgi', etiketler: yillar.map(i => i === 0 ? 'Bugün' : i + '. yıl'), xAdim: 5, sonEtiket: true,
           seriler: [
-            { ad: 'Bileşik getiri', renk: 'var(--data-1)', degerler: bilesik },
-            { ad: 'Basit faiz', renk: 'var(--data-2)', degerler: basit }
+            { ad: 'Bileşik getiri', renk: SERI[0], degerler: bilesik },
+            { ad: 'Basit faiz', renk: SERI[1], degerler: basit }
           ],
-          bicim: formatTL, aciklama: '10.000 TL\'nin basit ve bileşik getiriyle büyümesi'
+          bicim: formatTL, baglam: i => i ? 'Fark, yani faizin faizi: ' + formatTL(bilesik[i] - basit[i]) : 'Başlangıç', aciklama: '10.000 TL\'nin basit ve bileşik getiriyle büyümesi'
         });
         tablo.replaceChildren(tabloGorunumu(['Yıl', 'Bileşik', 'Basit'], yillar.map(i => [i, formatTL(bilesik[i]), formatTL(basit[i])])));
       };
@@ -111,10 +111,10 @@
         grafik(grafikKap, {
           tur: 'cizgi', etiketler: yillar.map(i => i === 0 ? 'Bugün' : i + '. yıl'), xAdim: 2, sonEtiket: true,
           seriler: [
-            { ad: 'Birikimin', renk: 'var(--data-1)', degerler: birikim },
-            { ad: 'Aynı alım gücü için gereken', renk: 'var(--data-2)', degerler: gereken }
+            { ad: 'Birikimin', renk: SERI[0], degerler: birikim },
+            { ad: 'Aynı alım gücü için gereken', renk: SERI[1], degerler: gereken }
           ],
-          bicim: formatTL, aciklama: 'Nominal birikim ile alım gücünü korumak için gereken tutar'
+          bicim: formatTL, baglam: i => i ? (birikim[i] >= gereken[i] ? 'Alım gücü korunuyor' : 'Alım gücü eriyor') + ': fark ' + formatTL(Math.abs(birikim[i] - gereken[i])) : 'Başlangıç', aciklama: 'Nominal birikim ile alım gücünü korumak için gereken tutar'
         });
         tablo.replaceChildren(tabloGorunumu(['Yıl', 'Birikimin', 'Gereken'], yillar.map(i => [i, formatTL(birikim[i]), formatTL(gereken[i])])));
       };
@@ -163,7 +163,7 @@
     miniHesap,
     el('div', { className: 'key-takeaway' }, el('span', { className: 'overline' }, 'Nelere dikkat?'), el('p', {}, t.degerlendir)),
     d.derin ? el('details', { className: 'deep-dive kv-derin' }, el('summary', {}, 'Daha derin'), el('div', {}, ...paragraflar(d.derin))) : null,
-    d.kaynaklar ? bolum('kaynak', 'Kaynaklar', el('ul', { className: 'kv-kaynaklar' }, ...d.kaynaklar.map(k =>
+    d.kaynaklar ? bolum('kaynak', 'Kaynaklar', el('ul', { className: 'kaynakca' }, ...d.kaynaklar.map(k =>
       el('li', {}, el('a', { href: k.url, rel: 'noopener', target: '_blank' }, k.ad), k.not ? el('span', {}, k.not) : null)))) : null,
     ilgililer.length || sitede.length ? el('div', { className: 'ilgili kv-ilgili' },
       el('h2', {}, 'İlgili kavramlar'),
