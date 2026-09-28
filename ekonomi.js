@@ -1,4 +1,4 @@
-// Ana sayfa: hero'daki ekonomi ağı ve "Faiz değişince ne olur?" zinciri.
+// Ekonomi görselleri: ekonomi ağı (ana sayfa) ve "Faiz değişince ne olur?" zinciri (ana sayfa, kavram sayfası).
 // Veri: ekonomi-veri.js (EKONOMI_AGI, FAIZ_ZINCIRI)
 
 (() => {
