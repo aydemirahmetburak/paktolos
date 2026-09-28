@@ -59,6 +59,73 @@ function initReveal() {
   items.forEach(el => observer.observe(el));
 }
 
+// ============================================
+// OKUMA LİSTESİ VE SON BAKILANLAR
+// Kavram, rehber, harita ve araçlar kaydedilebilir; liste Karnem'de.
+// Her şey yalnızca bu tarayıcıda tutulur.
+// ============================================
+const KAYIT_KEY = 'paktolos-kayitli';
+const GECMIS_KEY = 'paktolos-gecmis';
+const MAKALE_KEY = 'paktolos-makaleler';
+const KAYDET_SIMGE = '<path d="M7 4.5h10a1 1 0 0 1 1 1V20l-6-4-6 4V5.5a1 1 0 0 1 1-1z"/>';
+
+function kayitlar() { return store.get(KAYIT_KEY, []); }
+function kayitliMi(id) { return kayitlar().some(k => k.id === id); }
+function kaydiDegistir(oge) {
+  const liste = kayitlar();
+  const i = liste.findIndex(k => k.id === oge.id);
+  if (i >= 0) liste.splice(i, 1);
+  else liste.unshift({ ...oge, t: Date.now() });
+  store.set(KAYIT_KEY, liste);
+  document.dispatchEvent(new CustomEvent('paktolos:ilerleme'));
+  return i < 0;
+}
+
+// { id, baslik, tur, aciklama, href } → "Kaydet" düğmesi
+function kaydetDugmesi(oge) {
+  const simge = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  simge.setAttribute('viewBox', '0 0 24 24');
+  simge.setAttribute('class', 'ikon');
+  simge.setAttribute('aria-hidden', 'true');
+  simge.innerHTML = KAYDET_SIMGE;
+  const yazi = el('span');
+  const b = el('button', { type: 'button', className: 'btn btn-ikincil btn-kucuk kaydet-btn' }, simge, yazi);
+  const guncelle = () => {
+    const var_ = kayitliMi(oge.id);
+    b.setAttribute('aria-pressed', var_);
+    yazi.textContent = var_ ? 'Okuma listende' : 'Kaydet';
+  };
+  b.addEventListener('click', () => {
+    const eklendi = kaydiDegistir(oge);
+    guncelle();
+    showToast(eklendi ? 'Okuma listene eklendi' : 'Okuma listenden çıkarıldı');
+  });
+  guncelle();
+  return b;
+}
+
+// <span data-kaydet data-baslik="…" data-tur="Rehber" data-aciklama="…" data-href="…"></span>
+function initKaydet() {
+  document.querySelectorAll('[data-kaydet]').forEach(yer => {
+    const sayfa = location.pathname.split('/').pop() || 'index.html';
+    const href = yer.dataset.href || sayfa;
+    yer.replaceWith(kaydetDugmesi({
+      id: yer.dataset.kaydet || href,
+      baslik: yer.dataset.baslik || document.querySelector('h1')?.textContent.trim() || document.title,
+      tur: yer.dataset.tur || 'Sayfa',
+      aciklama: yer.dataset.aciklama || '',
+      href
+    }));
+  });
+}
+
+// Son bakılanlar: en yeni başta, tekrarsız, en fazla 10
+function gecmiseEkle(oge) {
+  const liste = store.get(GECMIS_KEY, []).filter(k => k.href !== oge.href);
+  liste.unshift({ ...oge, t: Date.now() });
+  store.set(GECMIS_KEY, liste.slice(0, 10));
+}
+
 // Uzun sayfalarda okuma ilerlemesi: menünün altında ince bir çizgi ve
 // kaydırırken beliren "kalan süre". <main data-okuma> olan sayfalarda çalışır.
 function initOkuma() {
@@ -68,16 +135,24 @@ function initOkuma() {
   const kelime = main.textContent.trim().split(/\s+/).length; // kapalı bölümler de okunur
   const toplamDk = kelime / 190;
   document.querySelectorAll('[data-okuma-sure]').forEach(d => { d.textContent = Math.max(1, Math.round(toplamDk)) + ' dk'; });
+  gecmiseEkle({ baslik: document.querySelector('h1')?.innerText.replace(/\s+/g, ' ').trim() || document.title, tur: 'Rehber', href: location.pathname.split('/').pop() });
   const cizgi = el('div', { className: 'okuma', 'aria-hidden': 'true' });
   const sure = el('div', { className: 'okuma-sure', 'aria-hidden': 'true' });
   bar.append(cizgi, sure);
-  let zaman = 0, bekleyen = false;
+  let zaman = 0, bekleyen = false, tamamlandi = false;
   const guncelle = () => {
     bekleyen = false;
     const bas = main.offsetTop, son = main.offsetTop + main.offsetHeight - innerHeight;
     const p = Math.max(0, Math.min(1, (scrollY - bas + innerHeight * 0.3) / Math.max(1, son - bas)));
     cizgi.style.setProperty('--okuma', p.toFixed(4));
     const kalan = Math.ceil(toplamDk * (1 - p));
+    // Sonuna gelinen rehber okunmuş sayılır (Karnem)
+    if (p > 0.92 && !tamamlandi) {
+      tamamlandi = true;
+      const sayfa = location.pathname.split('/').pop();
+      const okunan = new Set(store.get(MAKALE_KEY, []));
+      if (!okunan.has(sayfa)) { okunan.add(sayfa); store.set(MAKALE_KEY, [...okunan]); }
+    }
     sure.textContent = p > 0.98 ? 'Bitti' : kalan <= 1 ? '1 dk kaldı' : kalan + ' dk kaldı';
   };
   addEventListener('scroll', () => {
@@ -1464,6 +1539,7 @@ initSekmeler();
 initPopover();
 initGostergeler();
 initKavramKartlari();
+initKaydet();
 initOkuma();
 initCalculator();
 initHomeDaily();

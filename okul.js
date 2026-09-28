@@ -401,6 +401,9 @@ const ROZETLER = [
     kosul: s => s.enUzunSeri >= 30 }
 ];
 
+const TEMEL_KAVRAMLAR = ['enflasyon', 'faiz', 'bilesik-getiri', 'risk-getiri', 'likidite', 'tahvil-bono', 'hisse-senedi', 'yatirim-fonu'];
+const REHBER_SAYFALARI = ['ogren.html', 'analiz.html', 'sektorler.html', 'hikaye.html'];
+
 function karneOzeti() {
   const ilerleme = dersIlerleme();
   const gunluk = gunlukDurum();
@@ -413,6 +416,9 @@ function karneOzeti() {
     soru: store.get('paktolos-sorular', []).length,
     soruToplam: typeof SORULAR_KUTUPHANE !== 'undefined' ? SORULAR_KUTUPHANE.length : 0,
     test: store.get('paktolos-test-en-iyi', 0) || 0,
+    rehber: store.get(MAKALE_KEY, []).filter(h => REHBER_SAYFALARI.includes(h)).length,
+    rehberToplam: REHBER_SAYFALARI.length,
+    kayit: kayitlar().length,
     lab: store.get('paktolos-lab', []).length,
     checkup: !!store.get('paktolos-checkup', null),
     seri: gunluk.seri,
@@ -446,11 +452,58 @@ function initKarnem() {
         kutu('dersler.html', 'Dersler', s.ders, s.dersToplam),
         kutu('sozluk.html', 'Keşfedilen kavram', s.kavram, s.kavramToplam),
         kutu('sorular.html', 'Okunan soru', s.soru, s.soruToplam),
-        kutu('test.html', 'Test en iyi skor', s.test, 10))
+        kutu('test.html', 'Test en iyi skor', s.test, 10),
+        kutu('rehberler.html', 'Okunan rehber', s.rehber, s.rehberToplam),
+        kutu('#okuma-listesi', 'Okuma listesi', s.kayit, 0))
     );
 
-    // Sıradaki adım
+    // Finansal temeller: sekiz temel kavram ve kişisel finans dersleri
     const ilerleme = dersIlerleme();
+    const okunan = new Set(store.get('paktolos-okunan', []));
+    const kisisel = typeof DERSLER !== 'undefined' ? DERSLER.filter(d => d.yol === 'kisisel') : [];
+    const temelBitti = TEMEL_KAVRAMLAR.filter(id => okunan.has(id)).length + kisisel.filter(d => ilerleme[d.id] && ilerleme[d.id].tamam).length;
+    const temelToplam = TEMEL_KAVRAMLAR.length + kisisel.length;
+    const yuzde = temelToplam ? Math.round(temelBitti / temelToplam * 100) : 0;
+    const eksik = TEMEL_KAVRAMLAR.find(id => !okunan.has(id));
+    const eksikTerim = eksik && typeof SOZLUK !== 'undefined' ? SOZLUK.find(t => t.id === eksik) : null;
+    document.getElementById('temeller').replaceChildren(...[
+      el('div', { className: 'karne-temel-bas' },
+        el('strong', {}, 'Finansal temeller'),
+        el('span', {}, '%' + yuzde + ' tamamlandı')),
+      el('div', { className: 'progress', role: 'progressbar', 'aria-valuenow': String(yuzde), 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-label': 'Finansal temeller' },
+        el('span', { style: '--deger: ' + yuzde + '%' })),
+      el('p', { className: 'govde-kucuk' }, temelBitti + ' / ' + temelToplam + ' · sekiz temel kavram ve kişisel finans dersleri',
+        eksikTerim ? el('span', {}, ' · Sıradaki: ', el('a', { href: 'kavram.html?k=' + eksikTerim.id }, eksikTerim.terim)) : null)
+    ].filter(Boolean));
+
+    // Okuma listesi
+    const liste = kayitlar();
+    const listeKok = document.getElementById('okuma-listesi');
+    if (!liste.length) {
+      listeKok.replaceChildren(el('div', { className: 'card empty-state' },
+        svgIkon(KAYDET_SIMGE),
+        el('h3', {}, 'Henüz kaydettiğin bir içerik yok.'),
+        el('p', {}, 'Kavram, rehber ve araç sayfalarındaki “Kaydet” düğmesiyle buraya ekleyebilirsin.'),
+        el('a', { className: 'btn btn-ikincil btn-kucuk', href: 'rehberler.html' }, 'İçerikleri keşfet')));
+    } else {
+      listeKok.replaceChildren(...liste.map(k => el('div', { className: 'card okuma-oge' },
+        el('a', { href: k.href },
+          el('span', { className: 'overline' }, k.tur || 'Sayfa'),
+          el('strong', {}, k.baslik),
+          k.aciklama ? el('span', { className: 'govde-kucuk' }, k.aciklama) : null),
+        el('button', { type: 'button', className: 'icon-btn', 'aria-label': k.baslik + ' listeden çıkar', onclick: () => {
+          kaydiDegistir(k);
+          showToast('Okuma listenden çıkarıldı');
+        } }, svgIkon('<path d="M6 6l12 12M18 6L6 18"/>')))));
+    }
+
+    // Son baktıkların
+    const gecmis = store.get(GECMIS_KEY, []).slice(0, 6);
+    document.getElementById('son-bakilan-bas').hidden = !gecmis.length;
+    document.getElementById('son-bakilan').replaceChildren(...gecmis.map(k =>
+      el('a', { className: 'son-oge', href: k.href }, el('span', { className: 'overline' }, k.tur || 'Sayfa'), el('span', {}, k.baslik))));
+
+    // Sıradaki adım
     const siradaki = DERSLER.find(d => !(ilerleme[d.id] && ilerleme[d.id].tamam));
     const adim = document.getElementById('next-step');
     adim.replaceChildren(...(siradaki
@@ -473,8 +526,8 @@ function initKarnem() {
   }
 
   document.getElementById('reset-progress').addEventListener('click', () => {
-    if (!confirm('Tüm ilerlemen (dersler, okunan kavram ve sorular, test skoru, günlük seri, laboratuvar ve check-up kayıtları) bu cihazdan silinecek. Emin misin?')) return;
-    ['paktolos-dersler', 'paktolos-okunan', 'paktolos-sorular', 'paktolos-test-en-iyi', 'paktolos-gunluk', 'paktolos-lab', 'paktolos-checkup']
+    if (!confirm('Tüm ilerlemen (dersler, okunan kavram, soru ve rehberler, test skoru, günlük seri, okuma listen, son baktıkların, laboratuvar ve check-up kayıtları) bu cihazdan silinecek. Emin misin?')) return;
+    ['paktolos-dersler', 'paktolos-okunan', 'paktolos-sorular', 'paktolos-test-en-iyi', 'paktolos-gunluk', 'paktolos-lab', 'paktolos-checkup', KAYIT_KEY, GECMIS_KEY, MAKALE_KEY]
       .forEach(k => { try { localStorage.removeItem(k); } catch (e) { /* yok say */ } });
     ciz();
     initGununSorusu();

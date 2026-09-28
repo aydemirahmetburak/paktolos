@@ -23,6 +23,7 @@
     15. Anlam deseni: .anlam ("Bu ne anlama geliyor?")
     16. Durumlar: .empty-state, .error-state, .skeleton
     17. Simgeler
+    18. Okuma listesi: .kaydet-btn, .sayfa-eylem, .okuma-listesi, .son-bakilan
    ============================================ */
 
 /* ---------- 1. Yerleşim ---------- */
@@ -592,6 +593,35 @@ a.card:hover { box-shadow: var(--shadow-hairline), var(--shadow); transform: tra
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
+/* ---------- 18. Okuma listesi ve ilerleme ---------- */
+.sayfa-eylem { display: flex; flex-wrap: wrap; gap: var(--s-8); margin-top: var(--s-16); }
+.kaydet-btn .ikon { width: 18px; height: 18px; }
+.kaydet-btn[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.kaydet-btn[aria-pressed="true"] .ikon { fill: currentColor; }
+
+.karne-temel { display: grid; gap: var(--s-8); margin-top: var(--s-32); padding: var(--s-24); background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-m); }
+.karne-temel-bas { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-16); }
+.karne-temel-bas span { font-size: var(--text-small); color: var(--text-secondary); font-variant-numeric: tabular-nums; }
+.karne-temel .progress > span { background: var(--accent); }
+.karne-temel p { color: var(--text-secondary); }
+.karne-temel a { color: var(--accent); }
+.karne-bolum { margin-top: var(--s-64); }
+.karne-bolum[hidden], .son-bakilan:empty { display: none; }
+
+.okuma-listesi { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--s-16); }
+.okuma-listesi > .empty-state { grid-column: 1 / -1; }
+.okuma-oge { display: flex; align-items: flex-start; gap: var(--s-8); padding: var(--s-16) var(--s-8) var(--s-16) var(--s-24); }
+.okuma-oge > a { flex: 1; min-width: 0; display: grid; gap: var(--s-4); color: inherit; text-decoration: none; }
+.okuma-oge > a:hover strong { color: var(--accent); }
+.okuma-oge strong { font-weight: var(--weight-semibold); }
+.okuma-oge .govde-kucuk { color: var(--text-secondary); }
+.okuma-oge .icon-btn { flex: none; }
+
+.son-bakilan { display: grid; border-top: 1px solid var(--border); }
+.son-oge { display: flex; align-items: baseline; gap: var(--s-16); min-height: var(--touch); padding: var(--s-12) 0; border-bottom: 1px solid var(--border); color: var(--text-primary); text-decoration: none; }
+.son-oge .overline { flex: none; width: 96px; }
+.son-oge:hover { color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }

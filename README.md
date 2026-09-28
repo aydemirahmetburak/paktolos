@@ -111,7 +111,7 @@ paktolos/
 ├── kavram.html          # Kavram sayfası (kavram.html?k=enflasyon): katmanlı anlatım
 ├── ekonomi-haritasi.html # "Ekonomi nasıl çalışır?" etkileşimli haritası
 ├── test.html            # Kendini sına
-├── karnem.html          # Karnem: ilerleme, rozetler, günün sorusu
+├── karnem.html          # Karnem: ilerleme, finansal temeller, okuma listesi, son baktıkların
 │
 ├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
 ├── sozluk-veri.js       # Sözlükteki kavramlar
@@ -145,7 +145,7 @@ paktolos/
 
 ## Kullanıcı Verisi
 
-Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri, denenen laboratuvar senaryoları) ve check-up'a girilen rakamlar yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
+Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri, denenen laboratuvar senaryoları, okunan rehberler, okuma listesi ve son baktıkların) ve check-up'a girilen rakamlar yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
 
 ## İçerik Ekleme
 
@@ -154,7 +154,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle; "Neden?" (`aciklama`), "Gerçek hayatta" (`gercek`) ve ilgili kavramları (`kavramlar`) doldur.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
-- **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
+- **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" kilometre taşı senaryo sayısını kullanır.
 - **Yeni kaydırmalı infografik:** HTML'de `<section class="akis" data-akis="ad">` içine boş bir `.akis-sahne` ve her adım için bir `.akis-adim` yaz. `akis.js` içindeki `SAHNELER`'e aynı adla, verilen kaba görseli çizip adım numarasına göre güncelleyen bir fonksiyon ekle. Sahne her adımda durumu baştan çizmeli; kullanıcı adım atlayabilir. Metin HTML'de durduğu için JS kapalıyken de okunur.
 - **Yeni bileşen:** önce `tasarim/bilesenler.css`'e, sonra `tasarim.html` kataloğuna ekle.
 - **Grafikler:** `grafik.js` içindeki `grafik()` ya da başlık, not ve kaynakla sarılmış `grafikFigur()` bileşenini kullan; `baglam(i)` ile ipucuna anlam satırı ekle. Seri renkleri `SERI[0]` (`--data-1`) ve `SERI[1]` (`--data-2`); renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
@@ -180,6 +180,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 - [x] "Aklına takılan" soru kütüphanesi (25 soru, 5 konu)
 - [x] Paktolos Okulu (7 ders), Karnem, rozetler ve günün sorusu
+- [x] Okuma listesi: kavram, rehber, harita ve araçlarda "Kaydet"; Karnem'de finansal temeller ilerlemesi ve son baktıkların
 - [x] Şirket laboratuvarı: 8 senaryo, canlı gelir tablosu, bilanço ve nakit akışı
 - [x] Finansal check-up: dört göstergede kişisel finans durumu
 - [x] "Damla" sayfa geçişi, kaydırmalı infografikler, etkileşimli oran tablosu ve sektör haritası
