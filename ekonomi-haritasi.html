@@ -13,8 +13,8 @@
 <link rel="stylesheet" href="tasarim/tokenlar.css">
 <link rel="stylesheet" href="tasarim/bilesenler.css">
 <script src="tema.js"></script>
-<meta name="description" content="Enflasyon, faiz, kur ve büyüme: dört göstergenin ne ölçtüğü, nereden bakılacağı ve senin için ne anlama geldiği.">
-<title>Ekonomi — Paktolos</title>
+<meta name="description" content="Ekonomi nasıl çalışır? Hanehalkı, şirketler, bankalar, Merkez Bankası, devlet ve sermaye piyasaları arasındaki para, kredi ve sermaye akışlarını keşfet.">
+<title>Ekonomi nasıl çalışır? — Paktolos</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -47,67 +47,33 @@
   </nav>
 
   <main>
-    <section class="sayfa-hero sayfa-genis">
-      <span class="overline reveal">Ekonomi</span>
-      <h1 class="reveal">Ekonomi, günlük hayatının arka planıdır.</h1>
-      <p class="govde-giris reveal">Enflasyon, faiz, kur ve büyüme. Haberlerde her gün duyduğun dört göstergenin ne ölçtüğünü, nereden bakılacağını ve senin için ne anlama geldiğini öğren.</p>
-      <div class="hero-eylemler reveal"><a class="btn btn-birincil" href="ekonomi-haritasi.html">Ekonomi nasıl çalışır? Haritayı aç</a></div>
+    <section class="sayfa-hero sayfa-genis eh-hero">
+      <nav class="breadcrumbs" aria-label="Konum"><ol><li><a href="index.html">Ana sayfa</a></li><li><a href="ekonomi.html">Ekonomi</a></li><li aria-current="page">Ekonomi nasıl çalışır?</li></ol></nav>
+      <span class="overline">Etkileşimli harita</span>
+      <h1>Ekonomi nasıl çalışır?</h1>
+      <p class="govde-giris">Altı oyuncu, aralarında dönen para, kredi ve sermaye. Birine dokun; ne yaptığını, neyi kontrol ettiğini ve diğerlerini nasıl etkilediğini gör.</p>
     </section>
 
-    <section class="bolum" id="gostergeler">
-      <div class="sayfa-genis">
-        <header class="section-header">
-          <span class="overline">Dört gösterge</span>
-          <h2 class="reveal">Rakamın kendisi değil, anlamı.</h2>
-          <p>Paktolos veri yayınlamaz. Güncel değeri resmî kaynağından al; burada o rakamı nasıl okuyacağını öğren.</p>
-        </header>
-        <div class="izgara" data-gostergeler="tam"><noscript><p class="govde-kucuk">Göstergeleri görmek için JavaScript gerekir.</p></noscript></div>
+    <section class="sayfa-genis eh-bolum">
+      <div id="ekonomi-haritasi" class="ekonomi-haritasi">
+        <noscript><p>Haritayı görmek için JavaScript gerekir.</p></noscript>
       </div>
+      <p class="eh-not">Basitleştirilmiş bir modeldir. Gerçek ekonomide dış dünya (ihracat, ithalat, yabancı sermaye) ve pek çok başka kurum da vardır.</p>
     </section>
 
-    <section class="bolum bolum-ayrac" id="kavramlar">
-      <div class="sayfa-genis">
-        <header class="section-header">
-          <span class="overline">Temel kavramlar</span>
-          <h2 class="reveal">Haberi anlamak için gereken kelimeler.</h2>
-          
-        </header>
-        <div class="izgara" data-kavramlar="enflasyon,alim-gucu,faiz,reel-getiri,politika-faizi,doviz-kuru,gsyh,resesyon,cari-acik" data-sutun="k-4"></div>
-      </div>
-    </section>
-
-    <section class="bolum bolum-ayrac" id="dersler">
-      <div class="sayfa-genis">
-        <header class="section-header">
-          <span class="overline">Dersler</span>
-          <h2 class="reveal">Beş dakikada temeller.</h2>
-          
-        </header>
-        <div class="izgara">
-          <a class="card article-card k-6" href="dersler.html#enflasyon"><span class="overline">Ders · 5 dk</span><h3>Enflasyon ve alım gücü</h3><p>Paranın değeri neden sabit kalmaz ve bunu nasıl ölçeriz?</p><span class="meta">Etkileşimli, ara sorulu</span></a>
-          <a class="card article-card k-6" href="dersler.html#faiz"><span class="overline">Ders · 5 dk</span><h3>Faiz ve bileşik getiri</h3><p>Faizin faizi: zaman nasıl en güçlü yatırım aracına dönüşür?</p><span class="meta">Etkileşimli, ara sorulu</span></a>
+    <section class="makale-son">
+      <div class="okuma-genislik">
+        <div class="key-takeaway"><span class="overline">Akılda kalsın</span><p>Ekonomide hiçbir karar tek başına kalmaz. Bir kurumun kararı, akışlar üzerinden diğerlerine yayılır; etkisi çoğu zaman gecikmeli ve dolaylıdır.</p></div>
+        <div class="ilgili">
+          <h2>Devamı</h2>
+          <div class="ilgili-liste"><a class="tag" href="ekonomi.html">Dört gösterge</a><a class="tag" href="kavram.html?k=politika-faizi">Politika faizi</a><a class="tag" href="kavram.html?k=enflasyon">Enflasyon</a><a class="tag" href="dersler.html#faiz">Faiz dersi</a></div>
         </div>
+        <section class="kaynakca-bolum" aria-labelledby="kaynakca-eh">
+          <h2 id="kaynakca-eh">Kaynaklar</h2>
+          <ul class="kaynakca"><li><a href="https://www.tcmb.gov.tr" rel="noopener" target="_blank">Türkiye Cumhuriyet Merkez Bankası</a><span>Para politikası ve parasal aktarım</span></li><li><a href="https://www.hmb.gov.tr" rel="noopener" target="_blank">Hazine ve Maliye Bakanlığı</a><span>Maliye politikası ve kamu borçlanması</span></li><li><a href="https://www.spk.gov.tr" rel="noopener" target="_blank">Sermaye Piyasası Kurulu</a><span>Sermaye piyasalarının düzenlenmesi</span></li></ul>
+        </section>
       </div>
     </section>
-
-    <section class="bolum bolum-ayrac" id="haber">
-      <div class="sayfa-genis">
-        <header class="section-header">
-          <span class="overline">Haberi anla</span>
-          <h2 class="reveal">Manşetin arkasında ne var?</h2>
-          <p>Ekonomi haberlerinde sık geçen cümleler ve sana dokunan tarafları.</p>
-        </header>
-        <div class="izgara">
-          <a class="card article-card k-4" href="sorular.html#baz-puan"><span class="overline">Aklına takılan</span><h3>&quot;Merkez Bankası politika faizini 250 baz puan artırdı.&quot; Ne demek?</h3><p>100 baz puan, 1 puan demektir. Yani faiz 2,5 puan arttı; örneğin %40&#x27;tan %42,5&#x27;e çıktı. Bu karar genellikle kredileri pahalandırır, mevduat faizlerini yükseltir ve enflasyonu düşürmeyi amaçlar.</p></a>
-          <a class="card article-card k-4" href="sorular.html#enflasyon-dustu"><span class="overline">Aklına takılan</span><h3>&quot;Yıllık enflasyon düştü.&quot; Ama fiyatlar neden hâlâ artıyor?</h3><p>Enflasyonun düşmesi, fiyatların düşmesi değil, daha yavaş artması demektir. Yıllık enflasyon %60&#x27;tan %40&#x27;a düştüğünde fiyatlar hâlâ bir yıl öncesine göre %40 daha yüksektir.</p></a>
-          <a class="card article-card k-4" href="sorular.html#dolar-rekor"><span class="overline">Aklına takılan</span><h3>&quot;Dolar/TL rekor kırdı.&quot; Bu beni nasıl etkiler?</h3><p>Kur artışı, ithal ürünlerin ve dövize bağlı fiyatların TL karşılığını artırır; bu da zamanla enflasyona yansır. Döviz borcu olanlar zarar görürken, ihracat yapan şirketler ve dövizde birikimi olanlar TL bazında kazanır.</p></a>
-          <a class="card article-card k-4" href="sorular.html#resesyon-haberi"><span class="overline">Aklına takılan</span><h3>&quot;Ekonomi daraldı, resesyon kapıda.&quot; Ne demek?</h3><p>Ekonominin toplam üretimi (GSYH) bir önceki döneme göre küçüldü demektir. Arka arkaya iki çeyrek daralma yaygın olarak resesyon olarak adlandırılır. Bu dönemlerde işsizlik ve şirket kârları genellikle olumsuz etkilenir.</p></a>
-          <a class="card article-card k-4" href="sorular.html#zam-fakir"><span class="overline">Aklına takılan</span><h3>Zam aldım, ama neden daha fakir hissediyorum?</h3><p>Zam oranın, harcadığın şeylerin fiyat artışından düşükse, maaşının rakamı artsa bile alım gücün azalır. Buna ek olarak yıl içinde üst vergi dilimine geçmek de net maaşını düşürebilir.</p></a>
-          <a class="card article-card k-4" href="sorular.html#enflasyonda-birikim"><span class="overline">Aklına takılan</span><h3>Enflasyon yüksekken birikimimi nasıl korurum?</h3><p>Amaç, rakamın değil alım gücünün korunması; yani birikimin enflasyondan hızlı büyümesi. Bunu garanti eden tek bir araç yoktur; her birinin getirisi farklı bir riske dayanır.</p></a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>
@@ -139,6 +105,7 @@
   <script src="sozluk-veri.js"></script>
   <script src="ekonomi-veri.js"></script>
   <script src="script.js"></script>
+  <script src="harita.js"></script>
 
 </body>
 </html>

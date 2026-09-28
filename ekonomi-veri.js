@@ -90,3 +90,93 @@ const EKONOMI_AGI = {
     { a: 'piyasalar', b: 'enflasyon', metin: 'Kurdaki hareket, ithal ürünler yoluyla fiyatlara yansır.' }
   ]
 };
+
+// "Ekonomi nasıl çalışır?" haritası (ekonomi-haritasi.html)
+// Altı oyuncu ve aralarındaki para, kredi ve sermaye akışları. Basitleştirilmiştir:
+// gerçek ekonomide dış dünya (ihracat, ithalat, yabancı sermaye) da vardır.
+// tur: 'para' (düz çizgi) | 'kredi' (kesikli) | 'sermaye' (noktalı)
+// bukum: akışın kavis miktarı (piksel, işaretli); karşılıklı akışlar kendiliğinden iki yana ayrılır.
+const EKONOMI_HARITASI = {
+  dugumler: [
+    { id: 'devlet', ad: 'Devlet', rol: 'Maliye politikası', x: 130, y: 120,
+      ne: 'Vergi toplar; eğitim, sağlık, altyapı ve sosyal destekler için harcama yapar.',
+      kontrol: 'Vergi oranlarını, kamu harcamalarını ve borçlanmayı belirler. Buna maliye politikası denir.',
+      etkiler: [
+        ['hanehalki', 'Vergiler harcanabilir geliri azaltır; transferler ve kamu hizmetleri destekler.'],
+        ['sirketler', 'Vergi, teşvik ve kamu alımlarıyla şirketlerin kârını ve yatırımını etkiler.'],
+        ['piyasalar', 'Açığını kapatmak için tahvil çıkarır; yüksek borçlanma, faizleri yukarı itebilir.']],
+      kavramlar: ['tahvil-bono', 'gsyh', 'gelir-vergisi-dilimi'] },
+    { id: 'merkez', ad: 'Merkez Bankası', rol: 'Para politikası', x: 400, y: 50,
+      ne: 'Para politikasını yönetir. Temel amacı fiyat istikrarıdır.',
+      kontrol: 'Politika faizini belirler, bankaların likiditesini ayarlar ve döviz rezervlerini yönetir.',
+      etkiler: [
+        ['bankalar', 'Bankaların fonlama maliyetini belirler; bu da kredi ve mevduat faizlerine yansır.'],
+        ['hanehalki', 'Faiz ve beklentiler üzerinden harcama ve birikim kararlarını etkiler.'],
+        ['piyasalar', 'Faiz kararları hisse, tahvil ve döviz fiyatlarını hareketlendirir.']],
+      kavramlar: ['politika-faizi', 'enflasyon', 'doviz-kuru'] },
+    { id: 'piyasalar', ad: 'Sermaye piyasaları', rol: 'Hisse, tahvil, fon', x: 670, y: 120,
+      ne: 'Hisse, tahvil ve fonların alınıp satıldığı yerdir; birikimi yatırıma yönlendirir.',
+      kontrol: 'Kimse tek başına kontrol etmez: fiyatlar alıcı ve satıcıların beklentileriyle oluşur. SPK düzenler ve denetler.',
+      etkiler: [
+        ['sirketler', 'Banka kredisine alternatif sermaye sağlar.'],
+        ['hanehalki', 'Birikimi büyütme imkânı sunar; karşılığında risk taşır.'],
+        ['devlet', 'Devletin borçlanmasını finanse eder; tahvil faizleri ekonomiye dair beklentileri yansıtır.']],
+      kavramlar: ['hisse-senedi', 'tahvil-bono', 'yatirim-fonu'] },
+    { id: 'bankalar', ad: 'Bankalar', rol: 'Mevduat ve kredi', x: 400, y: 300,
+      ne: 'Mevduat toplar, kredi verir ve ödemelerin dolaşmasını sağlar.',
+      kontrol: 'Kime, hangi faizle ve ne kadar kredi vereceğine karar verir.',
+      etkiler: [
+        ['hanehalki', 'Kredi faizleri konut, taşıt ve ihtiyaç harcamalarını hızlandırır ya da yavaşlatır.'],
+        ['sirketler', 'Kredi, şirketlerin yatırımını ve işletme sermayesini finanse eder.'],
+        ['merkez', 'Politika faizini ekonomiye taşıyan ilk halkadır. Kredi verilirken yeni mevduat da oluşur; bu yüzden kredi büyümesi dolaşımdaki parayı artırır.']],
+      kavramlar: ['faiz', 'vadeli-mevduat', 'kredi-notu'] },
+    { id: 'hanehalki', ad: 'Hanehalkı', rol: 'Çalışır, harcar, biriktirir', x: 150, y: 510,
+      ne: 'Çalışır, harcar, biriktirir ve borçlanır. Ekonomideki harcamanın en büyük kaynağıdır.',
+      kontrol: 'Ne kadar harcayacağına, ne kadar biriktireceğine ve birikimini nereye koyacağına karar verir.',
+      etkiler: [
+        ['sirketler', 'Harcaması, şirketlerin satışıdır.'],
+        ['bankalar', 'Mevduatı, bankaların kaynaklarının önemli bir parçasıdır.'],
+        ['devlet', 'Gelir ve harcamaları üzerinden vergi öder.'],
+        ['piyasalar', 'Birikimini hisse, tahvil ya da fona yatırabilir.']],
+      kavramlar: ['butce', 'enflasyon', 'vadeli-mevduat'] },
+    { id: 'sirketler', ad: 'Şirketler', rol: 'Üretir, istihdam eder', x: 650, y: 510,
+      ne: 'Mal ve hizmet üretir, istihdam yaratır ve yatırım yapar.',
+      kontrol: 'Fiyatlarına, üretimine, yatırımına ve kaç kişi çalıştıracağına karar verir.',
+      etkiler: [
+        ['hanehalki', 'Maaş öder ve istihdam sağlar.'],
+        ['bankalar', 'Yatırım ve işletme sermayesi için kredi kullanır.'],
+        ['piyasalar', 'Hisse ve tahvil çıkararak sermaye toplar; kâr payı dağıtır.'],
+        ['devlet', 'Kazancı üzerinden vergi öder.']],
+      kavramlar: ['hisse-senedi', 'favok', 'bilanco'] }
+  ],
+  akislar: [
+    { id: 'likidite', a: 'merkez', b: 'bankalar', tur: 'para', ad: 'Likidite ve politika faizi' },
+    { id: 'mevduat', a: 'hanehalki', b: 'bankalar', tur: 'para', ad: 'Mevduat' },
+    { id: 'kredi-hane', a: 'bankalar', b: 'hanehalki', tur: 'kredi', ad: 'Tüketici kredisi' },
+    { id: 'kredi-sirket', a: 'bankalar', b: 'sirketler', tur: 'kredi', ad: 'Ticari kredi' },
+    { id: 'harcama', a: 'hanehalki', b: 'sirketler', tur: 'para', ad: 'Harcama' },
+    { id: 'maas', a: 'sirketler', b: 'hanehalki', tur: 'para', ad: 'Maaş' },
+    { id: 'vergi-hane', a: 'hanehalki', b: 'devlet', tur: 'para', ad: 'Vergi' },
+    { id: 'transfer', a: 'devlet', b: 'hanehalki', tur: 'para', ad: 'Kamu hizmeti ve destekler' },
+    { id: 'vergi-sirket', a: 'sirketler', b: 'devlet', tur: 'para', ad: 'Vergi', bukum: 150 },
+    { id: 'yatirim', a: 'hanehalki', b: 'piyasalar', tur: 'sermaye', ad: 'Yatırım', bukum: 110 },
+    { id: 'getiri', a: 'piyasalar', b: 'hanehalki', tur: 'sermaye', ad: 'Kâr payı ve faiz getirisi', bukum: 110 },
+    { id: 'sermaye', a: 'piyasalar', b: 'sirketler', tur: 'sermaye', ad: 'Hisse ve tahvil ile sermaye' },
+    { id: 'kar-payi', a: 'sirketler', b: 'piyasalar', tur: 'sermaye', ad: 'Kâr payı ve faiz ödemesi' },
+    { id: 'borclanma', a: 'piyasalar', b: 'devlet', tur: 'kredi', ad: 'Devlet tahvili ile borçlanma', bukum: 30 }
+  ],
+  senaryolar: {
+    faiz: {
+      ad: 'Faiz artarsa ne olur?',
+      adimlar: [
+        { akislar: ['likidite'], metin: 'Merkez Bankası politika faizini artırır. Bankaların fonlanma maliyeti yükselir.' },
+        { akislar: ['kredi-hane', 'kredi-sirket'], metin: 'Bankalar kredi faizlerini artırır. Borç almak hem haneler hem şirketler için pahalılaşır.' },
+        { akislar: ['mevduat'], metin: 'Mevduat faizleri de yükselir. Parayı harcamak yerine bankada tutmak cazipleşir.' },
+        { akislar: ['harcama'], metin: 'Harcama ve yatırım yavaşlar. Şirketlerin satışları ve yatırım iştahı azalır.' },
+        { akislar: ['yatirim', 'sermaye'], metin: 'Yüksek faiz, hisse ve tahvil fiyatlarını aşağı çekebilir. Şirketlerin sermaye toplaması zorlaşır.' },
+        { akislar: ['borclanma'], metin: 'Devletin borçlanma maliyeti de artar.' }
+      ],
+      sonuc: 'Hedef: talep yavaşlayarak fiyat artışlarının frenlenmesi. Bedel: büyüme ve istihdam üzerinde baskı. Etkiler aylar içinde, zamanlamaya ve beklentilere bağlı olarak yayılır.'
+    }
+  }
+};
