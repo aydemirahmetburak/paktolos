@@ -152,7 +152,8 @@
         el('li', { 'aria-current': 'page' }, KATEGORILER[t.kategori]))),
     el('header', { className: 'kv-bas' },
       el('span', { className: 'overline' }, KATEGORILER[t.kategori]),
-      el('h1', {}, t.terim)),
+      el('h1', {}, t.terim),
+      el('div', { className: 'sayfa-eylem' }, kaydetDugmesi({ id: 'kavram:' + t.id, baslik: t.terim, tur: 'Kavram', aciklama: t.kisa, href: 'kavram.html?k=' + t.id }))),
     el('div', { className: 'simple-explanation kv-basitce' },
       el('span', { className: 'overline' }, 'Basitçe'),
       el('p', {}, t.kisa)),
@@ -173,4 +174,5 @@
       sonraki ? el('a', { className: 'card kv-sonraki', href: 'kavram.html?k=' + sonraki.id }, el('span', { className: 'overline' }, 'Sonraki'), el('strong', {}, sonraki.terim)) : el('span')),
     el('p', { className: 'kv-uyari govde-kucuk' }, 'Bu içerik eğitim amaçlıdır; yatırım tavsiyesi değildir.')
   ].filter(Boolean));
+  gecmiseEkle({ baslik: t.terim, tur: 'Kavram', href: 'kavram.html?k=' + t.id });
 })();
