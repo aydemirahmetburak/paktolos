@@ -21,7 +21,7 @@ NAV = [('dersler.html', 'Öğren'), ('ekonomi.html', 'Ekonomi'), ('piyasalar.htm
 TABS = [('index.html', 'Ana sayfa', 'ev'), ('dersler.html', 'Öğren', 'ogren'), ('ekonomi.html', 'Ekonomi', 'ekonomi'),
         ('piyasalar.html', 'Piyasalar', 'piyasa'), ('araclar.html', 'Araçlar', 'araclar')]
 # Menüde yeri olmayan sayfalar hangi bölümün altında sayılır
-SEKME_GRUBU = {'sozluk.html': 'dersler.html', 'test.html': 'dersler.html',
+SEKME_GRUBU = {'sozluk.html': 'dersler.html', 'test.html': 'dersler.html', 'kavram.html': 'dersler.html',
                'ogren.html': 'piyasalar.html', 'analiz.html': 'piyasalar.html', 'sektorler.html': 'piyasalar.html',
                'sorular.html': 'rehberler.html', 'hikaye.html': 'rehberler.html',
                'lab.html': 'araclar.html', 'checkup.html': 'araclar.html'}

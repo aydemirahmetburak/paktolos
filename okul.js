@@ -105,7 +105,7 @@ function dersOynaticisi() {
         el('h2', {}, ders.baslik),
         el('p', {}, dogru === sorular.length ? 'Tüm soruları doğru cevapladın.' : 'Kaçırdığın soruları geri dönüp yeniden görebilirsin.'),
         el('div', { className: 'lp-links' },
-          ...(ders.bag.kavramlar || []).filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'sozluk.html#' + id }, kavramlar.get(id))),
+          ...(ders.bag.kavramlar || []).filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'kavram.html?k=' + id }, kavramlar.get(id))),
           ders.bag.arac ? el('a', { className: 'qa-chip', href: ders.bag.arac.href }, ders.bag.arac.ad + ' ›') : null,
           ders.bag.ders ? el('a', { className: 'qa-chip', href: ders.bag.ders.href }, ders.bag.ders.ad + ' ›') : null)
       );

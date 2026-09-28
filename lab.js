@@ -330,7 +330,7 @@
   const oranDugum = ORANLAR.map(o => {
     const deger = el('span', { className: 'ratio-value' });
     const fark = el('span', { className: 'delta' });
-    oranKap.appendChild(el('a', { className: 'ratio', href: 'sozluk.html#' + o.kavram }, el('span', { className: 'ratio-name' }, o.ad), deger, fark));
+    oranKap.appendChild(el('a', { className: 'ratio', href: 'kavram.html?k=' + o.kavram }, el('span', { className: 'ratio-name' }, o.ad), deger, fark));
     return { deger, fark };
   });
 

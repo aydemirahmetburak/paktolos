@@ -108,11 +108,13 @@ paktolos/
 ├── checkup.html         # Finansal check-up: bütçe, acil durum fonu, borç yükü, birikim oranı
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
+├── kavram.html          # Kavram sayfası (kavram.html?k=enflasyon): katmanlı anlatım
 ├── test.html            # Kendini sına
 ├── karnem.html          # Karnem: ilerleme, rozetler, günün sorusu
 │
 ├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
 ├── sozluk-veri.js       # Sözlükteki kavramlar
+├── kavramlar-veri.js    # Seçili kavramların derin katmanı, görselleri ve kaynakları
 ├── sorular-veri.js      # "Aklına takılan" soruları
 ├── test-veri.js         # Test soruları
 ├── arama-veri.js        # Site geneli arama dizini (sayfa ve bölümler)
@@ -126,7 +128,8 @@ paktolos/
 ├── lab.js               # Laboratuvar arayüzü: kollar, senaryolar, canlı tablolar
 ├── checkup.js           # Finansal check-up hesapları ve göstergeleri
 ├── akis.js              # Kaydırmalı infografikler ve etkileşimli tablolar
-├── anasayfa.js          # Ana sayfa: ekonomi ağı ve faiz zinciri
+├── ekonomi.js           # Ekonomi ağı ve faiz zinciri görselleri
+├── kavram.js            # Kavram sayfasını katmanlı olarak çizer
 ├── ekonomi-veri.js      # Göstergeler, faiz zinciri ve ekonomi ağı (içerik)
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
@@ -143,7 +146,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 
 ## İçerik Ekleme
 
-- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
+- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; kavram sayfası (`kavram.html?k=id`) kendiliğinden oluşur. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
 - **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer.
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
@@ -179,7 +182,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] "Damla" sayfa geçişi, kaydırmalı infografikler, etkileşimli oran tablosu ve sektör haritası
 - [x] Tasarım sistemi v2: tokenlar, bileşen kütüphanesi, yeni bilgi mimarisi (Öğren, Ekonomi, Piyasalar, Rehberler, Araçlar)
 - [x] Ana sayfa: ekonomi ağı, dört gösterge, finansal temeller, "Faiz değişince ne olur?", veri hikâyesi, rehberler, araçlar
-- [ ] Kavram sistemi: katmanlı kavram sayfaları
+- [x] Kavram sistemi: 67 kavram için katmanlı sayfa; 12 temel kavramda derin katman, kaynaklar ve etkileşimli görsel
 - [ ] Makale deneyimi ve veri görselleştirme sistemi
 - [ ] "Ekonomi nasıl çalışır?" etkileşimli haritası
 - [ ] Hesaplayıcılar, test ve arama yenilemesi; kaydedilenler ve ilerleme

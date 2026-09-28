@@ -90,7 +90,7 @@ function tabloGorunumu(baslik, satirlar) {
 }
 
 function sozlukLink(id, metin) {
-  return el('a', { href: 'sozluk.html#' + id }, metin);
+  return el('a', { href: 'kavram.html?k=' + id }, metin);
 }
 
 // ============================================
