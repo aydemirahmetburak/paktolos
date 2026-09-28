@@ -1,56 +1,97 @@
 /* ============================================
    PAKTOLOS TASARIM SİSTEMİ — TOKENLAR
-   Kesinlik × Açıklık × Editoryal zekâ
+   Sıcak kâğıt üzerinde serif: editoryal, sakin, neredeyse renksiz.
 
    Tüm renk, yazı, boşluk, köşe, gölge ve hareket değerleri burada.
    Bileşenler yalnızca bu değişkenleri kullanır; doğrudan renk ya da
    rastgele boşluk yazılmaz. Karanlık mod, aynı adların ayrı ayrı seçilmiş
    değerleridir; ters çevirme değildir.
 
+   İlkeler
+   - Sistem %97 renksizdir. Tek sıcak vurgu şeftali (--peach) ve onun
+     mürekkebi (--peach-ink); sayfa başına en fazla bir şeftali kart.
+   - Birincil eylem mürekkep siyahı hap düğmedir; renkli düğme yoktur.
+   - Başlıklar Newsreader serif, her boyutta 400 ağırlık; kalın serif yok.
+   - Gövde Inter; ara ağırlıklar (430, 450, 480) kalına geçmeden sıralar.
+   - Kartlar düz ve gölgesizdir; yalnızca "yüzen" parçalar gölge taşır.
+   - Tüm metin renkleri her zeminde en az 4.5:1 kontrast verir.
+
    Belge: tasarim.html (canlı bileşen kataloğu)
    ============================================ */
 
+/* ---------- Yazı tipleri (SIL Open Font License, tasarim/fontlar) ----------
+   Yalnızca kullanılan ağırlık ve Türkçe harfler; toplam ~88 KB.
+   Başlık serifi "swap": geç gelse de mutlaka görünür (markanın sesi).
+   Gövde "optional": ilk çizime yetişmezse o sayfada sistem yazısı kalır;
+   uzun metin sonradan değişip sayfayı kaydırmaz. İkisi de önceden yüklenir. */
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fontlar/nr-normal-latin.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+2013-2026, U+2032, U+20BA, U+2190-2193, U+2212; }
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("fontlar/nr-normal-tr.woff2") format("woff2"); unicode-range: U+011E-011F, U+0130-0131, U+015E-015F; }
+@font-face { font-family: "Newsreader"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("fontlar/nr-italic-latin.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+2013-2026, U+2032, U+20BA, U+2190-2193, U+2212; }
+@font-face { font-family: "Newsreader"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("fontlar/nr-italic-tr.woff2") format("woff2"); unicode-range: U+011E-011F, U+0130-0131, U+015E-015F; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900; font-display: optional;
+  src: url("fontlar/inter-latin.woff2") format("woff2"); unicode-range: U+0020-007E, U+00A0-00FF, U+2013-2026, U+2032, U+20BA, U+2190-2193, U+2212; }
+@font-face { font-family: "Inter"; font-style: normal; font-weight: 100 900; font-display: optional;
+  src: url("fontlar/inter-tr.woff2") format("woff2"); unicode-range: U+011E-011F, U+0130-0131, U+015E-015F; }
+
 :root {
   /* ---------- Renk: yüzeyler ---------- */
-  --background: #F7F7F5;          /* sayfa zemini */
-  --surface: #FFFFFF;             /* kart, panel */
-  --surface-secondary: #EFEFEC;   /* girinti, alan, pasif */
-  --surface-elevated: #FFFFFF;    /* açılır pencere, ipucu */
-  --dark: #0B0C0E;                /* koyu bölüm zemini */
-  --dark-surface: #16171A;        /* koyu bölüm içindeki yüzey */
+  --background: #FFFFFF;          /* sayfa: beyaz kâğıt */
+  --background-alt: #FAFAFB;      /* dönüşümlü bölüm bandı */
+  --surface: #F2F2F3;             /* kart: sis grisi, gölgesiz */
+  --surface-secondary: #EBEBED;   /* kart içi girinti, iz, pasif */
+  --surface-elevated: #FFFFFF;    /* yüzen parça, açılır pencere, ipucu */
+  --dark: #17191C;                /* koyu bölüm zemini (mürekkep) */
+  --dark-surface: #222428;        /* koyu bölüm içindeki yüzey */
 
   /* ---------- Renk: metin ---------- */
-  --text-primary: #111214;
-  --text-secondary: #5E6065;
-  --text-muted: #6A6C71;          /* ikincil bilgi: her zeminde en az 4.5:1 */
-  --text-on-dark: #F5F5F2;
-  --text-on-dark-secondary: #9B9DA2;
+  --text-primary: #17191C;        /* mürekkep siyahı */
+  --text-secondary: #5C606A;      /* arduvaz: yardımcı metin */
+  --text-muted: #5F636D;          /* etiket, künye; her zeminde en az 4.5:1 */
+  --text-on-dark: #F2F2F3;
+  --text-on-dark-secondary: #A3A6AF;
   --text-on-accent: #FFFFFF;
 
   /* ---------- Renk: çizgi ---------- */
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.14);
+  --border: #ECECEC;
+  --border-strong: rgba(23, 25, 28, 0.16);
   --border-on-dark: rgba(255, 255, 255, 0.1);
 
   /* ---------- Renk: anlam ---------- */
-  --accent: #2457A6;              /* seyrek: bağlantı, birincil eylem, seçili */
-  --accent-hover: #1D4988;
-  --accent-soft: rgba(36, 87, 166, 0.08);
-  --accent-on-dark: #9CBDF0;      /* koyu zeminli bölümlerde vurgu metni */
-  --accent-ring: rgba(36, 87, 166, 0.35);
+  --accent: #17191C;              /* birincil eylem, seçili durum: mürekkep */
+  --accent-hover: #000000;
+  --accent-soft: rgba(23, 25, 28, 0.06);
+  --accent-on-dark: #F2F2F3;      /* koyu zeminli bölümlerde vurgu metni */
+  --accent-ring: rgba(23, 25, 28, 0.35);
+  --link: #17191C;                /* bağlantı: dinlenirken çizgisiz, üzerine gelince çizgili */
   --positive: #13704F;
   --positive-soft: rgba(19, 112, 79, 0.1);
   --negative: #A63E3E;
   --negative-soft: rgba(166, 62, 62, 0.1);
-  --caution: #855A0C;             /* "dikkat" durumu; yalnızca etiketle birlikte */
+  --caution: #7A520B;             /* "dikkat" durumu; yalnızca etiketle birlikte */
   --caution-soft: rgba(133, 90, 12, 0.1);
+
+  /* Sıcak vurgu: şeftali kart ve üzerindeki kahve mürekkep (9.3:1) */
+  --peach: #FBE1D1;
+  --peach-ink: #5D2A1A;
+
+  /* Işık huzmeleri: başlıkların arkasında yumuşak, bulanık renk */
+  --glow-warm: rgba(248, 170, 130, 0.55);
+  --glow-sun: rgba(252, 214, 170, 0.5);
+  --glow-rose: rgba(244, 184, 196, 0.4);
+  --glow-sage: rgba(196, 226, 190, 0.45);
+  --glow-violet: rgba(150, 110, 220, 0.45);
 
   /* Marka: yalnızca logo (ilk Lidya sikkesi) ve hikâye çizimleri */
   --brand: #FF6B35;
 
   /* ---------- Veri görselleştirme ----------
      İki seri: renk körlüğü, kontrast ve açıklık kontrolleri doğrulandı
-     (dataviz doğrulayıcı, açık ve koyu zemin ayrı ayrı). */
+     (dataviz doğrulayıcı, açık ve koyu zemin ayrı ayrı). Arayüz renksizdir;
+     renk yalnızca veride konuşur. */
   --data-1: #2457A6;              /* ana seri, toplam, giren */
   --data-2: #C4622D;              /* karşılaştırılan, düşülen, çıkan */
   --data-grid: rgba(0, 0, 0, 0.06);
@@ -65,41 +106,46 @@
   --data-neutral: #7C7E83;
 
   /* ---------- Tipografi ---------- */
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, Geist, "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
 
-  --text-hero: clamp(2.75rem, 7vw, 5.5rem);     /* 44 → 88 */
-  --text-section: clamp(2rem, 4.2vw, 3.5rem);   /* 32 → 56 */
-  --text-article: clamp(2.25rem, 4.6vw, 3.5rem);/* 36 → 56 */
-  --text-subheading: clamp(1.25rem, 2vw, 1.75rem); /* 20 → 28 */
-  --text-lead: clamp(1.1875rem, 1.8vw, 1.4375rem); /* 19 → 23 */
-  --text-title: 1.1875rem;        /* 19 — kart başlığı */
-  --text-body: clamp(1.0625rem, 0.3vw + 1rem, 1.125rem); /* 17 → 18 */
-  --text-small: 0.875rem;         /* 14 */
-  --text-caption: 0.8125rem;      /* 13 */
-  --text-overline: 0.75rem;       /* 12 — büyük harf etiket */
+  --text-hero: clamp(2.75rem, 7.2vw, 5.625rem);    /* 44 → 90, serif */
+  --text-section: clamp(2.125rem, 5vw, 4rem);      /* 34 → 64, serif */
+  --text-article: clamp(2.25rem, 5vw, 4rem);       /* 36 → 64, serif */
+  --text-heading: clamp(1.75rem, 3.4vw, 2.75rem);  /* 28 → 44, serif */
+  --text-subheading: clamp(1.25rem, 2vw, 1.625rem);/* 20 → 26 */
+  --text-lead: clamp(1.125rem, 1.6vw, 1.25rem);    /* 18 → 20 */
+  --text-title: 1.25rem;          /* 20 — kart başlığı */
+  --text-body: 1.0625rem;         /* 17 */
+  --text-small: 0.9375rem;        /* 15 */
+  --text-caption: 0.875rem;       /* 14 */
+  --text-overline: 0.875rem;      /* 14 — sessiz etiket, büyük harf değil */
 
   --weight-regular: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
+  --weight-book: 430;
+  --weight-medium: 450;
+  --weight-semibold: 500;         /* sistemdeki en kalın ağırlık */
+  --weight-bold: 500;
 
-  --leading-tight: 1.08;
-  --leading-snug: 1.25;
-  --leading-body: 1.6;
-  --tracking-display: -0.035em;
-  --tracking-heading: -0.022em;
-  --tracking-body: -0.011em;
-  --tracking-overline: 0.08em;
+  --leading-tight: 1.12;
+  --leading-snug: 1.3;
+  --leading-body: 1.55;
+  --tracking-display: -0.025em;
+  --tracking-heading: -0.015em;
+  --tracking-body: 0;
+  --tracking-overline: 0;
 
-  /* ---------- Boşluk: 8 noktalı ölçek ----------
-     İzin verilen değerler: 4 8 12 16 24 32 48 64 80 96 128 160 192 */
+  /* ---------- Boşluk: 4 noktalı ölçek ----------
+     İzin verilen değerler: 4 8 12 16 20 24 32 40 48 64 80 96 128 160 192 */
   --s-4: 4px;
   --s-8: 8px;
   --s-12: 12px;
   --s-16: 16px;
+  --s-20: 20px;
   --s-24: 24px;
   --s-32: 32px;
+  --s-40: 40px;
   --s-48: 48px;
   --s-64: 64px;
   --s-80: 80px;
@@ -111,14 +157,16 @@
   --section: clamp(80px, 10vw, 160px);      /* bölümler arası */
 
   /* ---------- Köşe ---------- */
-  --radius-s: 8px;
-  --radius-m: 12px;
-  --radius-l: 20px;
-  --radius-full: 999px;
+  --radius-s: 12px;               /* görsel, küçük parça */
+  --radius-m: 16px;               /* giriş alanı, küçük kart */
+  --radius-float: 20px;           /* yüzen parça */
+  --radius-l: 24px;               /* içerik kartı */
+  --radius-full: 9999px;          /* düğme: her zaman hap */
 
-  /* ---------- Gölge: neredeyse görünmez ---------- */
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
-  --shadow-raised: 0 12px 40px rgba(0, 0, 0, 0.1);
+  /* ---------- Gölge: yalnızca yüzen parçalar ---------- */
+  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-raised: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 8px 40px rgba(0, 0, 0, 0.1);
+  --shadow-float: 0 0 0 1px rgba(4, 23, 43, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   --shadow-hairline: 0 0 0 1px var(--border);
 
   /* ---------- Hareket ---------- */
@@ -150,36 +198,51 @@
   color-scheme: light;
 }
 
-/* ---------- Karanlık mod: ayrı ayrı seçilmiş değerler ---------- */
+/* ---------- Karanlık mod: ayrı ayrı seçilmiş değerler ----------
+   Gece okunan bir dergi: sıcak olmayan koyu gri zemin, kırık beyaz mürekkep.
+   Birincil düğme tersine döner (açık hap, koyu yazı); şeftali, koyu
+   toprak rengine iner ve mürekkebi açılır. */
 :root[data-theme="dark"] {
-  --background: #08090A;
-  --surface: #111214;
-  --surface-secondary: #18191C;
-  --surface-elevated: #1D1E22;
-  --dark: #000000;
-  --dark-surface: #111214;
+  --background: #121314;
+  --background-alt: #16171A;
+  --surface: #1C1D20;
+  --surface-secondary: #25262A;
+  --surface-elevated: #202125;
+  --dark: #0B0C0D;
+  --dark-surface: #1A1B1E;
 
-  --text-primary: #F5F5F2;
-  --text-secondary: #A6A8AD;
-  --text-muted: #85878C;
-  --text-on-dark: #F5F5F2;
-  --text-on-dark-secondary: #9B9DA2;
+  --text-primary: #F2F2F3;
+  --text-secondary: #A3A6AF;
+  --text-muted: #8C9099;
+  --text-on-dark: #F2F2F3;
+  --text-on-dark-secondary: #A3A6AF;
+  --text-on-accent: #17191C;
 
   --border: rgba(255, 255, 255, 0.08);
   --border-strong: rgba(255, 255, 255, 0.16);
   --border-on-dark: rgba(255, 255, 255, 0.1);
 
-  --accent: #6E9EE6;
-  --accent-hover: #8DB3EE;
-  --accent-soft: rgba(110, 158, 230, 0.12);
-  --accent-ring: rgba(110, 158, 230, 0.45);
-  --text-on-accent: #08090A;
+  --accent: #F2F2F3;
+  --accent-hover: #FFFFFF;
+  --accent-soft: rgba(242, 242, 243, 0.08);
+  --accent-on-dark: #F2F2F3;
+  --accent-ring: rgba(242, 242, 243, 0.4);
+  --link: #F2F2F3;
   --positive: #4CB58C;
   --positive-soft: rgba(76, 181, 140, 0.12);
   --negative: #E07A7A;
   --negative-soft: rgba(224, 122, 122, 0.12);
   --caution: #D9A441;
   --caution-soft: rgba(217, 164, 65, 0.12);
+
+  --peach: #3B2418;
+  --peach-ink: #F7C9AE;
+
+  --glow-warm: rgba(214, 120, 74, 0.28);
+  --glow-sun: rgba(200, 150, 80, 0.18);
+  --glow-rose: rgba(190, 110, 140, 0.2);
+  --glow-sage: rgba(90, 150, 110, 0.18);
+  --glow-violet: rgba(130, 90, 210, 0.4);
 
   --data-1: #5B8FDB;
   --data-2: #D6784A;
@@ -193,8 +256,9 @@
   --data-warm-2: #D6784A;
   --data-neutral: #8E9095;
 
-  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
-  --shadow-raised: 0 16px 48px rgba(0, 0, 0, 0.6);
+  --shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-raised: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 8px 40px rgba(0, 0, 0, 0.5);
+  --shadow-float: 0 0 0 1px rgba(255, 255, 255, 0.07), 0 20px 25px -5px rgba(0, 0, 0, 0.45), 0 8px 10px -6px rgba(0, 0, 0, 0.4);
 
   color-scheme: dark;
 }
