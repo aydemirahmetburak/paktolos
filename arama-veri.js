@@ -26,6 +26,14 @@ const ARAMA_DIZINI = [
   { tur: 'arac', baslik: 'Oran hesaplayıcı', aciklama: 'KAP rakamlarını gir, yedi oranı anında gör', href: 'analiz.html#hesapla',
     anahtar: 'hesapla hesaplayıcı fk pd dd roe cari oran net borç favök' },
 
+  // Ana bölümler
+  { tur: 'sayfa', baslik: 'Ekonomi', aciklama: 'Enflasyon, faiz, kur ve büyüme: ne ölçer, nereden bakılır, ne anlama gelir?', href: 'ekonomi.html',
+    anahtar: 'ekonomi gösterge enflasyon politika faizi döviz kuru dolar büyüme gsyh tüik tcmb merkez bankası haber' },
+  { tur: 'sayfa', baslik: 'Piyasalar', aciklama: 'Borsa şirketlerinin mali tablolarını ve oranlarını okumayı öğren', href: 'piyasalar.html',
+    anahtar: 'piyasa borsa hisse bist şirket analizi mali tablo oran sektör' },
+  { tur: 'sayfa', baslik: 'Rehberler', aciklama: 'Uzun anlatımlar ve günlük hayattan para soruları', href: 'rehberler.html',
+    anahtar: 'rehber uzun okuma soru cevap aklına takılan' },
+
   // Laboratuvar ve check-up
   { tur: 'arac', baslik: 'Şirket laboratuvarı', aciklama: 'Kolları çevir, üç mali tablonun birlikte değişimini canlı izle', href: 'lab.html',
     anahtar: 'şirket laboratuvarı simülasyon gelir tablosu bilanço nakit akışı senaryo borç faiz temettü favök f/k pd/dd' },

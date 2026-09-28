@@ -26,24 +26,46 @@ Paktolos bu boşluğu dolduruyor: **yatırım kararını vermiyor, kararı vereb
 
 ## Tasarım Felsefesi
 
-Paktolos'un tasarım dili, karmaşık finansal bilgiyi sadeleştirme misyonuyla birebir örtüşüyor:
+**Karmaşığı apaçık kıl.** Paktolos, finans hakkında bilgi veren bir web sitesi değil; finansı *anlamayı* sağlayan bir deneyimdir. Arayüz anlamanın arkasında kaybolur.
 
-- Minimalist, dikkat dağıtmayan arayüz; apple.com'dan ilham alan akışkan geçişler
-- "Damla" sayfa geçişi: yeni sayfa dokunulan noktadan genişleyen bir daire içinde açılır, menü yerinde kalır, etkin sekmenin işareti yeni sekmeye kayar; geri dönülünce hareket tersine işler
-- Kaydırdıkça ilerleyen infografikler: bilanço terazisi, 100 liralık satışın yolculuğu, kârdan nakde şelale, 1.000 liranın enflasyonla erimesi
-- Dokunarak keşfedilen tablolar: üç şirket altı oran karşılaştırması, sektör haritası
-- Başlıklar satır satır belirir; uzun sayfalarda okuma ilerleme çizgisi ve kalan süre
-- iOS tarzı cam yüzeyler: yarı saydam katmanlar, ışık kenarı, arkada süzülen sıcak renk ışımaları
-- Telefonda altta yüzen cam sekme çubuğu, alttan kayan ve aşağı çekilerek kapanan pencereler
-- Karanlık mod: telefonun ayarını izler; alt bilgiden elle de seçilebilir
-- Telefona uygulama olarak yüklenebilir, internet olmadan da açılır
-- "Azaltılmış hareket" tercihine saygı
-- Bilgi yalnızca ihtiyaç duyulduğunda görünür (katmanlı bilgi mimarisi)
-- 8pt grid sistemi, sistem yazı tipi (Apple cihazlarda SF Pro)
-- Braun'dan ilham alan sade renk paleti
-- Her etkileşim anlamlı ve amaçlı
+- Kesinlik, açıklık, ölçülülük: gereksiz süs yok, her renk bir anlam taşır, her animasyonun bir nedeni vardır.
+- Sakin bir zemin (#F7F7F5), beyaz yüzeyler, ince çizgiler; ağır gölge ve cam efekti yok.
+- Tek vurgu rengi mavi (#2457A6) ve seyrek kullanılır. Markanın turuncusu yalnızca logoda ve hikâye çizimlerinde.
+- Katmanlı anlatım: önce basitçe, sonra nasıl çalıştığı, gerçek hayattaki karşılığı, daha derini ve kaynaklar.
+- "Bu ne anlama geliyor?": her gösterge, sana dokunan üç kısa sonuca açılır.
+- Grafikler süs değil, bir fikri anlatır: ince çizgiler, az ızgara, doğrulanmış iki renk.
+- Karanlık mod ters çevirme değil, ayrı ayrı seçilmiş değerlerdir.
+- "Damla" sayfa geçişi, kaydırdıkça ilerleyen infografikler, dokunarak keşfedilen tablolar.
+- Erişilebilirlik: WCAG AA, klavye ile gezinme, görünür odak, 44 piksel dokunma alanı, "azaltılmış hareket" tercihine saygı.
 
-Renkler, boşluklar, yazı ölçeği, köşe yuvarlaklıkları ve hareket eğrileri `style.css` dosyasının başında CSS değişkenleri (`--color-*`, `--space-*`, `--text-*`, `--radius-*`, `--ease*`) olarak tanımlı. Yeni bileşenler bu değişkenleri kullanmalı.
+## Tasarım Sistemi
+
+Canlı katalog: **`tasarim.html`**. Yeni bir şey tasarlamadan önce oraya bak.
+
+| Katman | Dosya | İçerik |
+|---|---|---|
+| Tokenlar | `tasarim/tokenlar.css` | Renk (açık/koyu), yazı ölçeği, 8 noktalı boşluk, köşe, gölge, hareket, yerleşim |
+| Bileşenler | `tasarim/bilesenler.css` | Menü, alt çubuk, alt bilgi, düğme, rozet, etiket, kartlar, sayı, bölüm başlığı, sekmeler, ipucu, akordeon, ilerleme, anahtar, öğrenme blokları, "Bu ne anlama geliyor?", boş/hata/yükleniyor durumları |
+| Sayfa stilleri | `style.css` | Sayfalara özel stiller; eski değişken adları yeni tokenlara bağlıdır |
+| Etkileşim | `script.js` → BİLEŞENLER | Sekmeler (ok tuşlarıyla), açılır kutu |
+
+Kurallar:
+- Bileşenler yalnızca token kullanır; doğrudan renk ya da ölçek dışı boşluk yazılmaz.
+- Kırılımlar: telefon < 768, tablet 768–1279, masaüstü ≥ 1280.
+- Hareket eğrisi tektir: `--ease` = cubic-bezier(0.22, 1, 0.36, 1). Zıplama ve esneme yok.
+- Simgeler tek aile: 24 piksel ızgara, 1,5 piksel çizgi, yuvarlak uç.
+
+## Bilgi Mimarisi
+
+| Bölüm | Sayfa | İçindekiler |
+|---|---|---|
+| Öğren | `dersler.html` | Dersler, sözlük, kendini sına |
+| Ekonomi | `ekonomi.html` | Dört gösterge (rakamsız), temel kavramlar, haberi anla |
+| Piyasalar | `piyasalar.html` | Mali tablolar, hisse analizi, sektörler, şirket laboratuvarı |
+| Rehberler | `rehberler.html` | Uzun anlatımlar, "Aklına takılan" soru kütüphanesi, Paktolos'un hikâyesi |
+| Araçlar | `araclar.html` | Hesaplayıcılar, şirket laboratuvarı, finansal check-up |
+
+Arama (⌘K) ve Karnem (öğrenme ilerlemesi) her sayfada menünün sağında. Telefonda alt çubuk: Ana sayfa, Öğren, Ekonomi, Piyasalar, Araçlar.
 
 ## Logo
 
@@ -73,6 +95,10 @@ Framework kullanılmıyor — proje bilinçli olarak temel web teknolojileriyle,
 paktolos/
 ├── index.html           # Ana sayfa
 ├── hikaye.html          # Paktolos'un hikâyesi: Midas, nehir ve ilk para
+├── ekonomi.html         # Ekonomi: dört gösterge, kavramlar, haberi anla
+├── piyasalar.html       # Piyasalar: şirket analizi rehberleri, dersler, kavramlar
+├── rehberler.html       # Rehberler: uzun anlatımlar ve soru kütüphanesi
+├── tasarim.html         # Tasarım sistemi kataloğu (menüde yok)
 ├── dersler.html         # Paktolos Okulu: etkileşimli dersler (menüde "Öğren")
 ├── ogren.html           # Mali tablolar ve temel oranlar (ayrıntılı)
 ├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
@@ -91,7 +117,8 @@ paktolos/
 ├── test-veri.js         # Test soruları
 ├── arama-veri.js        # Site geneli arama dizini (sayfa ve bölümler)
 │
-├── style.css            # Tasarım sistemi, cam katmanı, karanlık mod
+├── tasarim/             # Tasarım sistemi: tokenlar.css, bilesenler.css
+├── style.css            # Sayfa stilleri
 ├── script.js            # Ortak etkileşimler: arama, sözlük, sorular, tema, test
 ├── araclar.js           # Araç kutusu hesaplamaları ve grafik bileşeni
 ├── okul.js              # Dersler, günün sorusu ve Karnem
@@ -121,9 +148,9 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
 - **Yeni kaydırmalı infografik:** HTML'de `<section class="akis" data-akis="ad">` içine boş bir `.akis-sahne` ve her adım için bir `.akis-adim` yaz. `akis.js` içindeki `SAHNELER`'e aynı adla, verilen kaba görseli çizip adım numarasına göre güncelleyen bir fonksiyon ekle. Sahne her adımda durumu baştan çizmeli; kullanıcı adım atlayabilir. Metin HTML'de durduğu için JS kapalıyken de okunur.
-- **Yeni cam yüzey:** `style.css` içindeki "CAM KATMANI" bölümündeki seçici listelerine ekle.
-- **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--chart-1` ve `--chart-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
-- **Renkler:** Doğrudan renk yazma; `--color-*` değişkenlerini ya da `rgba(var(--ink), 0.08)` gibi tema kanallarını kullan. Böylece karanlık mod kendiliğinden çalışır.
+- **Yeni bileşen:** önce `tasarim/bilesenler.css`'e, sonra `tasarim.html` kataloğuna ekle.
+- **Grafikler:** `araclar.js` içindeki `grafik()` bileşenini kullan. Seri renkleri `--data-1` ve `--data-2`; renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
+- **Renkler:** Doğrudan renk yazma; `tasarim/tokenlar.css` değişkenlerini kullan. Böylece karanlık mod kendiliğinden çalışır.
 
 ## Yerelde Çalıştırma
 
@@ -139,7 +166,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Sektörlere göre analiz rehberi
 - [x] Finans sözlüğü (67 kavram, mini hesaplayıcılar)
 - [x] Kendini sına: oran yorumlama testi
-- [x] iOS tarzı cam görünüm
+- [x] iOS tarzı cam görünüm (v2 ile sade yüzeylere geçildi)
 - [x] Paktolos'un hikâyesi
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
@@ -148,6 +175,12 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Şirket laboratuvarı: 8 senaryo, canlı gelir tablosu, bilanço ve nakit akışı
 - [x] Finansal check-up: dört göstergede kişisel finans durumu
 - [x] "Damla" sayfa geçişi, kaydırmalı infografikler, etkileşimli oran tablosu ve sektör haritası
+- [x] Tasarım sistemi v2: tokenlar, bileşen kütüphanesi, yeni bilgi mimarisi (Öğren, Ekonomi, Piyasalar, Rehberler, Araçlar)
+- [ ] Ana sayfa: editoryal hikâye, "Bugün ekonomide" gösterge rehberi
+- [ ] Kavram sistemi: katmanlı kavram sayfaları
+- [ ] Makale deneyimi ve veri görselleştirme sistemi
+- [ ] "Ekonomi nasıl çalışır?" etkileşimli haritası
+- [ ] Hesaplayıcılar, test ve arama yenilemesi; kaydedilenler ve ilerleme
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme

@@ -10,7 +10,7 @@
     var tema = tercih === 'light' || tercih === 'dark' ? tercih : (media.matches ? 'dark' : 'light');
     document.documentElement.setAttribute('data-theme', tema);
     var meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', tema === 'dark' ? '#000000' : '#FFFFFF');
+    if (meta) meta.setAttribute('content', tema === 'dark' ? '#08090A' : '#F7F7F5');
   }
 
   uygula();
@@ -34,10 +34,6 @@
 // kaydedilir. Geri gelirken daire, bu sayfada en son dokunulan noktaya kapanır.
 (function () {
   var kok = document.documentElement;
-
-  // Arka plan ışıması sayfadan sayfaya baştan başlamasın: 72 sn'lik döngüde
-  // saate göre aynı noktadan devam etsin.
-  kok.style.setProperty('--ambient-gecikme', -((Date.now() / 1000) % 72).toFixed(2) + 's');
 
   window.addEventListener('pagereveal', function (e) {
     if (!e.viewTransition) return;
