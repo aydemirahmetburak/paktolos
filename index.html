@@ -52,56 +52,271 @@
 
   <main id="icerik" tabindex="-1">
 
-    <!-- 1. HERO -->
-    <section class="ana-hero sayfa-genis">
-      <div class="ana-hero-metin">
-        <h1 class="giris" style="--sira: 2">Paranın nasıl çalıştığını gerçekten anla.</h1>
-        <p class="govde-giris giris" style="--sira: 3">Ekonomiden enflasyona, faizden sermaye piyasalarına kadar finans dünyasının temel mekanizmalarını sade ve anlaşılır şekilde öğren.</p>
-        <div class="hero-eylemler giris" style="--sira: 4">
+    <!-- 1. GİRİŞ: ortada serif başlık, çevresinde yüzen örnek parçalar -->
+    <section class="sahne sayfa-genis" aria-labelledby="sahne-baslik">
+      <div class="sahne-metin">
+        <h1 id="sahne-baslik" data-kelime>Paranın nasıl çalıştığını <em>gerçekten</em> anla.</h1>
+        <p class="govde-giris giris" style="--sira: 4">Enflasyondan faize, borçtan sermaye piyasalarına: finansın temel mekanizmalarını sade bir dille, kendi rakamlarınla öğren.</p>
+        <div class="hero-eylemler giris" style="--sira: 5">
           <a class="btn btn-birincil" href="dersler.html">Öğrenmeye başla</a>
-          <a class="btn btn-ikincil" href="#nasil">Nasıl çalışıyor?</a>
+          <a class="btn btn-sade ok-sonu" href="#nasil">Nasıl çalışıyor?</a>
         </div>
       </div>
-      <figure class="ana-hero-gorsel giris" style="--sira: 5" id="ekonomi-agi">
-        <figcaption class="gizli">Ekonominin beş parçası ve aralarındaki neden-sonuç bağları</figcaption>
-      </figure>
+
+      <div class="sahne-parcalar" aria-label="Sitedeki araçlardan örnekler">
+        <a class="yuzen parca parca-alim giris" style="--sira: 6" data-yuzen="-0.06" href="kavram.html?k=enflasyon">
+          <span class="parca-bas"><span>100 TL'nin alım gücü</span><span class="parca-etiket">Örnek</span></span>
+          <span class="parca-alt">Yıllık %40 enflasyonda</span>
+          <span class="parca-tablo">
+            <span><i>Bugün</i><b>100 TL</b></span>
+            <span><i>1 yıl sonra</i><b>71 TL</b></span>
+            <span><i>3 yıl sonra</i><b>36 TL</b></span>
+            <span><i>5 yıl sonra</i><b>19 TL</b></span>
+          </span>
+          <span class="parca-cubuklar" aria-hidden="true"><i style="--h: 100%"></i><i style="--h: 71%"></i><i style="--h: 51%"></i><i style="--h: 36%"></i><i style="--h: 26%"></i><i style="--h: 19%"></i></span>
+        </a>
+        <a class="yuzen parca parca-halka giris" style="--sira: 7" data-yuzen="0.08" href="checkup.html">
+          <span class="parca-bas"><span>Acil durum fonu</span><span class="parca-etiket">Örnek</span></span>
+          <span class="parca-halka-ic">
+            <svg viewBox="0 0 36 36" aria-hidden="true"><circle class="iz" cx="18" cy="18" r="15.5"/><circle class="dolu" cx="18" cy="18" r="15.5" pathLength="100" stroke-dasharray="67 100"/></svg>
+            <b>4 / 6</b>
+          </span>
+          <span class="parca-alt">aylık gider kenarda</span>
+        </a>
+        <a class="yuzen parca parca-cizgi giris" style="--sira: 8" data-yuzen="0.1" href="araclar.html#bilesik">
+          <span class="parca-bas"><span>Bileşik büyüme</span><span class="parca-etiket">Örnek</span></span>
+          <b class="parca-sayi">40.456 TL</b>
+          <span class="parca-alt">10.000 TL, yıllık %15, 10 yıl</span>
+          <svg class="parca-egri" viewBox="0 0 120 44" aria-hidden="true"><path d="M2 40 C 30 38, 52 34, 70 26 S 104 8, 118 3"/><circle cx="118" cy="3" r="2.5"/></svg>
+        </a>
+        <button type="button" class="yuzen parca parca-sor giris" style="--sira: 9" data-yuzen="-0.04" data-arama-ac>
+          <span class="parca-sor-yazi">Aklına takılanı ara: faiz, kredi kartı, F/K…</span>
+          <span class="parca-sor-dugme" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></span>
+        </button>
+      </div>
     </section>
 
-    <!-- 2. HER GÜN DUYDUĞUN DÖRT SAYI -->
-    <section class="bolum bolum-ayrac" id="gostergeler">
+    <!-- 2. PENCERE: ekonominin beş parçası -->
+    <section class="pencere-bolum sayfa-genis" aria-labelledby="pencere-baslik">
+      <div class="pencere">
+        <div class="pencere-ust" aria-hidden="true"><i></i><i></i><i></i><span>paktolos · ekonomi</span></div>
+        <div class="pencere-govde">
+          <nav class="pencere-yan" aria-label="Bölümler">
+            <a href="dersler.html">Öğren</a>
+            <a href="ekonomi.html" aria-current="true">Ekonomi</a>
+            <a href="piyasalar.html">Piyasalar</a>
+            <a href="rehberler.html">Rehberler</a>
+            <a href="araclar.html">Araçlar</a>
+            <a href="karnem.html">Karnem</a>
+          </nav>
+          <div class="pencere-ana">
+            <span class="overline">Ekonomi ›</span>
+            <h2 id="pencere-baslik" class="pencere-h">Ekonominin beş parçası birbirine bağlı.</h2>
+            <figure class="ana-hero-gorsel" id="ekonomi-agi">
+              <figcaption class="gizli">Ekonominin beş parçası ve aralarındaki neden-sonuç bağları</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. KAYNAK ŞERİDİ -->
+    <section class="kaynak-serit sayfa-genis" aria-label="Kaynaklar">
+      <p>Rakamların nereden geldiğini her zaman gösteririz</p>
+      <div class="serit" data-serit style="--sure: 40s">
+        <ul class="serit-ic">
+          <li>TÜİK</li><li>TCMB</li><li>KAP</li><li>SPK</li><li>BDDK</li><li>Borsa İstanbul</li><li>Hazine ve Maliye Bakanlığı</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4. YENİ BİR YOL: üç ilke -->
+    <section class="bolum yol" aria-labelledby="yol-baslik">
+      <div class="sayfa-genis">
+        <h2 id="yol-baslik" class="yol-baslik">Finansı öğrenmenin <em>yeni</em> bir yolu</h2>
+        <div class="yol-kartlar">
+          <article class="card card-seftali yol-kart yol-kart-buyuk reveal">
+            <h3>Katman katman anlatım</h3>
+            <svg class="cizim" viewBox="0 0 200 150" aria-hidden="true">
+              <ellipse cx="78" cy="118" rx="44" ry="11"/><path d="M34 118v-10M122 118v-10"/><ellipse cx="78" cy="108" rx="44" ry="11"/>
+              <path d="M34 108v-10M122 108v-10"/><ellipse cx="78" cy="98" rx="44" ry="11"/>
+              <path d="M40 90v-10M116 90v-10"/><ellipse cx="78" cy="80" rx="38" ry="9.5"/>
+              <circle cx="146" cy="58" r="30"/><rect x="131" y="45" width="12" height="24" rx="2.5"/><rect x="149" y="50" width="10" height="15" rx="2.5"/>
+              <path d="M168 26l6-6M176 36h8M160 20v-8"/>
+            </svg>
+            <p>Önce tek cümleyle basitçe, sonra nasıl çalıştığı, gerçek hayattaki karşılığı ve daha derini. Her kavram, sen ne kadar derine inmek istersen o kadar açılır.</p>
+          </article>
+          <article class="card yol-kart reveal" style="--delay: 0.1s">
+            <h3>Kendi rakamlarınla</h3>
+            <svg class="cizim" viewBox="0 0 200 150" aria-hidden="true">
+              <path d="M100 30v96M64 126h72"/><path d="M40 52h120"/><circle cx="100" cy="28" r="5"/>
+              <path d="M40 52l-20 44h40z"/><path d="M20 96c0 10 40 10 40 0"/>
+              <path d="M160 52l-20 36h40z"/><path d="M140 88c0 10 40 10 40 0"/>
+              <ellipse cx="40" cy="88" rx="10" ry="3"/><ellipse cx="40" cy="84" rx="10" ry="3"/>
+            </svg>
+            <p>Kredi, birikim, enflasyon: hesaplayıcılara kendi rakamını gir, sonucu grafikte ve sade bir cümleyle gör.</p>
+          </article>
+          <article class="card yol-kart reveal" style="--delay: 0.2s">
+            <h3>Günlük hayattan</h3>
+            <svg class="cizim" viewBox="0 0 200 150" aria-hidden="true">
+              <path d="M52 62h96l-10 62H62z"/><path d="M74 62c0-22 12-34 26-34s26 12 26 34"/>
+              <path d="M140 40l24-10 10 22-24 10z"/><circle cx="160" cy="38" r="2.5"/><path d="M150 50l8-3"/>
+              <path d="M78 86h44M82 104h36"/>
+            </svg>
+            <p>Market sepeti, kredi kartı ekstresi, maaş zammı. Her konu, her gün karşına çıkan bir durumla başlar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ÖĞREN: sekmeli liste -->
+    <section class="bolum isikli isikli-yesil ogren-bolum" aria-labelledby="ogren-baslik">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <a class="overline overline-ok" href="dersler.html">Öğren</a>
+          <h2 id="ogren-baslik">Beş dakikada bir <em>fikir</em>.</h2>
+          <p>Kısa dersler, 67 kavramlık sözlük, kendini sınayan sorular ve ilerlemeni gösteren bir karne.</p>
+          <a class="btn btn-ikincil ok-sonu" href="dersler.html">Derslere git</a>
+        </header>
+
+        <div class="sekmeli" data-sekmeli data-sure="6500">
+          <div class="sekmeli-liste" role="tablist" aria-orientation="vertical" aria-label="Öğrenme araçları">
+            <button type="button" role="tab" id="og-t1" aria-controls="og-p1"><strong>Dersler</strong><span>Birkaç kısa kart, arada küçük bir soru, sonunda özet. Kaldığın yerden devam edersin.</span></button>
+            <button type="button" role="tab" id="og-t2" aria-controls="og-p2"><strong>Sözlük</strong><span>Günlük hayattan borsaya 67 kavram; her biri tek cümleyle başlar.</span></button>
+            <button type="button" role="tab" id="og-t3" aria-controls="og-p3"><strong>Kavram sayfaları</strong><span>Basitçe, nasıl çalışır, gerçek hayattan, daha derin ve kaynaklar.</span></button>
+            <button type="button" role="tab" id="og-t4" aria-controls="og-p4"><strong>Kendini sına</strong><span>Her cevaptan sonra nedenini, gerçek hayattaki karşılığını gör.</span></button>
+            <button type="button" role="tab" id="og-t5" aria-controls="og-p5"><strong>Karnem</strong><span>Finansal temellerde nerede olduğunu, okuma listeni ve son baktıklarını tek yerde gör.</span></button>
+          </div>
+          <div class="sekmeli-panolar">
+            <div class="ekran" role="tabpanel" id="og-p1" aria-labelledby="og-t1">
+              <div class="ekran-kart">
+                <span class="overline">Ders 1 · 5 dk</span>
+                <h3 class="ekran-h">Enflasyon ve alım gücü</h3>
+                <p>Fiyatlar genel olarak yükseldiğinde, aynı parayla daha az şey alırsın. Rakam aynı kalır; değeri küçülür.</p>
+                <div class="ekran-adimlar" aria-hidden="true"><i class="dolu"></i><i class="dolu"></i><i class="dolu"></i><i></i><i></i></div>
+                <a class="btn btn-birincil btn-kucuk" href="dersler.html#enflasyon">Derse başla</a>
+              </div>
+            </div>
+            <div class="ekran" role="tabpanel" id="og-p2" aria-labelledby="og-t2">
+              <div class="ekran-kart">
+                <div class="ekran-ara" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>getiri</div>
+                <ul class="ekran-liste">
+                  <li><a href="kavram.html?k=bilesik-getiri"><strong>Bileşik getiri</strong><span>Kazancın da kazanç üretmesi: faizin faizi.</span></a></li>
+                  <li><a href="kavram.html?k=reel-getiri"><strong>Reel getiri</strong><span>Enflasyondan arındırılmış, gerçek kazanç.</span></a></li>
+                  <li><a href="kavram.html?k=risk-getiri"><strong>Risk ve getiri</strong><span>Daha yüksek beklenen getiri, daha fazla dalgalanma demektir.</span></a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="ekran" role="tabpanel" id="og-p3" aria-labelledby="og-t3">
+              <div class="ekran-kart">
+                <span class="overline">Faiz ve kredi</span>
+                <h3 class="ekran-h ekran-serif">Faiz</h3>
+                <div class="ekran-basitce"><span class="overline">Basitçe</span><p>Paranın kirası: borç alanın ödediği, parasını verenin kazandığı bedel.</p></div>
+                <a class="btn btn-sade ok-sonu btn-kucuk" href="kavram.html?k=faiz">Kavramı aç</a>
+              </div>
+            </div>
+            <div class="ekran" role="tabpanel" id="og-p4" aria-labelledby="og-t4">
+              <div class="ekran-kart">
+                <span class="overline">Örnek soru</span>
+                <h3 class="ekran-h">Bir şirketin F/K oranı sektör ortalamasının iki katı. Bu tek başına ne söyler?</h3>
+                <ul class="ekran-secenek" aria-hidden="true">
+                  <li>Hisse kesinlikle pahalıdır</li>
+                  <li class="dogru">Piyasa yüksek büyüme bekliyor olabilir; tek başına yetmez</li>
+                  <li>Şirket zarar ediyordur</li>
+                </ul>
+                <a class="btn btn-sade ok-sonu btn-kucuk" href="test.html">Teste başla</a>
+              </div>
+            </div>
+            <div class="ekran" role="tabpanel" id="og-p5" aria-labelledby="og-t5">
+              <div class="ekran-kart">
+                <div class="karne-temel-bas"><strong>Finansal temeller</strong><span>%42 tamamlandı</span></div>
+                <div class="progress" aria-hidden="true"><span style="--deger: 42%"></span></div>
+                <ul class="ekran-liste ekran-liste-sade">
+                  <li><span class="overline">Kavram</span><strong>Enflasyon</strong></li>
+                  <li><span class="overline">Rehber</span><strong>Bir hisseyi yedi adımda oku</strong></li>
+                  <li><span class="overline">Hesaplayıcı</span><strong>Bileşik büyüme</strong></li>
+                </ul>
+                <a class="btn btn-sade ok-sonu btn-kucuk" href="karnem.html">Karneni aç</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. HER GÜN DUYDUĞUN DÖRT SAYI -->
+    <section class="bolum bolum-bant" id="gostergeler">
       <div class="sayfa-genis">
         <header class="section-header section-header-satir">
           <div>
             <span class="overline">Ekonomi</span>
-            <h2 class="reveal">Her gün duyduğun dört sayı.</h2>
+            <h2>Her gün duyduğun dört sayı.</h2>
             <p>Rakamı resmî kaynağından al. Ne anlama geldiğini burada öğren.</p>
           </div>
-          <a class="btn btn-sade" href="ekonomi.html">Tüm göstergeler</a>
+          <a class="btn btn-sade ok-sonu" href="ekonomi.html">Tüm göstergeler</a>
         </header>
         <div class="izgara" data-gostergeler="kompakt"></div>
       </div>
     </section>
 
-    <!-- 3. FİNANSAL TEMELLER -->
-    <section class="bolum bolum-ayrac" id="temeller">
+    <!-- 7. FİNANSAL TEMELLER -->
+    <section class="bolum" id="temeller">
       <div class="sayfa-genis">
         <header class="section-header section-header-satir">
           <div>
             <span class="overline">Finansal temeller</span>
-            <h2 class="reveal">Her şeyin üzerine kurulduğu sekiz fikir.</h2>
+            <h2>Her şeyin üzerine kurulduğu sekiz fikir.</h2>
           </div>
-          <a class="btn btn-sade" href="sozluk.html">Tüm kavramlar</a>
+          <a class="btn btn-sade ok-sonu" href="sozluk.html">Tüm kavramlar</a>
         </header>
         <div class="izgara" data-kavramlar="enflasyon,faiz,bilesik-getiri,risk-getiri,likidite,tahvil-bono,hisse-senedi,yatirim-fonu" data-numarali></div>
       </div>
     </section>
 
-    <!-- 4. ETKİLEŞİMLİ ANLATIM -->
-    <section class="bolum bolum-ayrac" id="nasil">
+    <!-- 8. KOYU BÖLÜM: ekonomi haritası -->
+    <section class="bolum bolum-koyu isikli isikli-mor" aria-labelledby="harita-baslik">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <a class="overline overline-ok" href="ekonomi-haritasi.html">Ekonomi nasıl çalışır?</a>
+          <h2 id="harita-baslik">Ezberleme,<br><em>bağlantıları</em> gör.</h2>
+          <p>Merkez Bankası bir sayıyı değiştirir; etkisi bankalardan hanelere, şirketlerden piyasalara yayılır. Haritada her oyuncuya dokun, akışı izle.</p>
+          <a class="btn btn-ikincil ok-sonu" href="ekonomi-haritasi.html">Haritayı aç</a>
+        </header>
+
+        <div class="sema reveal" aria-label="Göstergelerden ekonomiye, ekonomiden senin hayatına">
+          <ul class="sema-sol">
+            <li>Politika faizi</li><li>Enflasyon</li><li>Döviz kuru</li><li>Büyüme</li>
+          </ul>
+          <svg class="sema-bag" viewBox="0 0 60 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 12.5 C 30 12.5, 30 50, 60 50"/><path d="M0 37.5 C 30 37.5, 30 50, 60 50"/><path d="M0 62.5 C 30 62.5, 30 50, 60 50"/><path d="M0 87.5 C 30 87.5, 30 50, 60 50"/>
+          </svg>
+          <div class="sema-orta">
+            <span class="sema-marka"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg>Ekonomi</span>
+            <span class="sema-merkez">Merkez Bankası · Devlet</span>
+            <div class="sema-uclu"><span>Hanehalkı</span><span>Şirketler</span><span>Bankalar</span></div>
+          </div>
+          <svg class="sema-bag" viewBox="0 0 60 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0 50 C 30 50, 30 10, 60 10"/><path d="M0 50 C 30 50, 30 30, 60 30"/><path d="M0 50 C 30 50, 30 50, 60 50"/><path d="M0 50 C 30 50, 30 70, 60 70"/><path d="M0 50 C 30 50, 30 90, 60 90"/>
+          </svg>
+          <ul class="sema-sag">
+            <li>Kredi taksitin</li><li>Mevduat getirin</li><li>Market fiyatları</li><li>Hisse ve tahvil</li><li>İş ve maaş</li>
+          </ul>
+        </div>
+
+        <div class="sema-ozellik">
+          <div><h3>Altı oyuncu</h3><p>Hanehalkı, şirketler, bankalar, Merkez Bankası, devlet ve piyasalar.</p></div>
+          <div><h3>Üç akış</h3><p>Para, kredi ve sermaye; her biri kendi çizgisiyle.</p></div>
+          <div><h3>"Faiz artarsa" turu</h3><p>Altı adımda bir kararın ekonomiye nasıl yayıldığını izle.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FAİZ ZİNCİRİ -->
+    <section class="bolum" id="nasil">
       <div class="sayfa-genis zincir-duzen" id="faiz-zinciri">
         <header class="section-header">
           <span class="overline">Nasıl çalışıyor?</span>
-          <h2 class="reveal">Faiz değişince ne olur?</h2>
+          <h2>Faiz değişince ne olur?</h2>
           <p>Merkez Bankası tek bir sayıyı değiştirir; etkisi kredine, birikimine ve fiyatlara adım adım yayılır.</p>
           <div class="segmented" role="radiogroup" aria-label="Faizin yönü">
             <button type="button" role="radio" data-yon="artis" aria-checked="true">Faiz artarsa</button>
@@ -113,17 +328,61 @@
           <ol class="zincir"></ol>
           <p class="zincir-bedel"></p>
           <p class="zincir-not govde-kucuk"></p>
-          <a class="btn btn-sade btn-kucuk zincir-harita" href="ekonomi-haritasi.html">Tüm ekonomiyi haritada gör</a>
+          <a class="btn btn-sade btn-kucuk ok-sonu zincir-harita" href="ekonomi-haritasi.html">Tüm ekonomiyi haritada gör</a>
         </div>
       </div>
     </section>
 
-    <!-- 5. VERİ HİKÂYESİ -->
-    <section class="bolum bolum-ayrac" id="veri-hikayesi">
+    <!-- 10. ARAÇLAR: pencere ve çevresinde sorular -->
+    <section class="bolum bolum-bant isikli araclar-bolum" id="araclar" aria-labelledby="araclar-baslik">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <a class="overline overline-ok" href="araclar.html">Araçlar</a>
+          <h2 id="araclar-baslik">Hesapla, karşılaştır, <em>sonra</em> karar ver.</h2>
+          <p>Kredi, kart borcu, birikim ve enflasyon için hesaplayıcılar. Rakamların yalnızca senin cihazında kalır.</p>
+          <a class="btn btn-ikincil ok-sonu" href="araclar.html">Tüm araçlar</a>
+        </header>
+
+        <div class="arac-sahne">
+          <div class="pencere pencere-arac reveal">
+            <div class="pencere-ust" aria-hidden="true"><i></i><i></i><i></i><span>Kredi hesaplayıcı</span></div>
+            <div class="arac-ekran">
+              <div class="arac-girdi">
+                <span><i>Kredi tutarı</i><b>250.000 TL</b></span>
+                <span><i>Aylık faiz</i><b>%3,49</b></span>
+                <span><i>Vade</i><b>24 ay</b></span>
+              </div>
+              <div class="arac-sonuc">
+                <b class="arac-taksit">15.552 TL</b>
+                <span>aylık taksit · 24 ay</span>
+                <dl>
+                  <div><dt>Toplam geri ödeme</dt><dd>373.245 TL</dd></div>
+                  <div><dt>Toplam faiz</dt><dd>123.245 TL</dd></div>
+                </dl>
+                <span class="arac-bar" aria-hidden="true"><i style="--p: 67%"></i></span>
+                <span class="arac-bar-not"><span><i class="anapara"></i>Anapara</span><span><i class="faiz"></i>Faiz</span></span>
+              </div>
+            </div>
+          </div>
+          <a class="yuzen balon balon-1" data-yuzen="-0.08" href="araclar.html#asgari">"Hep asgariyi ödersem kart borcum ne zaman biter?"</a>
+          <a class="yuzen balon balon-2" data-yuzen="0.1" href="araclar.html#taksit">"Taksit mi daha ucuz, peşin mi?"</a>
+          <a class="yuzen balon balon-3" data-yuzen="0.05" href="araclar.html#enflasyon">"Param 10 yılda ne kadar erir?"</a>
+        </div>
+
+        <div class="izgara arac-alt">
+          <a class="arac-alti k-4" href="lab.html"><h3>Şirket laboratuvarı</h3><p>Kolları çevir; gelir tablosu, bilanço ve nakit akışı birlikte değişsin.</p></a>
+          <a class="arac-alti k-4" href="checkup.html"><h3>Finansal check-up</h3><p>Altı rakamla bütçe, acil durum fonu, borç ve birikim.</p></a>
+          <a class="arac-alti k-4" href="araclar.html#erken"><h3>Erken başlamanın gücü</h3><p>25 ile 35 yaşında başlamanın farkı: zamanın bileşik etkisi.</p></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. VERİ HİKÂYESİ -->
+    <section class="bolum" id="veri-hikayesi">
       <div class="sayfa-genis">
         <header class="section-header">
           <span class="overline">Veri hikâyesi</span>
-          <h2 class="reveal">1.000 liranın sessiz erimesi.</h2>
+          <h2>1.000 liranın sessiz erimesi.</h2>
           <p>Cüzdanındaki rakam hiç değişmeden paran nasıl küçülür? Kaydır ve beş yılı birkaç saniyede yaşa.</p>
         </header>
         <section class="akis" data-akis="enflasyon" aria-label="Enflasyonun alım gücüne etkisi">
@@ -161,56 +420,45 @@
       </div>
     </section>
 
-    <!-- 6. ÖNE ÇIKAN REHBERLER -->
-    <section class="bolum bolum-ayrac" id="rehberler">
-      <div class="sayfa-genis">
-        <header class="section-header section-header-satir">
-          <div>
-            <span class="overline">Rehberler</span>
-            <h2 class="reveal">Bir konuyu baştan sona anla.</h2>
-          </div>
-          <a class="btn btn-sade" href="rehberler.html">Tüm rehberler</a>
-        </header>
-        <div class="izgara">
-          <a class="card article-card rehber-buyuk k-7" href="ogren.html"><span class="overline">Piyasalar · 7 dk okuma</span><h3>Bir şirketin hikâyesi rakamlarında yazılı.</h3><p>Bilanço, gelir tablosu, nakit akışı ve temel oranlar; kaydırdıkça ilerleyen görsellerle.</p><span class="meta">Mali tablolar ve oranlar</span></a>
-          <div class="rehber-yan k-5">
-            <a class="card article-card" href="analiz.html"><span class="overline">Piyasalar · 3 dk okuma</span><h3>Bir hisseyi yedi adımda oku</h3><p>KAP'tan rakamları bulmaktan sonucu yorumlamaya.</p></a>
-            <a class="card article-card" href="sorular.html#baz-puan"><span class="overline">Ekonomi · Haberi anla</span><h3>"Politika faizi 250 baz puan arttı." Ne demek?</h3><p>Manşetin arkasındaki mekanizma ve sana dokunan tarafı.</p></a>
+    <!-- 12. HİKÂYE BANDI -->
+    <section class="bolum hikaye-bant" aria-labelledby="hikaye-baslik">
+      <div class="sayfa-genis hikaye-bant-ic">
+        <div>
+          <a class="overline overline-ok" href="hikaye.html">Paktolos'un hikâyesi</a>
+          <h2 id="hikaye-baslik" class="hikaye-soz">"Midas her şeyin fiyatını biliyordu. Hiçbir şeyin <em>değerini</em> değil."</h2>
+          <p>Sitenin adı, Lidya'da altın taşıyan bir nehirden geliyor. Hikâyesi ise bugün hepimizin düştüğü bir yanılgıyı anlatıyor.</p>
+          <div class="hero-eylemler">
+            <a class="btn btn-birincil ok-sonu" href="hikaye.html">Hikâyeyi oku</a>
+            <a class="btn btn-sade" href="rehberler.html">Tüm rehberler</a>
           </div>
         </div>
+        <svg class="cizim hikaye-cizim" viewBox="0 0 220 200" aria-hidden="true">
+          <path d="M70 40h80c0 40-14 64-40 70-26-6-40-30-40-70z"/><path d="M110 110v48M84 170h52M92 158h36"/>
+          <path d="M20 190c30-8 50-8 80 0s60 8 100 0" class="nehir"/><path d="M34 178c24-6 40-6 64 0s48 6 80 0" class="nehir"/>
+          <circle cx="160" cy="36" r="10" class="sikke"/><circle cx="178" cy="62" r="7" class="sikke"/><circle cx="52" cy="70" r="6" class="sikke"/>
+        </svg>
       </div>
     </section>
 
-    <!-- 7. ARAÇLAR -->
-    <section class="bolum bolum-ayrac" id="araclar">
-      <div class="sayfa-genis">
-        <header class="section-header section-header-satir">
-          <div>
-            <span class="overline">Araçlar</span>
-            <h2 class="reveal">Kendi rakamlarınla dene.</h2>
-          </div>
-          <a class="btn btn-sade" href="araclar.html">Tüm araçlar</a>
-        </header>
-        <div class="izgara">
-          <a class="card arac-kart k-3" href="araclar.html#kredi"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="2"/><path d="M4 10h16"/><path d="M8 14.5h3"/></svg><span class="overline">Hesaplayıcı</span><h3>Kredinin gerçek maliyeti</h3><p>Aylık taksit, toplam faiz ve ödeme planı.</p></a>
-          <a class="card arac-kart k-3" href="araclar.html#erken"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 17c4 0 7-2 9-6s3-6 5-6"/></svg><span class="overline">Hesaplayıcı</span><h3>Erken başlamanın gücü</h3><p>Bileşik getiri: zaman nasıl en güçlü araca dönüşür?</p></a>
-          <a class="card arac-kart k-3" href="lab.html"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3.5h5M10.5 3.5v5.2L5.3 17.6A2 2 0 0 0 7 20.5h10a2 2 0 0 0 1.7-2.9l-5.2-8.9V3.5"/><path d="M7.8 14h8.4"/></svg><span class="overline">Simülasyon</span><h3>Şirket laboratuvarı</h3><p>Kolları çevir; üç mali tablo birlikte değişsin.</p></a>
-          <a class="card arac-kart k-3" href="checkup.html"><svg class="ikon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12h4l2-5 4 10 2-5h5"/></svg><span class="overline">Kişisel</span><h3>Finansal check-up</h3><p>Altı rakamla bütçe, fon, borç ve birikim.</p></a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 8. KAPANIŞ -->
-    <section class="bolum bolum-ayrac kapanis">
-      <div class="sayfa-genis">
-        <div class="kapanis-ic">
-          <h2 class="reveal">Al ya da sat demiyoruz.<br>Anlamanı sağlıyoruz.</h2>
-          <p class="govde-giris">Kararı sen verirsin. Paktolos, o kararı verebilmen için gereken bilgiyi en sade haliyle anlatır; hiçbir içerik yatırım tavsiyesi değildir.</p>
+    <!-- 13. KAPANIŞ -->
+    <section class="bolum kapanis" aria-labelledby="kapanis-baslik">
+      <div class="sayfa-genis kapanis-ic">
+        <div>
+          <h2 id="kapanis-baslik">Bugün <em>başla</em>, kendi hızında.</h2>
+          <p class="govde-giris">Al ya da sat demiyoruz; anlamanı sağlıyoruz. Hesap açman gerekmez, hiçbir içerik yatırım tavsiyesi değildir.</p>
           <div class="hero-eylemler">
             <a class="btn btn-birincil" href="dersler.html#enflasyon">İlk derse başla</a>
-            <a class="btn btn-sade" href="hikaye.html">Paktolos'un hikâyesi</a>
+            <a class="btn btn-sade ok-sonu" href="sozluk.html">Sözlüğe göz at</a>
           </div>
         </div>
+        <svg class="cizim kapi" viewBox="0 0 240 200" aria-hidden="true">
+          <path d="M20 180h200"/>
+          <path d="M96 180V40h64v140"/>
+          <path class="kapi-isik" d="M96 40h64v140H96z"/>
+          <path class="kapi-kanat" d="M160 40l34-10v160l-34-10"/>
+          <path d="M184 112v8"/>
+          <circle cx="128" cy="116" r="12" class="sikke"/>
+        </svg>
         <div class="install-card glass reveal" id="install-card" hidden>
           <img class="install-icon" src="icons/icon-192.png" alt="" width="72" height="72">
           <div>

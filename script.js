@@ -35,15 +35,39 @@ function initGecisNoktasi() {
 
 // Kaydırınca belirme. Sayfa geçişiyle gelindiyse ekranda zaten görünen
 // öğeler ikinci kez belirmez; girişi geçişin kendisi yapar (tema.js).
-function initReveal() {
-  // Büyük başlıklar satır satır, bir maskenin içinden yükselir
-  document.querySelectorAll('.headline.reveal, .page-hero h1.reveal').forEach(h => {
-    const satirlar = h.innerHTML.split(/<br\s*\/?>/i);
-    h.innerHTML = satirlar.map((s, i) => `<span class="satir"><span style="--i:${i}">${s.trim()}</span></span>`).join('');
-    h.classList.add('satirli');
-  });
+// Serif başlıklar kelime kelime belirir: her kelime soluk griden, hafif
+// bulanık ve biraz aşağıdan kendi yerine oturur (tasarim/bilesenler.css, 21).
+const KELIME_SECICI = '.headline.reveal, .page-hero h1, .sayfa-hero h1, .ana-hero h1, .section-header h2, [data-kelime]';
 
-  const items = document.querySelectorAll('.reveal');
+function kelimeleriBol(h) {
+  let i = 0;
+  const yuru = dugum => [...dugum.childNodes].forEach(c => {
+    if (c.nodeType === Node.TEXT_NODE) {
+      if (!c.textContent.trim()) return;
+      const parca = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(p => {
+        if (!p) return;
+        if (/^\s+$/.test(p)) { parca.append(p); return; }
+        const k = document.createElement('span');
+        k.className = 'kelime';
+        k.style.setProperty('--i', i);
+        k.style.setProperty('--y', ((i * 7) % 5) * 0.06 + 0.18 + 'em'); // her kelime biraz farklı derinlikten
+        k.textContent = p;
+        parca.append(k);
+        i++;
+      });
+      c.replaceWith(parca);
+    } else if (c.nodeType === Node.ELEMENT_NODE && c.tagName !== 'BR') yuru(c);
+  });
+  yuru(h);
+  h.classList.add('kelimeli');
+}
+
+function initReveal() {
+  const kelimeli = [...document.querySelectorAll(KELIME_SECICI)];
+  kelimeli.forEach(kelimeleriBol);
+
+  const items = new Set([...document.querySelectorAll('.reveal'), ...kelimeli]);
   if (!('IntersectionObserver' in window)) {
     items.forEach(el => el.classList.add('visible'));
     return;
@@ -57,6 +81,114 @@ function initReveal() {
     });
   }, { rootMargin: '0px 0px -8% 0px' });
   items.forEach(el => observer.observe(el));
+}
+
+// ============================================
+// HAREKET: yüzen parçalar, sekmeli liste, kayan şerit
+// Hepsi "azaltılmış hareket" tercihinde durur.
+// ============================================
+const AZ_HAREKET = matchMedia('(prefers-reduced-motion: reduce)');
+
+// <div class="yuzen" data-yuzen="0.12">: kaydırdıkça sayfadan biraz farklı
+// hızda kayar (derinlik). Değer: sayfaya göre hız farkı; eksi olabilir.
+function initYuzen() {
+  const parcalar = [...document.querySelectorAll('[data-yuzen]')];
+  if (!parcalar.length) return;
+  const gorunen = new Set();
+  let bekliyor = false;
+  const ciz = () => {
+    bekliyor = false;
+    if (AZ_HAREKET.matches) return;
+    const orta = innerHeight / 2;
+    gorunen.forEach(p => {
+      const r = p.parentElement.getBoundingClientRect();
+      const fark = (r.top + r.height / 2 - orta) * parseFloat(p.dataset.yuzen || 0.1);
+      p.style.setProperty('--kay', fark.toFixed(1) + 'px');
+    });
+  };
+  const iste = () => { if (!bekliyor) { bekliyor = true; requestAnimationFrame(ciz); } };
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => e.isIntersecting ? gorunen.add(e.target) : gorunen.delete(e.target));
+    iste();
+  }, { rootMargin: '20% 0px' });
+  parcalar.forEach(p => io.observe(p));
+  addEventListener('scroll', iste, { passive: true });
+  addEventListener('resize', iste);
+  iste();
+}
+
+// Sekmeli liste: solda başlıklar, sağda pano. Görünürken kendiliğinden
+// ilerler; seçili başlığın altındaki çizgi dolunca sıradakine geçer.
+// Kullanıcı bir başlığa dokunursa ya da imleç/odak içerideyse durur.
+//   <div class="sekmeli" data-sekmeli data-sure="7000">
+//     <div class="sekmeli-liste" role="tablist" aria-orientation="vertical">
+//       <button role="tab" id="…" aria-controls="…"><strong>Başlık</strong><span>Açıklama</span></button> …
+//     </div>
+//     <div class="sekmeli-panolar"><div role="tabpanel" id="…" aria-labelledby="…">…</div> …</div>
+//   </div>
+function initSekmeliListe() {
+  document.querySelectorAll('[data-sekmeli]').forEach(kok => {
+    const sekmeler = [...kok.querySelectorAll('[role="tab"]')];
+    if (!sekmeler.length) return;
+    kok.style.setProperty('--sure', (+kok.dataset.sure || 7000) + 'ms');
+    let secili = 0, elle = false, gorunur = false;
+    const sec = (n, odakla) => {
+      secili = (n + sekmeler.length) % sekmeler.length;
+      sekmeler.forEach((t, i) => {
+        const bu = i === secili;
+        t.setAttribute('aria-selected', bu);
+        t.tabIndex = bu ? 0 : -1;
+        const pano = document.getElementById(t.getAttribute('aria-controls'));
+        if (pano) pano.toggleAttribute('data-acik', bu);
+      });
+      if (odakla) sekmeler[secili].focus();
+      yenidenBaslat();
+    };
+    // Çizginin animasyonunu baştan başlat; bitince sıradakine geç
+    const yenidenBaslat = () => {
+      kok.classList.remove('akiyor');
+      void kok.offsetWidth;
+      if (!elle && gorunur && !AZ_HAREKET.matches) kok.classList.add('akiyor');
+    };
+    kok.addEventListener('animationend', e => {
+      if (e.animationName === 'sekmeli-dol' && kok.classList.contains('akiyor')) sec(secili + 1);
+    });
+    sekmeler.forEach((t, i) => {
+      t.addEventListener('click', () => { elle = true; sec(i); });
+      t.addEventListener('keydown', e => {
+        const yon = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+        if (yon) { e.preventDefault(); elle = true; sec(i + yon, true); }
+      });
+    });
+    const dur = v => kok.classList.toggle('durdu', v);
+    kok.addEventListener('pointerenter', () => dur(true));
+    kok.addEventListener('pointerleave', () => dur(false));
+    kok.addEventListener('focusin', () => dur(true));
+    kok.addEventListener('focusout', () => dur(false));
+    new IntersectionObserver(([e]) => { gorunur = e.isIntersecting; yenidenBaslat(); }, { threshold: 0.35 }).observe(kok);
+    sec(0);
+  });
+}
+
+// data-arama-ac: sayfadaki herhangi bir öğe arama paletini açabilir
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-arama-ac]')) document.querySelector('.search-trigger')?.click();
+});
+
+// Kayan şerit: içerik bir kez kopyalanır, sonsuz ve kesintisiz akar.
+//   <div class="serit" data-serit><div class="serit-ic">…öğeler…</div></div>
+function initSerit() {
+  document.querySelectorAll('[data-serit]').forEach(kok => {
+    const ic = kok.querySelector('.serit-ic');
+    if (!ic || ic.dataset.kopya) return;
+    [...ic.children].forEach(c => {
+      const k = c.cloneNode(true);
+      k.setAttribute('aria-hidden', 'true');
+      k.querySelectorAll('a, button').forEach(a => a.tabIndex = -1);
+      ic.append(k);
+    });
+    ic.dataset.kopya = '1';
+  });
 }
 
 // ============================================
@@ -1535,6 +1667,9 @@ function initHomeQuestions() {
 initNav();
 initGecisNoktasi();
 initReveal();
+initYuzen();
+initSekmeliListe();
+initSerit();
 initSekmeler();
 initPopover();
 initGostergeler();

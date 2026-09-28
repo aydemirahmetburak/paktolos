@@ -32,6 +32,8 @@
   .olcek code { flex: none; width: 160px; font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
   @media (max-width: 479px) { .olcek > div { flex-direction: column; gap: var(--s-4); } .olcek span { overflow-wrap: anywhere; } }
   @media (max-width: 479px) { .kat-satir { position: relative; } .kat-satir > span[style] { position: static !important; } }
+  .kat-alt { margin-top: var(--s-48); font-size: var(--text-title); font-weight: var(--weight-semibold); }
+  .kat-liste { display: grid; gap: var(--s-8); margin-top: var(--s-16); padding-left: 1.2em; color: var(--text-secondary); }
   .bosluk > div { display: flex; align-items: center; gap: var(--s-16); padding: 4px 0; }
   .bosluk i { display: block; height: 12px; background: var(--accent); border-radius: 2px; }
   .bosluk code { width: 60px; font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
@@ -130,6 +132,19 @@
           <div style="--sure: var(--motion-story)"><code>story · 900ms</code><span class="ray"><b></b></span></div>
         </div>
         <button type="button" class="btn btn-ikincil btn-kucuk" id="hareket-oynat">Oynat</button>
+        <h3 class="kat-alt">Hareketli bileşenler</h3>
+        <ul class="kat-liste">
+          <li><b>Kelime kelime başlık</b> (<code>data-kelime</code>, sayfa ve bölüm başlıklarında kendiliğinden): her kelime soluk griden, hafif bulanık ve aşağıdan yerine oturur.</li>
+          <li><b>Yüzen parça</b> (<code>.yuzen</code> + <code>data-yuzen="0.1"</code>): kaydırdıkça sayfadan farklı hızda kayar; gölge taşıyan tek öğe.</li>
+          <li><b>Sekmeli liste</b> (<code>data-sekmeli</code>): seçili başlığın altındaki çizgi dolunca sıradakine geçer; dokununca ya da üzerine gelince durur.</li>
+          <li><b>Kayan şerit</b> (<code>data-serit</code>): içerik bir kez kopyalanır ve kesintisiz akar.</li>
+          <li><b>Işık huzmesi</b> (<code>.isikli</code>): başlık arkasında yavaşça nefes alan bulanık renk.</li>
+        </ul>
+        <h2 class="gizli">Kelime kelime örnek</h2>
+        <p class="baslik-bolum" data-kelime style="margin-top: var(--s-32)">Her kelime <em>kendi</em> sırasıyla gelir.</p>
+        <div class="serit" data-serit style="--sure: 30s; margin-top: var(--s-32)"><ul class="serit-ic" style="list-style: none">
+          <li class="tag">Enflasyon</li><li class="tag">Faiz</li><li class="tag">Bileşik getiri</li><li class="tag">Likidite</li><li class="tag">Risk</li><li class="tag">Tahvil</li>
+        </ul></div>
       </section>
 
       <section class="kat-bolum" id="dugmeler">
