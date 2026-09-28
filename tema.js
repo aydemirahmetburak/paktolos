@@ -1,5 +1,9 @@
 // Tema: sayfa çizilmeden önce çalışır, böylece karanlık modda beyaz parlama olmaz.
 // Tercih "auto" (telefonun ayarını izle), "light" ya da "dark" olabilir.
+// "js" sınıfı: betikle kurulan bölümler ilk çizimden itibaren son
+// düzenlerinde durur; betik yoksa yedek düzen görünür (kayma olmaz).
+document.documentElement.classList.add('js');
+
 (function () {
   var KEY = 'paktolos-tema';
   var media = window.matchMedia('(prefers-color-scheme: dark)');

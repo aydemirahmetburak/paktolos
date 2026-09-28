@@ -848,7 +848,7 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .step-row.example b {
-  color: var(--color-accent);
+  color: var(--accent-on-dark);
 }
 
 /* ============================================
@@ -885,7 +885,7 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .field small {
-  color: rgba(245,245,240,0.4);
+  color: rgba(245,245,240,0.6);
 }
 
 .field input {
@@ -949,7 +949,7 @@ html[data-gecis="geri"]::view-transition-new(root) {
   font-family: var(--font-mono);
   font-size: 20px;
   font-weight: 600;
-  color: var(--color-text-tertiary);
+  color: var(--color-text-secondary);
   transition: color var(--duration-fast) var(--ease);
 }
 
@@ -2910,8 +2910,9 @@ body.glossary-in-view .letter-index {
   margin: 0 auto var(--space-xl);
 }
 
-.story-moral .quote span {
-  color: var(--color-accent);
+.story-moral .quote span,
+.section-dark .link-more {
+  color: var(--accent-on-dark);
 }
 
 .story-sources {
@@ -3002,9 +3003,10 @@ body.glossary-in-view .letter-index {
 
 .num-input {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 4px;
-  padding: 4px 10px;
+  min-height: var(--touch);
+  padding: 0 12px;
   background: rgba(var(--ink),0.05);
   border-radius: var(--radius-sm);
   transition: box-shadow var(--duration-fast) var(--ease);
@@ -3015,6 +3017,7 @@ body.glossary-in-view .letter-index {
 }
 
 .num-input input {
+  align-self: stretch;
   width: 9ch;
   font-family: var(--font-mono);
   font-size: 16px;
@@ -4246,6 +4249,8 @@ body.glossary-in-view .letter-index {
 /* Senaryolar */
 .scenarios {
   display: grid;
+  min-width: 0;
+  max-width: 100%;
   grid-auto-flow: column;
   grid-auto-columns: minmax(170px, 1fr);
   gap: var(--space-xs);
@@ -4371,6 +4376,7 @@ body.glossary-in-view .letter-index {
 .lab-board {
   display: grid;
   gap: var(--space-md);
+  grid-template-columns: minmax(0, 1fr);
   min-width: 0;
 }
 
@@ -4779,7 +4785,7 @@ body.glossary-in-view .letter-index {
 }
 
 @media (max-width: 900px) {
-  .lab-grid { grid-template-columns: 1fr; }
+  .lab-grid { grid-template-columns: minmax(0, 1fr); }
   .lab-controls { position: static; order: 2; }
   .meters { grid-template-columns: 1fr; }
 }
@@ -4879,6 +4885,7 @@ body.glossary-in-view .letter-index {
 .gizli {
   position: absolute !important;
   width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
@@ -4946,10 +4953,10 @@ body.glossary-in-view .letter-index {
 @keyframes altyazi-gel { from { opacity: 0; transform: translateY(8px); } }
 
 /* JS yokken sahne gizlenir, metin tek sütunda okunur */
-.akis:not(.hazir) { display: block; }
-.akis:not(.hazir) .akis-sahne { display: none; }
-.akis:not(.hazir) .akis-adimlar { padding: 0; }
-.akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(--space-md); }
+html:not(.js) .akis:not(.hazir) { display: block; }
+html:not(.js) .akis:not(.hazir) .akis-sahne { display: none; }
+html:not(.js) .akis:not(.hazir) .akis-adimlar { padding: 0; }
+html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(--space-md); }
 
 /* Terazi */
 .tz { display: flex; flex-direction: column; gap: var(--space-md); }
@@ -5172,7 +5179,7 @@ body.glossary-in-view .letter-index {
   background: rgba(var(--ink), 0.08);
   font-weight: 600;
 }
-.ot-sirket[aria-pressed="true"] .ot-logo { background: var(--color-accent); color: #fff; }
+.ot-sirket[aria-pressed="true"] .ot-logo { background: var(--color-accent); color: var(--text-on-accent); }
 .ot-sirket span:not(.ot-logo) { font-size: 14px; font-weight: 600; line-height: 1.2; }
 .ot-sirket small { font-size: 12px; color: var(--color-text-secondary); }
 .ot-satir { cursor: pointer; }
@@ -5254,7 +5261,7 @@ body.glossary-in-view .letter-index {
   transition: background 0.3s var(--ease), color 0.3s var(--ease);
 }
 .sh-tablo thead button:hover { background: rgba(var(--ink), 0.1); }
-.sh-tablo thead button[aria-pressed="true"] { background: var(--color-accent); color: #fff; }
+.sh-tablo thead button[aria-pressed="true"] { background: var(--color-accent); color: var(--text-on-accent); }
 .sh-tablo th, .sh-tablo td { text-align: center; }
 .sh-tablo .kisa { display: none; }
 .sh-tablo thead th:first-child { text-align: left; }
@@ -5300,6 +5307,9 @@ body.glossary-in-view .letter-index {
   transition-delay: calc(var(--delay, 0s) + var(--i, 0) * 0.09s);
 }
 .satirli.visible .satir > span { transform: none; }
+/* Sayfanın ilk ekranı en büyük içeriktir: çabuk yerine otursun */
+.page-hero .satirli .satir > span,
+.page-hero .reveal { transition-duration: var(--motion-slow); }
 
 .okuma {
   position: absolute;
@@ -5825,3 +5835,55 @@ body.glossary-in-view .letter-index {
 [data-theme="dark"] .install-icon { box-shadow: 0 0 0 0.5px rgba(255,255,255,0.15); }
 
 [data-theme="dark"] .lab-story { background: var(--surface-elevated); box-shadow: 0 0 0 1px var(--border); }
+
+/* ============================================
+   DOKUNMA ALANLARI
+   Parmakla dokunulan her hedef en az 44 × 44 px. Görünüm değişmeden
+   alan büyütülür; satır içindeki metin bağlantıları hariç.
+   ============================================ */
+.breadcrumbs a,
+.kaynakca a,
+.chapter-nav a,
+.table-view summary,
+.eh-liste summary,
+.qa-share,
+.report-note button {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch);
+}
+
+.kavram-baglanti,
+.sh-tablo thead button,
+.sh-tablo tbody th a {
+  position: relative;
+}
+
+.kavram-baglanti::after,
+.sh-tablo thead button::after,
+.sh-tablo tbody th a::after {
+  content: '';
+  position: absolute;
+  inset: -12px -4px;
+}
+
+@media (max-width: 359px) {
+  .wf-row { grid-template-columns: 6.5rem 1fr 4.25rem; }
+}
+
+/* ============================================
+   YER AYIRMA
+   Betikle dolan alanlar boşken yer tutar; içerik gelince alttaki
+   bölümler ve alt bilgi aşağı kaymaz.
+   ============================================ */
+.js #kavram:has(> .kv-yukleniyor),
+.js #checkup:empty,
+.js #tracks:empty { min-height: 100svh; }
+.js .ekonomi-haritasi:has(> noscript:only-child) { min-height: min(100svh, 740px); }
+.js #daily-question:empty { min-height: 500px; }
+.js #report:empty { min-height: 418px; }
+.js #ekonomi-agi:has(> figcaption:only-child) { min-height: 352px; }
+@media (min-width: 768px) {
+  .js #ekonomi-agi:has(> figcaption:only-child) { min-height: 500px; }
+}
+.js #kavram > .error-state { min-height: 100svh; align-content: center; }

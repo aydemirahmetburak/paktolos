@@ -54,6 +54,8 @@ Kurallar:
 - Kırılımlar: telefon < 768, tablet 768–1279, masaüstü ≥ 1280.
 - Hareket eğrisi tektir: `--ease` = cubic-bezier(0.22, 1, 0.36, 1). Zıplama ve esneme yok.
 - Simgeler tek aile: 24 piksel ızgara, 1,5 piksel çizgi, yuvarlak uç.
+- Metin rengi her zeminde en az 4.5:1 kontrast verir; koyu zeminli bölümlerde vurgu metni `--accent-on-dark` kullanır.
+- Betikle dolan alanlar boşken yer ayırır (`style.css`, YER AYIRMA); böylece sayfa yüklenirken içerik kaymaz.
 
 ## Bilgi Mimarisi
 
@@ -190,7 +192,8 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Makale deneyimi (künye, bölüm sonu "Akılda kalsın", ilgili kavramlar, kaynakça) ve ortak veri görselleştirme sistemi
 - [x] "Ekonomi nasıl çalışır?" etkileşimli haritası: altı kurum, para, kredi ve sermaye akışları, "Faiz artarsa" turu
 - [x] Hesaplayıcılar (bileşik büyüme, enflasyon), açıklamalı test geri bildirimi, kategorili arama paleti
-- [ ] Kaydedilenler ve öğrenme ilerlemesi
+- [x] Kaydedilenler ve öğrenme ilerlemesi
+- [x] Kalite turu: kontrast (AA), 44 piksel dokunma alanları, "İçeriğe geç" bağlantısı, başlık sırası, 320 piksele kadar taşmasız düzen, yükleme sırasında kaymayan sayfalar
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme
