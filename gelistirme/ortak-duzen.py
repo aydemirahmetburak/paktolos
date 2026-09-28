@@ -58,6 +58,7 @@ def header(current):
         <div class="nav-actions">
           <button type="button" class="search-trigger" aria-label="Sitede ara (⌘K)">{SEARCH_ICON}<kbd class="nav-kbd">⌘K</kbd></button>
           <a href="karnem.html" class="nav-profil" aria-label="Karnem: öğrenme ilerlemen"{' aria-current="page"' if current == 'karnem.html' else ''}>{PROFIL_ICON}</a>
+          <a href="dersler.html" class="btn btn-birincil btn-kucuk nav-cta">Öğrenmeye başla</a>
         </div>
       </div>
     </div>
@@ -97,6 +98,8 @@ HEAD_EXTRA = '''<meta name="viewport" content="width=device-width, initial-scale
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="tasarim/fontlar/nr-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="tasarim/fontlar/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="tasarim/tokenlar.css">
 <link rel="stylesheet" href="tasarim/bilesenler.css">
 <script src="tema.js"></script>'''
@@ -110,7 +113,7 @@ for path in sys.argv[1:]:
     # <head>: önce eski eklemeleri temizle, sonra tek blok olarak yaz
     s = re.sub(r'<meta name="viewport"[^>]*>\n', '', s)
     for pat in [r'<meta name="theme-color"[^>]*>\n', r'<meta name="apple-mobile-web-app-[^>]*>\n', r'<meta name="mobile-web-app-capable"[^>]*>\n',
-                r'<link rel="manifest"[^>]*>\n', r'<link rel="icon"[^>]*>\n', r'<link rel="apple-touch-icon"[^>]*>\n', r'<link rel="stylesheet" href="tasarim/[^"]*">\n', r'<script src="tema.js"></script>\n']:
+                r'<link rel="manifest"[^>]*>\n', r'<link rel="icon"[^>]*>\n', r'<link rel="apple-touch-icon"[^>]*>\n', r'<link rel="stylesheet" href="tasarim/[^"]*">\n', r'<link rel="preload" href="tasarim/fontlar/[^"]*"[^>]*>\n', r'<script src="tema.js"></script>\n']:
         s = re.sub(pat, '', s)
     s = s.replace('<meta charset="UTF-8">\n', '<meta charset="UTF-8">\n' + HEAD_EXTRA + '\n', 1)
     open(path, 'w').write(s)

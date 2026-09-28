@@ -1,5 +1,5 @@
 /* ============================================
-   TASARIM SİSTEMİ — Braun/Jony Ive ilhamlı
+   SAYFA STİLLERİ — tokenlar ve bileşenler tasarim/ klasöründe
    ============================================ */
 :root {
   /* ESKİ ADLAR → YENİ TOKENLAR
@@ -38,7 +38,7 @@
   --text-display: var(--text-hero);
   --text-h1: var(--text-article);
   --text-h2: var(--text-section);
-  --text-h3: 1.3125rem;
+  --text-h3: 1.25rem;
 
   --space-xxs: var(--s-8);
   --space-xs: var(--s-12);
@@ -63,9 +63,9 @@
   --duration-slow: var(--motion-story);
 
   /* Tema kanalları: rgba(var(--ink), 0.08) gibi kullanılır */
-  --ink: 17,18,20;
+  --ink: 23,25,28;
   --glass-rgb: 255,255,255;
-  --tint-rgb: 247,247,245;
+  --tint-rgb: 250,250,251;
   --shadow-rgb: 0,0,0;
   --hilite: transparent;
   --surface-raised: var(--surface);
@@ -75,8 +75,8 @@
   --glass-bg-strong: var(--surface);
   --glass-rim: transparent;
   --glass-blur: var(--blur);
-  --glass-shadow: 0 0 0 1px var(--border);
-  --glass-shadow-hover: 0 0 0 1px var(--border-strong), var(--shadow);
+  --glass-shadow: none;              /* kartlar düz: sis grisi, gölgesiz */
+  --glass-shadow-hover: 0 0 0 1px var(--border-strong);
   --glass-dark-bg: var(--dark-surface);
   --glass-dark-rim: transparent;
 
@@ -234,9 +234,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 .eyebrow {
   display: block;
   font-size: var(--text-overline);
-  font-weight: 600;
-  letter-spacing: var(--tracking-overline);
-  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--text-secondary);
   margin-bottom: var(--space-xs);
 }
@@ -637,10 +636,9 @@ html[data-gecis="geri"]::view-transition-new(root) {
 
 .balance-caption {
   font-size: var(--text-caption);
-  font-weight: 600;
+  font-weight: var(--weight-medium);
   color: var(--color-text-tertiary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-align: center;
 }
 
@@ -836,9 +834,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 .step-row b {
   display: block;
   font-size: var(--text-caption);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
   margin-bottom: 2px;
 }
@@ -991,9 +988,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 
 .sector-box h3 {
   font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
   margin-bottom: var(--space-sm);
 }
@@ -1749,10 +1745,9 @@ body.glossary-in-view .letter-index {
 }
 
 .sheet-section h3 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
   margin-bottom: var(--space-xxs);
 }
@@ -2239,7 +2234,7 @@ body.glossary-in-view .letter-index {
 .quiz-verdict.no strong, .quiz-verdict.no .quiz-isaret { color: var(--negative); }
 .quiz-isaret { font-weight: 700; }
 .quiz-katman { margin-top: var(--s-16); }
-.quiz-katman h3 { margin-bottom: var(--s-4); font-size: var(--text-caption); font-weight: 600; letter-spacing: var(--tracking-overline); text-transform: uppercase; color: var(--text-muted); }
+.quiz-katman h3 { margin-bottom: var(--s-4); font-size: var(--text-caption); font-weight: var(--weight-medium); letter-spacing: 0; color: var(--text-muted); }
 .quiz-katman .quiz-explain { margin: 0; }
 .quiz-katman .ilgili-liste { margin-top: var(--s-4); }
 
@@ -2351,10 +2346,9 @@ body.glossary-in-view .letter-index {
 }
 
 .review-title {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
   margin-bottom: 4px;
 }
@@ -2540,10 +2534,9 @@ body.glossary-in-view .letter-index {
 
 .spot-group {
   padding: var(--space-xs) var(--space-xs) 4px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
 }
 
@@ -3107,10 +3100,9 @@ body.glossary-in-view .letter-index {
 .insight-title {
   display: block;
   margin-bottom: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-accent);
 }
 
@@ -3461,10 +3453,9 @@ body.glossary-in-view .letter-index {
 .qa-badge {
   flex-shrink: 0;
   padding: 3px 8px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-accent);
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   border-radius: var(--radius-sm);
@@ -3497,10 +3488,9 @@ body.glossary-in-view .letter-index {
 .qa-label {
   display: block;
   margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
 }
 
@@ -4361,10 +4351,9 @@ body.glossary-in-view .letter-index {
 .lab-group-title {
   display: block;
   margin-bottom: var(--space-xs);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
 }
 
@@ -4560,10 +4549,9 @@ body.glossary-in-view .letter-index {
 
 .bal-title {
   grid-column: 1 / -1;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-tertiary);
 }
 
@@ -4939,10 +4927,9 @@ body.glossary-in-view .letter-index {
 .akis-sayac {
   display: block;
   margin-bottom: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-accent);
 }
 
@@ -5000,10 +4987,9 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
   padding-bottom: 6px;
   margin-bottom: 6px;
   border-bottom: 1px solid rgba(var(--ink), 0.1);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: var(--weight-medium);
+  letter-spacing: 0;
   color: var(--color-text-secondary);
 }
 .tz-baslik b { color: var(--color-text-primary); font-variant-numeric: tabular-nums; letter-spacing: 0; }
@@ -5148,7 +5134,7 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
 .ot-kaydir { position: relative; overflow-x: auto; margin: 0 -8px; padding: 0 8px; }
 .ot-tablo, .sh-tablo { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
 .ot-tablo th, .ot-tablo td, .sh-tablo th, .sh-tablo td { padding: 12px 10px; text-align: left; vertical-align: middle; }
-.ot-kose { font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-text-secondary); }
+.ot-kose { font-size: 13px; font-weight: var(--weight-medium); letter-spacing: 0; color: var(--color-text-secondary); }
 .ot-sirket {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -5751,9 +5737,9 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
    birkaç bileşen.
    ============================================ */
 [data-theme="dark"] {
-  --ink: 245,245,242;
-  --glass-rgb: 17,18,20;
-  --tint-rgb: 8,9,10;
+  --ink: 242,242,243;
+  --glass-rgb: 28,29,32;
+  --tint-rgb: 22,23,26;
   --shadow-rgb: 0,0,0;
 }
 
@@ -5882,8 +5868,29 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
 .js .ekonomi-haritasi:has(> noscript:only-child) { min-height: min(100svh, 740px); }
 .js #daily-question:empty { min-height: 500px; }
 .js #report:empty { min-height: 418px; }
+.js #scenarios:empty { min-height: 174px; }
+.js #quiz-stage:has(#quiz-options:empty) { min-height: 563px; }
+@media (max-width: 767px) { .js #quiz-stage:has(#quiz-options:empty) { min-height: 671px; } }
+.js #lab-story:empty { min-height: 207px; }
+.js #lab-kpis:empty { min-height: 134px; }
+@media (max-width: 1099px) { .js #lab-kpis:empty { min-height: 266px; } }
 .js #ekonomi-agi:has(> figcaption:only-child) { min-height: 352px; }
 @media (min-width: 768px) {
   .js #ekonomi-agi:has(> figcaption:only-child) { min-height: 500px; }
 }
 .js #kavram > .error-state { min-height: 100svh; align-content: center; }
+
+/* ============================================
+   EDİTORYAL BAŞLIKLAR
+   Sayfa başlıkları Newsreader serif, her boyutta 400 ağırlık. Bu dosyadaki
+   eski kalın başlık kurallarını ezmek için :not(#_) ile güçlendirildi;
+   küçük arayüz başlıkları (.sans) sans kalır.
+   ============================================ */
+:is(h1, h2, .headline):not(#_):not(.sans) {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-heading);
+  line-height: var(--leading-tight);
+}
+h1:not(#_):not(.sans) { letter-spacing: -0.02em; }
+footer h2:not(#_), .gizli:not(#_), .ilgili h2:not(#_), .kaynakca-bolum h2:not(#_) { font-family: var(--font-sans); letter-spacing: 0; line-height: 1.3; }

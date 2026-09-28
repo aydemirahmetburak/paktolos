@@ -10,6 +10,8 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="tasarim/fontlar/nr-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="tasarim/fontlar/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="tasarim/tokenlar.css">
 <link rel="stylesheet" href="tasarim/bilesenler.css">
 <script src="tema.js"></script>
@@ -61,6 +63,7 @@
         <div class="nav-actions">
           <button type="button" class="search-trigger" aria-label="Sitede ara (⌘K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><kbd class="nav-kbd">⌘K</kbd></button>
           <a href="karnem.html" class="nav-profil" aria-label="Karnem: öğrenme ilerlemen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg></a>
+          <a href="dersler.html" class="btn btn-birincil btn-kucuk nav-cta">Öğrenmeye başla</a>
         </div>
       </div>
     </div>
@@ -85,15 +88,15 @@
 
       <section class="kat-bolum" id="renk">
         <h2>Renk</h2>
-        <p>Renk ölçülü kullanılır. Mavi yalnızca bağlantı, birincil eylem ve seçili durum içindir. Turuncu yalnızca logoda ve hikâye çizimlerinde yer alır. Olumlu ve olumsuz renkleri her zaman bir etiketle birlikte gelir.</p>
+        <p>Sistem neredeyse renksizdir: beyaz kâğıt, sis grisi kartlar, mürekkep siyahı yazı ve düğmeler. Tek sıcak vurgu şeftali kart ve onun kahve mürekkebidir; sayfa başına en fazla bir kez. Renk grafiklerde veriyi, ışık huzmelerinde atmosferi taşır. Turuncu yalnızca logoda ve hikâye çizimlerinde yer alır.</p>
         <div class="renkler" id="renkler"></div>
       </section>
 
       <section class="kat-bolum" id="yazi">
         <h2>Yazı</h2>
-        <p>Sistem yazı tipi (Apple cihazlarda SF Pro, diğerlerinde Inter ya da sistemin grotesk yazısı). Hiyerarşi boyuttan daha önemlidir; her başlık büyük olmak zorunda değil.</p>
+        <p>Başlıklar Newsreader serif, her boyutta 400 ağırlık; vurgu kalınlıkla değil, <em>eğik</em> bir kelimeyle yapılır. Gövde ve arayüz Inter; 430, 450 gibi ara ağırlıklar kalına geçmeden sıralar. İkisi de siteyle birlikte gelir ve yalnızca Türkçe için gereken harfleri taşır.</p>
         <div class="olcek">
-          <div><code>--text-hero</code><span class="baslik-hero">Paranın dili</span></div>
+          <div><code>--text-hero</code><span class="baslik-hero">Paranın <em>dili</em></span></div>
           <div><code>--text-section</code><span class="baslik-bolum">Bölüm başlığı</span></div>
           <div><code>--text-article</code><span class="baslik-makale">Makale başlığı</span></div>
           <div><code>--text-subheading</code><span class="baslik-alt">Ara başlık</span></div>
@@ -131,12 +134,13 @@
 
       <section class="kat-bolum" id="dugmeler">
         <h2>Düğmeler</h2>
-        <p>Bir ekranda en fazla bir birincil eylem. En küçük dokunma alanı 44 piksel.</p>
+        <p>Düğmeler her zaman haptır. Birincil eylem mürekkep siyahı; yanında ikincil (sis grisi) ya da yalnızca yazı ve ok. Bir ekranda en fazla bir birincil eylem; en küçük dokunma alanı 44 piksel.</p>
         <div class="kat-satir">
           <button type="button" class="btn btn-birincil">Öğrenmeye başla</button>
           <button type="button" class="btn btn-vurgu">Hesapla</button>
           <button type="button" class="btn btn-ikincil">Nasıl çalışıyor?</button>
-          <button type="button" class="btn btn-sade">Tümünü gör</button>
+          <button type="button" class="btn btn-cerceve">Çerçeveli</button>
+          <button type="button" class="btn btn-sade ok-sonu">Tümünü gör</button>
           <button type="button" class="btn btn-ikincil btn-kucuk">Küçük</button>
           <button type="button" class="btn btn-birincil" disabled>Pasif</button>
         </div>
@@ -162,7 +166,7 @@
 
       <section class="kat-bolum" id="kartlar">
         <h2>Kartlar</h2>
-        <p>Kart, tek bir şeyi anlatır. Yüzey beyaz, kenar ince çizgi; üzerine gelince yalnızca hafifçe yükselir.</p>
+        <p>Kart tek bir şeyi anlatır: sis grisi, düz, gölgesiz, 24 piksel köşe. Şeftali kart sayfanın tek sıcak vurgusudur. Gölgeyi yalnızca yüzen parçalar taşır: başlıkların çevresinde duran küçük arayüz kesitleri.</p>
         <div class="izgara">
           <a class="card article-card k-4" href="ogren.html"><span class="overline">Rehber · 7 dk</span><h3>Mali tablolar ve oranlar</h3><p>ArticleCard: uzun anlatımlar ve rehberler için.</p><span class="meta">Kaydırmalı infografikler</span></a>
           <a class="card concept-card k-4" href="sozluk.html#enflasyon"><span class="overline">Kavram</span><h3>Enflasyon</h3><p>ConceptCard: bir kavramın tek cümlelik tanımı.</p><span class="ok">Tanımı oku</span></a>
@@ -174,6 +178,8 @@
             <dl class="source"><div><dt>Kaynak</dt><dd>TÜİK</dd></div><div><dt>Sıklık</dt><dd>Aylık</dd></div></dl>
           </article>
           <div class="card card-sade k-6"><h3>Sade kart</h3><p>Girinti gerektiren, ikincil bilgiler için gölgesiz yüzey.</p></div>
+          <div class="card card-seftali k-6"><span class="overline">Şeftali kart</span><h3>Sayfanın tek sıcak vurgusu</h3><p>Öne çıkan bir fikir ya da alıntı için; sayfa başına en fazla bir kez.</p></div>
+          <div class="k-6" style="display: grid; place-items: center; padding: var(--s-32); border-radius: var(--radius-l)"><div class="yuzen" style="display: grid; gap: var(--s-4)"><span class="govde-kucuk">Yüzen parça</span><strong style="font-size: var(--text-title); font-weight: var(--weight-semibold)">%46,2</strong><span class="govde-kucuk">Gölge taşıyan tek öğe</span></div></div>
         </div>
       </section>
 
@@ -308,7 +314,7 @@
     (() => {
       const RENK = ['--background', '--surface', '--surface-secondary', '--text-primary', '--text-secondary', '--text-muted', '--accent', '--positive', '--negative', '--caution', '--dark', '--brand', '--data-1', '--data-2', '--data-seq-1', '--data-seq-2', '--data-seq-3', '--data-seq-4', '--data-warm-1', '--data-neutral'];
       document.getElementById('renkler').append(...RENK.map(ad => el('div', { className: 'renk' }, el('i', { style: `background: var(${ad})` }), el('span', { className: 'kat-ad' }, ad))));
-      document.getElementById('bosluklar').append(...[4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160, 192].map(n => el('div', {}, el('code', {}, n), el('i', { style: `width: var(--s-${n})` }))));
+      document.getElementById('bosluklar').append(...[4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128, 160, 192].map(n => el('div', {}, el('code', {}, n), el('i', { style: `width: var(--s-${n})` }))));
       const yil = Array.from({ length: 11 }, (_, i) => i);
       const bilesik = yil.map(i => 10000 * Math.pow(1.15, i)), basit = yil.map(i => 10000 * (1 + 0.15 * i));
       document.getElementById('grafik-ornek').append(grafikFigur(

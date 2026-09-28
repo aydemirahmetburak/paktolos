@@ -29,11 +29,13 @@ Paktolos bu boşluğu dolduruyor: **yatırım kararını vermiyor, kararı vereb
 **Karmaşığı apaçık kıl.** Paktolos, finans hakkında bilgi veren bir web sitesi değil; finansı *anlamayı* sağlayan bir deneyimdir. Arayüz anlamanın arkasında kaybolur.
 
 - Kesinlik, açıklık, ölçülülük: gereksiz süs yok, her renk bir anlam taşır, her animasyonun bir nedeni vardır.
-- Sakin bir zemin (#F7F7F5), beyaz yüzeyler, ince çizgiler; ağır gölge ve cam efekti yok.
-- Tek vurgu rengi mavi (#2457A6) ve seyrek kullanılır. Markanın turuncusu yalnızca logoda ve hikâye çizimlerinde.
+- Sıcak kâğıt üzerinde serif: beyaz zemin, sis grisi düz kartlar, mürekkep siyahı (#17191C) yazı ve hap düğmeler. Sistem neredeyse renksizdir.
+- Başlıklar Newsreader serif, her boyutta 400 ağırlık; vurgu kalınlıkla değil, eğik bir kelimeyle. Gövde Inter.
+- Tek sıcak vurgu şeftali kart (#FBE1D1, kahve mürekkep #5D2A1A), sayfa başına en fazla bir kez. Başlıkların arkasında yumuşak ışık huzmeleri.
+- Gölgeyi yalnızca başlıkların çevresinde duran "yüzen" arayüz parçaları taşır. Markanın turuncusu yalnızca logoda ve hikâye çizimlerinde.
 - Katmanlı anlatım: önce basitçe, sonra nasıl çalıştığı, gerçek hayattaki karşılığı, daha derini ve kaynaklar.
 - "Bu ne anlama geliyor?": her gösterge, sana dokunan üç kısa sonuca açılır.
-- Grafikler süs değil, bir fikri anlatır: ince çizgiler, az ızgara, doğrulanmış iki renk.
+- Grafikler süs değil, bir fikri anlatır: ince çizgiler, az ızgara, doğrulanmış iki renk. Arayüz renksiz olduğu için renk yalnızca veride konuşur.
 - Karanlık mod ters çevirme değil, ayrı ayrı seçilmiş değerlerdir.
 - "Damla" sayfa geçişi, kaydırdıkça ilerleyen infografikler, dokunarak keşfedilen tablolar.
 - Erişilebilirlik: WCAG AA, klavye ile gezinme, görünür odak, 44 piksel dokunma alanı, "azaltılmış hareket" tercihine saygı.
@@ -44,7 +46,8 @@ Canlı katalog: **`tasarim.html`**. Yeni bir şey tasarlamadan önce oraya bak.
 
 | Katman | Dosya | İçerik |
 |---|---|---|
-| Tokenlar | `tasarim/tokenlar.css` | Renk (açık/koyu), yazı ölçeği, 8 noktalı boşluk, köşe, gölge, hareket, yerleşim |
+| Tokenlar | `tasarim/tokenlar.css` | Yazı tipleri, renk (açık/koyu), yazı ölçeği, 4 noktalı boşluk, köşe, gölge, ışık, hareket, yerleşim |
+| Yazı tipleri | `tasarim/fontlar/` | Newsreader ve Inter (SIL OFL); yalnızca kullanılan ağırlık ve Türkçe harfler, toplam ~88 KB |
 | Bileşenler | `tasarim/bilesenler.css` | Menü, alt çubuk, alt bilgi, düğme, rozet, etiket, kartlar, sayı, bölüm başlığı, sekmeler, ipucu, akordeon, ilerleme, anahtar, öğrenme blokları, "Bu ne anlama geliyor?", boş/hata/yükleniyor durumları |
 | Sayfa stilleri | `style.css` | Sayfalara özel stiller; eski değişken adları yeni tokenlara bağlıdır |
 | Etkileşim | `script.js` → BİLEŞENLER | Sekmeler (ok tuşlarıyla), açılır kutu |
