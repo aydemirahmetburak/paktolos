@@ -109,6 +109,7 @@ paktolos/
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
 ├── kavram.html          # Kavram sayfası (kavram.html?k=enflasyon): katmanlı anlatım
+├── ekonomi-haritasi.html # "Ekonomi nasıl çalışır?" etkileşimli haritası
 ├── test.html            # Kendini sına
 ├── karnem.html          # Karnem: ilerleme, rozetler, günün sorusu
 │
@@ -131,6 +132,7 @@ paktolos/
 ├── akis.js              # Kaydırmalı infografikler ve etkileşimli tablolar
 ├── ekonomi.js           # Ekonomi ağı ve faiz zinciri görselleri
 ├── kavram.js            # Kavram sayfasını katmanlı olarak çizer
+├── harita.js            # Ekonomi haritası: kurumlar, akışlar, senaryo turu
 ├── ekonomi-veri.js      # Göstergeler, faiz zinciri ve ekonomi ağı (içerik)
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
@@ -185,7 +187,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Ana sayfa: ekonomi ağı, dört gösterge, finansal temeller, "Faiz değişince ne olur?", veri hikâyesi, rehberler, araçlar
 - [x] Kavram sistemi: 67 kavram için katmanlı sayfa; 12 temel kavramda derin katman, kaynaklar ve etkileşimli görsel
 - [x] Makale deneyimi (künye, bölüm sonu "Akılda kalsın", ilgili kavramlar, kaynakça) ve ortak veri görselleştirme sistemi
-- [ ] "Ekonomi nasıl çalışır?" etkileşimli haritası
+- [x] "Ekonomi nasıl çalışır?" etkileşimli haritası: altı kurum, para, kredi ve sermaye akışları, "Faiz artarsa" turu
 - [ ] Hesaplayıcılar, test ve arama yenilemesi; kaydedilenler ve ilerleme
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)

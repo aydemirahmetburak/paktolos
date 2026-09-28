@@ -24,11 +24,11 @@ TABS = [('index.html', 'Ana sayfa', 'ev'), ('dersler.html', 'Öğren', 'ogren'),
 SEKME_GRUBU = {'sozluk.html': 'dersler.html', 'test.html': 'dersler.html', 'kavram.html': 'dersler.html',
                'ogren.html': 'piyasalar.html', 'analiz.html': 'piyasalar.html', 'sektorler.html': 'piyasalar.html',
                'sorular.html': 'rehberler.html', 'hikaye.html': 'rehberler.html',
-               'lab.html': 'araclar.html', 'checkup.html': 'araclar.html'}
+               'lab.html': 'araclar.html', 'checkup.html': 'araclar.html', 'ekonomi-haritasi.html': 'ekonomi.html'}
 # Alt bilgi: bölümlere göre gruplu
 ALT_MENU = [
   ('Öğren', [('dersler.html', 'Dersler'), ('sozluk.html', 'Sözlük'), ('test.html', 'Kendini sına')]),
-  ('Ekonomi', [('ekonomi.html', 'Göstergeler'), ('ekonomi.html#kavramlar', 'Temel kavramlar')]),
+  ('Ekonomi', [('ekonomi-haritasi.html', 'Ekonomi nasıl çalışır?'), ('ekonomi.html', 'Göstergeler'), ('ekonomi.html#kavramlar', 'Temel kavramlar')]),
   ('Piyasalar', [('ogren.html', 'Mali tablolar'), ('analiz.html', 'Hisse analizi'), ('sektorler.html', 'Sektörler')]),
   ('Rehberler', [('sorular.html', 'Aklına takılan'), ('hikaye.html', 'Paktolos\'un hikâyesi')]),
   ('Araçlar', [('araclar.html', 'Hesaplayıcılar'), ('lab.html', 'Şirket laboratuvarı'), ('checkup.html', 'Finansal check-up')]),

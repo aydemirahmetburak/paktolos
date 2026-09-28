@@ -7,11 +7,11 @@
 // Yeni bir sayfa ya da dosya eklendiğinde DOSYALAR listesine ekle ve
 // SURUM değerini bir artır.
 
-const SURUM = 'paktolos-v11';
+const SURUM = 'paktolos-v12';
 const DOSYALAR = [
   './',
-  'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html', 'araclar.html', 'sorular.html', 'dersler.html', 'karnem.html', 'lab.html', 'checkup.html', 'ekonomi.html', 'piyasalar.html', 'rehberler.html', 'tasarim.html', 'kavram.html',
-  'style.css', 'tasarim/tokenlar.css', 'tasarim/bilesenler.css', 'script.js', 'tema.js', 'sozluk-veri.js', 'test-veri.js', 'arama-veri.js', 'grafik.js', 'araclar.js', 'sorular-veri.js', 'dersler-veri.js', 'okul.js', 'lab-model.js', 'lab.js', 'checkup.js', 'akis.js', 'ekonomi-veri.js', 'ekonomi.js', 'kavram.js', 'kavramlar-veri.js',
+  'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html', 'araclar.html', 'sorular.html', 'dersler.html', 'karnem.html', 'lab.html', 'checkup.html', 'ekonomi.html', 'piyasalar.html', 'rehberler.html', 'tasarim.html', 'kavram.html', 'ekonomi-haritasi.html',
+  'style.css', 'tasarim/tokenlar.css', 'tasarim/bilesenler.css', 'script.js', 'tema.js', 'sozluk-veri.js', 'test-veri.js', 'arama-veri.js', 'grafik.js', 'araclar.js', 'sorular-veri.js', 'dersler-veri.js', 'okul.js', 'lab-model.js', 'lab.js', 'checkup.js', 'akis.js', 'ekonomi-veri.js', 'ekonomi.js', 'kavram.js', 'kavramlar-veri.js', 'harita.js',
   'manifest.webmanifest', 'icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'
 ];
 

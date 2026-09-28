@@ -27,6 +27,8 @@ const ARAMA_DIZINI = [
     anahtar: 'hesapla hesaplayıcı fk pd dd roe cari oran net borç favök' },
 
   // Ana bölümler
+  { tur: 'sayfa', baslik: 'Ekonomi nasıl çalışır?', aciklama: 'Hanehalkı, şirketler, bankalar, Merkez Bankası, devlet ve piyasalar arasındaki akışlar', href: 'ekonomi-haritasi.html',
+    anahtar: 'ekonomi haritası nasıl çalışır para kredi sermaye akış hanehalkı şirket banka merkez bankası devlet maliye para politikası vergi' },
   { tur: 'sayfa', baslik: 'Ekonomi', aciklama: 'Enflasyon, faiz, kur ve büyüme: ne ölçer, nereden bakılır, ne anlama gelir?', href: 'ekonomi.html',
     anahtar: 'ekonomi gösterge enflasyon politika faizi döviz kuru dolar büyüme gsyh tüik tcmb merkez bankası haber' },
   { tur: 'sayfa', baslik: 'Piyasalar', aciklama: 'Borsa şirketlerinin mali tablolarını ve oranlarını okumayı öğren', href: 'piyasalar.html',
