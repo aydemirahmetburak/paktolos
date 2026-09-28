@@ -536,6 +536,21 @@ a.card:hover { box-shadow: var(--shadow-hairline), var(--shadow); transform: tra
 .source dd { display: inline; margin: 0 0 0 var(--s-4); color: var(--text-secondary); }
 .source a { color: var(--text-secondary); }
 
+/* Makale: künye (okuma süresi, güncelleme, seviye) ve kapanış */
+.makale-meta { display: flex; flex-wrap: wrap; gap: var(--s-8) var(--s-32); margin: var(--s-24) 0; padding: var(--s-16) 0; border-block: 1px solid var(--border); }
+.makale-meta div { display: grid; gap: 2px; }
+.makale-meta dt { font-size: var(--text-overline); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-overline); text-transform: uppercase; color: var(--text-muted); }
+.makale-meta dd { margin: 0; font-size: var(--text-small); font-weight: var(--weight-medium); color: var(--text-primary); font-variant-numeric: tabular-nums; }
+.makale-son { padding: var(--s-64) 0 var(--s-96); border-top: 1px solid var(--border); }
+.makale-son > div { display: grid; gap: var(--s-48); }
+.makale-son h2 { font-size: var(--text-small); font-weight: var(--weight-semibold); letter-spacing: 0; color: var(--text-secondary); margin-bottom: var(--s-12); }
+.makale-uyari { font-size: var(--text-caption); color: var(--text-muted); }
+.bolum-akil { margin-top: var(--s-48); }
+.kaynakca { display: grid; list-style: none; }
+.kaynakca li { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-12); align-items: baseline; padding: var(--s-12) 0; border-bottom: 1px solid var(--border); font-size: var(--text-small); }
+.kaynakca a { color: var(--text-primary); font-weight: var(--weight-medium); }
+.kaynakca span { color: var(--text-secondary); }
+
 /* ---------- 15. "Bu ne anlama geliyor?" ---------- */
 .anlam { border-top: 1px solid var(--border); }
 .anlam > summary {

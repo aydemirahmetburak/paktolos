@@ -65,8 +65,9 @@ function initOkuma() {
   const main = document.querySelector('main[data-okuma]');
   const bar = document.querySelector('.nav-bar');
   if (!main || !bar) return;
-  const kelime = main.innerText.split(/\s+/).length;
+  const kelime = main.textContent.trim().split(/\s+/).length; // kapalı bölümler de okunur
   const toplamDk = kelime / 190;
+  document.querySelectorAll('[data-okuma-sure]').forEach(d => { d.textContent = Math.max(1, Math.round(toplamDk)) + ' dk'; });
   const cizgi = el('div', { className: 'okuma', 'aria-hidden': 'true' });
   const sure = el('div', { className: 'okuma-sure', 'aria-hidden': 'true' });
   bar.append(cizgi, sure);
