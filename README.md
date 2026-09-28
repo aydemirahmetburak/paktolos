@@ -73,7 +73,7 @@ Paktolos'un logosu, dünyanın ilk madeni paralarından birinin, Paktolos'un alt
 
 - İşaret tek bir SVG yolundan oluşur (`icon.svg`); damgalar boşluk olarak kesildiği için her zeminde çalışır.
 - Renk her zaman turuncu (`--color-accent`); uygulama simgelerinde kömür zemin üzerinde.
-- Menüdeki işaret `gelistirme/ortak-duzen.py` içindeki `LOGO_MARK`'tan gelir. Açılış ekranında sikke "darp edilir": pul düşer, iki damga vurulur.
+- Menüdeki işaret `gelistirme/ortak-duzen.py` içindeki `LOGO_MARK`'tan gelir. Oturumun ilk açılışında menüdeki sikke bir kez "darp edilir"; ayrı bir açılış ekranı yoktur.
 - Uygulama simgeleri (`icons/`) aynı çizimden üretilir; maskable simgede işaret güvenli alanın içinde kalır.
 
 ## Teknik Yaklaşım (Web)
@@ -126,6 +126,8 @@ paktolos/
 ├── lab.js               # Laboratuvar arayüzü: kollar, senaryolar, canlı tablolar
 ├── checkup.js           # Finansal check-up hesapları ve göstergeleri
 ├── akis.js              # Kaydırmalı infografikler ve etkileşimli tablolar
+├── anasayfa.js          # Ana sayfa: ekonomi ağı ve faiz zinciri
+├── ekonomi-veri.js      # Göstergeler, faiz zinciri ve ekonomi ağı (içerik)
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
@@ -176,7 +178,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Finansal check-up: dört göstergede kişisel finans durumu
 - [x] "Damla" sayfa geçişi, kaydırmalı infografikler, etkileşimli oran tablosu ve sektör haritası
 - [x] Tasarım sistemi v2: tokenlar, bileşen kütüphanesi, yeni bilgi mimarisi (Öğren, Ekonomi, Piyasalar, Rehberler, Araçlar)
-- [ ] Ana sayfa: editoryal hikâye, "Bugün ekonomide" gösterge rehberi
+- [x] Ana sayfa: ekonomi ağı, dört gösterge, finansal temeller, "Faiz değişince ne olur?", veri hikâyesi, rehberler, araçlar
 - [ ] Kavram sistemi: katmanlı kavram sayfaları
 - [ ] Makale deneyimi ve veri görselleştirme sistemi
 - [ ] "Ekonomi nasıl çalışır?" etkileşimli haritası

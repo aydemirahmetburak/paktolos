@@ -6,27 +6,6 @@ function toggleExplain(id) {
   button.setAttribute('aria-expanded', open);
 }
 
-// Açılış ekranı: oturum başına bir kez gösterilir, dokununca geçilir
-function initSplash() {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-
-  let seen = false;
-  try {
-    seen = sessionStorage.getItem('splash-seen') === '1';
-    sessionStorage.setItem('splash-seen', '1');
-  } catch (e) { /* gizli sekme vb. — her seferinde göster */ }
-
-  if (seen) {
-    splash.remove();
-    return;
-  }
-  splash.addEventListener('click', () => splash.classList.add('hide'));
-  splash.addEventListener('animationend', e => {
-    if (e.animationName === 'splash-out') splash.remove();
-  });
-}
-
 // Menü: sayfa kaydırılınca alt çizgi belirir
 function initNav() {
   const bar = document.querySelector('.nav-bar');
@@ -158,6 +137,41 @@ function initPopover() {
     kutu?.toggleAttribute('data-acik', !acik);
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') kapat(); });
+}
+
+// Gösterge kartları: <div data-gostergeler="kompakt|tam"> — ekonomi-veri.js'ten.
+// Rakam yayınlamaz; ne ölçtüğünü, kaynağını ve "Bu ne anlama geliyor?" açılımını gösterir.
+function initGostergeler() {
+  if (typeof GOSTERGELER === 'undefined') return;
+  document.querySelectorAll('[data-gostergeler]').forEach(kap => {
+    const kompakt = kap.dataset.gostergeler === 'kompakt';
+    kap.replaceChildren(...GOSTERGELER.map(g => el('article', { className: 'card gosterge ' + (kompakt ? 'k-3' : 'k-6') },
+      el('header', { className: 'gosterge-bas' },
+        el('div', {}, el('span', { className: 'overline' }, g.olcu), el('h3', {}, g.ad)),
+        kompakt ? null : el('a', { className: 'tag', href: 'sozluk.html#' + g.kavram }, 'Kavram')),
+      el('p', { className: 'gosterge-ne' }, el('span', {}, kompakt ? '' : 'Ne ölçer? '), kompakt ? g.kisa : g.neOlcer),
+      el('details', { className: 'anlam' },
+        el('summary', {}, kompakt ? 'Bu ne anlama geliyor?' : g.soru + ', bu ne anlama gelir?'),
+        kompakt ? el('p', { className: 'anlam-soru' }, g.soru + ':') : null,
+        el('ul', {}, ...g.anlam.map(m => el('li', {}, m)))),
+      el('dl', { className: 'source' },
+        el('div', {}, el('dt', {}, 'Kaynak'), el('dd', {}, g.kaynak)),
+        el('div', {}, el('dt', {}, 'Sıklık'), el('dd', {}, g.siklik)),
+        kompakt ? null : el('div', {}, el('dt', {}, 'Güncel değer'), el('dd', {}, el('a', { href: g.url, rel: 'noopener', target: '_blank' }, g.urlAd)))))));
+  });
+}
+
+// Kavram kartları: <div data-kavramlar="enflasyon,faiz,…" data-numarali> — sozluk-veri.js'ten
+function initKavramKartlari() {
+  if (typeof SOZLUK === 'undefined') return;
+  document.querySelectorAll('[data-kavramlar]').forEach(kap => {
+    const numarali = kap.hasAttribute('data-numarali');
+    const sinif = kap.dataset.sutun || 'k-3';
+    kap.replaceChildren(...kap.dataset.kavramlar.split(',').map(id => SOZLUK.find(t => t.id === id.trim())).filter(Boolean).map((t, i) =>
+      el('a', { className: 'card concept-card ' + sinif, href: 'sozluk.html#' + t.id },
+        el('span', { className: 'overline' }, numarali ? String(i + 1).padStart(2, '0') : 'Kavram'),
+        el('h3', {}, t.terim), el('p', {}, t.kisa), el('span', { className: 'ok' }, 'Tanımı oku'))));
+  });
 }
 
 // ============================================
@@ -1425,12 +1439,13 @@ function initHomeQuestions() {
     el('a', { href: 'sorular.html#' + q.id }, el('span', {}, q.soru), el('span', { className: 'arrow', 'aria-hidden': 'true' }, '›'))));
 }
 
-initSplash();
 initNav();
 initGecisNoktasi();
 initReveal();
 initSekmeler();
 initPopover();
+initGostergeler();
+initKavramKartlari();
 initOkuma();
 initCalculator();
 initHomeDaily();
