@@ -1,0 +1,199 @@
+/* ============================================
+   PAKTOLOS TASARIM SİSTEMİ — TOKENLAR
+   Kesinlik × Açıklık × Editoryal zekâ
+
+   Tüm renk, yazı, boşluk, köşe, gölge ve hareket değerleri burada.
+   Bileşenler yalnızca bu değişkenleri kullanır; doğrudan renk ya da
+   rastgele boşluk yazılmaz. Karanlık mod, aynı adların ayrı ayrı seçilmiş
+   değerleridir; ters çevirme değildir.
+
+   Belge: tasarim.html (canlı bileşen kataloğu)
+   ============================================ */
+
+:root {
+  /* ---------- Renk: yüzeyler ---------- */
+  --background: #F7F7F5;          /* sayfa zemini */
+  --surface: #FFFFFF;             /* kart, panel */
+  --surface-secondary: #EFEFEC;   /* girinti, alan, pasif */
+  --surface-elevated: #FFFFFF;    /* açılır pencere, ipucu */
+  --dark: #0B0C0E;                /* koyu bölüm zemini */
+  --dark-surface: #16171A;        /* koyu bölüm içindeki yüzey */
+
+  /* ---------- Renk: metin ---------- */
+  --text-primary: #111214;
+  --text-secondary: #6F7175;
+  --text-muted: #9A9CA0;          /* yalnızca 14px üstü ya da süs metni */
+  --text-on-dark: #F5F5F2;
+  --text-on-dark-secondary: #9B9DA2;
+  --text-on-accent: #FFFFFF;
+
+  /* ---------- Renk: çizgi ---------- */
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+  --border-on-dark: rgba(255, 255, 255, 0.1);
+
+  /* ---------- Renk: anlam ---------- */
+  --accent: #2457A6;              /* seyrek: bağlantı, birincil eylem, seçili */
+  --accent-hover: #1D4988;
+  --accent-soft: rgba(36, 87, 166, 0.08);
+  --accent-ring: rgba(36, 87, 166, 0.35);
+  --positive: #167A56;
+  --positive-soft: rgba(22, 122, 86, 0.1);
+  --negative: #B84A4A;
+  --negative-soft: rgba(184, 74, 74, 0.1);
+  --caution: #9A6A12;             /* "dikkat" durumu; yalnızca etiketle birlikte */
+  --caution-soft: rgba(154, 106, 18, 0.1);
+
+  /* Marka: yalnızca logo (ilk Lidya sikkesi) ve hikâye çizimleri */
+  --brand: #FF6B35;
+
+  /* ---------- Veri görselleştirme ----------
+     İki seri: renk körlüğü, kontrast ve açıklık kontrolleri doğrulandı
+     (dataviz doğrulayıcı, açık ve koyu zemin ayrı ayrı). */
+  --data-1: #2457A6;              /* ana seri, toplam, giren */
+  --data-2: #C4622D;              /* karşılaştırılan, düşülen, çıkan */
+  --data-grid: rgba(0, 0, 0, 0.06);
+  --data-axis: rgba(0, 0, 0, 0.18);
+  /* Sıralı mavi rampa (açıktan koyuya) + sıcak çift + nötr */
+  --data-seq-1: #B7CBEA;
+  --data-seq-2: #7FA3D9;
+  --data-seq-3: #4A7BC4;
+  --data-seq-4: #2457A6;
+  --data-warm-1: #EDB08C;
+  --data-warm-2: #C4622D;
+  --data-neutral: #7C7E83;
+
+  /* ---------- Tipografi ---------- */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", Inter, Geist, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --text-hero: clamp(2.75rem, 7vw, 5.5rem);     /* 44 → 88 */
+  --text-section: clamp(2rem, 4.2vw, 3.5rem);   /* 32 → 56 */
+  --text-article: clamp(2.25rem, 4.6vw, 3.5rem);/* 36 → 56 */
+  --text-subheading: clamp(1.25rem, 2vw, 1.75rem); /* 20 → 28 */
+  --text-lead: clamp(1.1875rem, 1.8vw, 1.4375rem); /* 19 → 23 */
+  --text-title: 1.1875rem;        /* 19 — kart başlığı */
+  --text-body: clamp(1.0625rem, 0.3vw + 1rem, 1.125rem); /* 17 → 18 */
+  --text-small: 0.875rem;         /* 14 */
+  --text-caption: 0.8125rem;      /* 13 */
+  --text-overline: 0.75rem;       /* 12 — büyük harf etiket */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-body: 1.6;
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.022em;
+  --tracking-body: -0.011em;
+  --tracking-overline: 0.08em;
+
+  /* ---------- Boşluk: 8 noktalı ölçek ----------
+     İzin verilen değerler: 4 8 12 16 24 32 48 64 80 96 128 160 192 */
+  --s-4: 4px;
+  --s-8: 8px;
+  --s-12: 12px;
+  --s-16: 16px;
+  --s-24: 24px;
+  --s-32: 32px;
+  --s-48: 48px;
+  --s-64: 64px;
+  --s-80: 80px;
+  --s-96: 96px;
+  --s-128: 128px;
+  --s-160: 160px;
+  --s-192: 192px;
+  --gutter: clamp(16px, 4vw, 32px);         /* sayfa kenar boşluğu */
+  --section: clamp(80px, 10vw, 160px);      /* bölümler arası */
+
+  /* ---------- Köşe ---------- */
+  --radius-s: 8px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-full: 999px;
+
+  /* ---------- Gölge: neredeyse görünmez ---------- */
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --shadow-raised: 0 12px 40px rgba(0, 0, 0, 0.1);
+  --shadow-hairline: 0 0 0 1px var(--border);
+
+  /* ---------- Hareket ---------- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --motion-instant: 100ms;
+  --motion-fast: 180ms;
+  --motion-normal: 300ms;
+  --motion-slow: 600ms;
+  --motion-story: 900ms;
+
+  /* ---------- Yerleşim ---------- */
+  --width-page: 1200px;           /* en geniş içerik; menü ve alt bilgi bu ızgaraya hizalanır */
+  --width-data: 1200px;           /* grafik, tablo */
+  --width-wide: 1040px;           /* bölüm içeriği */
+  --width-article: 720px;         /* okuma */
+  --nav-height: 64px;
+  --tabbar-height: 64px;
+  --touch: 44px;                  /* en küçük dokunma alanı */
+  --blur: saturate(180%) blur(20px);
+
+  /* ---------- Katmanlar ---------- */
+  --z-nav: 50;
+  --z-tabbar: 60;
+  --z-popover: 70;
+  --z-modal: 90;
+  --z-toast: 95;
+
+  color-scheme: light;
+}
+
+/* ---------- Karanlık mod: ayrı ayrı seçilmiş değerler ---------- */
+:root[data-theme="dark"] {
+  --background: #08090A;
+  --surface: #111214;
+  --surface-secondary: #18191C;
+  --surface-elevated: #1D1E22;
+  --dark: #000000;
+  --dark-surface: #111214;
+
+  --text-primary: #F5F5F2;
+  --text-secondary: #9B9DA2;
+  --text-muted: #6E7075;
+  --text-on-dark: #F5F5F2;
+  --text-on-dark-secondary: #9B9DA2;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --border-on-dark: rgba(255, 255, 255, 0.1);
+
+  --accent: #6E9EE6;
+  --accent-hover: #8DB3EE;
+  --accent-soft: rgba(110, 158, 230, 0.12);
+  --accent-ring: rgba(110, 158, 230, 0.45);
+  --text-on-accent: #08090A;
+  --positive: #4CB58C;
+  --positive-soft: rgba(76, 181, 140, 0.12);
+  --negative: #E07A7A;
+  --negative-soft: rgba(224, 122, 122, 0.12);
+  --caution: #D9A441;
+  --caution-soft: rgba(217, 164, 65, 0.12);
+
+  --data-1: #5B8FDB;
+  --data-2: #D6784A;
+  --data-grid: rgba(255, 255, 255, 0.07);
+  --data-axis: rgba(255, 255, 255, 0.22);
+  --data-seq-1: #2A4670;
+  --data-seq-2: #3B639E;
+  --data-seq-3: #5B8FDB;
+  --data-seq-4: #9DBDEB;
+  --data-warm-1: #7A4A30;
+  --data-warm-2: #D6784A;
+  --data-neutral: #8E9095;
+
+  --shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-raised: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}

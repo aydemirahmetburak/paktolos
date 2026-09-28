@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F7F7F5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paktolos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="tasarim/tokenlar.css">
+<link rel="stylesheet" href="tasarim/bilesenler.css">
+<script src="tema.js"></script>
+<meta name="description" content="Paktolos tasarım sistemi: tokenlar ve bileşenlerin canlı kataloğu.">
+<meta name="robots" content="noindex">
+<title>Tasarım sistemi — Paktolos</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Yalnızca katalog düzeni; bileşenlerin kendisi tasarim/bilesenler.css'te */
+  .kat-bolum { padding-block: var(--s-64); border-top: 1px solid var(--border); }
+  .kat-bolum > h2 { font-size: var(--text-subheading); margin-bottom: var(--s-8); }
+  .kat-bolum > p { max-width: 64ch; margin-bottom: var(--s-32); color: var(--text-secondary); font-size: var(--text-small); }
+  .kat-satir { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-16); margin-bottom: var(--s-24); }
+  .kat-ad { display: block; margin-top: var(--s-8); font: var(--text-caption)/1.4 var(--font-mono); color: var(--text-secondary); }
+  .renkler { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--s-16); }
+  .renk i { display: block; height: 64px; border-radius: var(--radius-m); box-shadow: 0 0 0 1px var(--border) inset; }
+  .olcek > div { display: flex; align-items: baseline; gap: var(--s-24); padding: var(--s-12) 0; border-bottom: 1px solid var(--border); }
+  .olcek code { flex: none; width: 160px; font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
+  .bosluk > div { display: flex; align-items: center; gap: var(--s-16); padding: 4px 0; }
+  .bosluk i { display: block; height: 12px; background: var(--accent); border-radius: 2px; }
+  .bosluk code { width: 60px; font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
+  .kutular { display: flex; flex-wrap: wrap; gap: var(--s-24); }
+  .kutular > div { width: 140px; height: 96px; display: grid; place-items: center; background: var(--surface); font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
+  .hareket > div { display: flex; align-items: center; gap: var(--s-16); padding: var(--s-8) 0; }
+  .hareket code { width: 180px; font: var(--text-caption) var(--font-mono); color: var(--text-secondary); }
+  .hareket .ray { position: relative; flex: 1; max-width: 360px; height: 4px; border-radius: 2px; background: var(--surface-secondary); }
+  .hareket .ray b { position: absolute; top: -6px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--text-primary); }
+  .kat-oynat .ray b { left: calc(100% - 16px); transition: left var(--sure) var(--ease); }
+  .simgeler { display: flex; flex-wrap: wrap; gap: var(--s-24); color: var(--text-primary); }
+  .simgeler svg { width: 24px; height: 24px; }
+</style>
+</head>
+<body>
+
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+      <div class="nav-end">
+        <nav class="nav" aria-label="Ana menü">
+          <a href="dersler.html">Öğren</a>
+          <a href="ekonomi.html">Ekonomi</a>
+          <a href="piyasalar.html">Piyasalar</a>
+          <a href="rehberler.html">Rehberler</a>
+          <a href="araclar.html">Araçlar</a>
+        </nav>
+        <div class="nav-actions">
+          <button type="button" class="search-trigger" aria-label="Sitede ara (⌘K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><kbd class="nav-kbd">⌘K</kbd></button>
+          <a href="karnem.html" class="nav-profil" aria-label="Karnem: öğrenme ilerlemen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar" aria-label="Sekmeler">
+    <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.2 12 4l7.5 6.2V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z"/></svg>Ana sayfa</a>
+    <a href="dersler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="ekonomi.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 0 1-12.9 5.2"/><path d="M4.5 12a7.5 7.5 0 0 1 12.9-5.2"/><path d="M17.6 3.6v3.2h-3.2"/><path d="M6.4 20.4v-3.2h3.2"/><circle cx="12" cy="12" r="1.8"/></svg>Ekonomi</a>
+    <a href="piyasalar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>Piyasalar</a>
+    <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
+  </nav>
+
+  <main>
+    <section class="sayfa-hero sayfa-genis">
+      <span class="overline">Tasarım sistemi</span>
+      <h1>Karmaşığı apaçık kılmak.</h1>
+      <p class="govde-giris">Kesinlik, açıklık ve editoryal zekâ. Bu sayfa, sitenin her ekranını kuran tokenların ve bileşenlerin canlı kataloğudur. Yeni bir şey tasarlamadan önce buraya bak.</p>
+    </section>
+
+    <div class="sayfa-genis">
+
+      <section class="kat-bolum" id="renk">
+        <h2>Renk</h2>
+        <p>Renk ölçülü kullanılır. Mavi yalnızca bağlantı, birincil eylem ve seçili durum içindir. Turuncu yalnızca logoda ve hikâye çizimlerinde yer alır. Olumlu ve olumsuz renkleri her zaman bir etiketle birlikte gelir.</p>
+        <div class="renkler" id="renkler"></div>
+      </section>
+
+      <section class="kat-bolum" id="yazi">
+        <h2>Yazı</h2>
+        <p>Sistem yazı tipi (Apple cihazlarda SF Pro, diğerlerinde Inter ya da sistemin grotesk yazısı). Hiyerarşi boyuttan daha önemlidir; her başlık büyük olmak zorunda değil.</p>
+        <div class="olcek">
+          <div><code>--text-hero</code><span class="baslik-hero">Paranın dili</span></div>
+          <div><code>--text-section</code><span class="baslik-bolum">Bölüm başlığı</span></div>
+          <div><code>--text-article</code><span class="baslik-makale">Makale başlığı</span></div>
+          <div><code>--text-subheading</code><span class="baslik-alt">Ara başlık</span></div>
+          <div><code>--text-lead</code><span class="govde-giris">Giriş paragrafı: konuyu tek cümlede özetler.</span></div>
+          <div><code>--text-body</code><span class="govde">Gövde metni. Kısa paragraflar, geniş satır aralığı.</span></div>
+          <div><code>--text-small</code><span class="govde-kucuk">Küçük metin: açıklama ve yardımcı bilgi.</span></div>
+          <div><code>.overline</code><span class="overline" style="margin:0">Üst etiket</span></div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="bosluk">
+        <h2>Boşluk, köşe ve gölge</h2>
+        <p>8 noktalı ölçek: 4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160, 192. Ara değer kullanılmaz. Gölge neredeyse görünmezdir; yüzeyleri önce boşluk ve ince çizgi ayırır.</p>
+        <div class="bosluk" id="bosluklar"></div>
+        <div class="kutular" style="margin-top: var(--s-32)">
+          <div style="border-radius: var(--radius-s); box-shadow: var(--shadow-hairline)">radius-s · 8</div>
+          <div style="border-radius: var(--radius-m); box-shadow: var(--shadow-hairline)">radius-m · 12</div>
+          <div style="border-radius: var(--radius-l); box-shadow: var(--shadow-hairline)">radius-l · 20</div>
+          <div style="border-radius: var(--radius-l); box-shadow: var(--shadow)">shadow</div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="hareket">
+        <h2>Hareket</h2>
+        <p>Hareket hiyerarşi, neden-sonuç, durum ya da süreklilik anlatır; süs için kullanılmaz. Tek eğri: cubic-bezier(0.22, 1, 0.36, 1). Zıplama ve esneme yoktur. "Azaltılmış hareket" açıksa büyük geçişler kapanır.</p>
+        <div class="hareket" id="hareket-kutu">
+          <div style="--sure: var(--motion-instant)"><code>instant · 100ms</code><span class="ray"><b></b></span></div>
+          <div style="--sure: var(--motion-fast)"><code>fast · 180ms</code><span class="ray"><b></b></span></div>
+          <div style="--sure: var(--motion-normal)"><code>normal · 300ms</code><span class="ray"><b></b></span></div>
+          <div style="--sure: var(--motion-slow)"><code>slow · 600ms</code><span class="ray"><b></b></span></div>
+          <div style="--sure: var(--motion-story)"><code>story · 900ms</code><span class="ray"><b></b></span></div>
+        </div>
+        <button type="button" class="btn btn-ikincil btn-kucuk" id="hareket-oynat">Oynat</button>
+      </section>
+
+      <section class="kat-bolum" id="dugmeler">
+        <h2>Düğmeler</h2>
+        <p>Bir ekranda en fazla bir birincil eylem. En küçük dokunma alanı 44 piksel.</p>
+        <div class="kat-satir">
+          <button type="button" class="btn btn-birincil">Öğrenmeye başla</button>
+          <button type="button" class="btn btn-vurgu">Hesapla</button>
+          <button type="button" class="btn btn-ikincil">Nasıl çalışıyor?</button>
+          <button type="button" class="btn btn-sade">Tümünü gör</button>
+          <button type="button" class="btn btn-ikincil btn-kucuk">Küçük</button>
+          <button type="button" class="btn btn-birincil" disabled>Pasif</button>
+        </div>
+        <div class="kat-satir">
+          <button type="button" class="icon-btn" aria-label="Kaydet" aria-pressed="false" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed') !== 'true')"><svg class="ikon" viewBox="0 0 24 24"><path d="M7 4.5h10a1 1 0 0 1 1 1V20l-6-4-6 4V5.5a1 1 0 0 1 1-1z"/></svg></button>
+          <button type="button" class="icon-btn" aria-label="Paylaş"><svg class="ikon" viewBox="0 0 24 24"><path d="M12 15V4"/><path d="m8 8 4-4 4 4"/><path d="M6 12v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7"/></svg></button>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="rozet">
+        <h2>Rozet ve etiket</h2>
+        <p>Rozet durum bildirir; etiket bir konuya götürür.</p>
+        <div class="kat-satir">
+          <span class="badge">Nötr</span>
+          <span class="badge badge-vurgu">Yeni</span>
+          <span class="badge badge-olumlu">Güçlü</span>
+          <span class="badge badge-dikkat">Geliştirilebilir</span>
+          <span class="badge badge-olumsuz">Dikkat</span>
+          <a class="tag" href="sozluk.html#enflasyon">Enflasyon</a>
+          <a class="tag" href="sozluk.html#faiz">Faiz</a>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="kartlar">
+        <h2>Kartlar</h2>
+        <p>Kart, tek bir şeyi anlatır. Yüzey beyaz, kenar ince çizgi; üzerine gelince yalnızca hafifçe yükselir.</p>
+        <div class="izgara">
+          <a class="card article-card k-4" href="ogren.html"><span class="overline">Rehber · 7 dk</span><h3>Mali tablolar ve oranlar</h3><p>ArticleCard: uzun anlatımlar ve rehberler için.</p><span class="meta">Kaydırmalı infografikler</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#enflasyon"><span class="overline">Kavram</span><h3>Enflasyon</h3><p>ConceptCard: bir kavramın tek cümlelik tanımı.</p><span class="ok">Tanımı oku</span></a>
+          <div class="card data-card k-4"><span class="etiket">DataCard</span><span class="deger">%6,75</span><span class="govde-kucuk">Her 100 TL'lik satıştan kalan net kâr (örnek).</span></div>
+          <article class="card gosterge k-6">
+            <header class="gosterge-bas"><div><span class="overline">TÜFE, yıllık değişim</span><h3>Gösterge kartı</h3></div><a class="tag" href="ekonomi.html">Ekonomi</a></header>
+            <p class="gosterge-ne"><span>Ne ölçer?</span> Rakam yayınlamaz; ne ölçtüğünü, kaynağını ve anlamını anlatır.</p>
+            <details class="anlam"><summary>Yükselirse, bu ne anlama gelir?</summary><ul><li>Sonuç bir.</li><li>Sonuç iki.</li><li>Sonuç üç.</li></ul></details>
+            <dl class="source"><div><dt>Kaynak</dt><dd>TÜİK</dd></div><div><dt>Sıklık</dt><dd>Aylık</dd></div></dl>
+          </article>
+          <div class="card card-sade k-6"><h3>Sade kart</h3><p>Girinti gerektiren, ikincil bilgiler için gölgesiz yüzey.</p></div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="sayilar">
+        <h2>Sayı</h2>
+        <p>Büyük sayı tek bir manşet içindir. Sayılar her zaman sabit genişlikli rakamlarla yazılır.</p>
+        <div class="izgara">
+          <div class="stat k-4"><span class="stat-deger">11,9</span><span class="stat-etiket">sepet: %45 faizle beş yıl sonra (örnek)</span></div>
+          <div class="k-8">
+            <div class="metric"><span class="metric-ad">F/K</span><span class="metric-deger">8,0</span></div>
+            <div class="metric"><span class="metric-ad">Özkaynak kârlılığı</span><span class="metric-deger degisim-artis">%12 ▲</span></div>
+            <div class="metric"><span class="metric-ad">Net borç / FAVÖK</span><span class="metric-deger degisim-azalis">2,4 ▼</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="gezinti">
+        <h2>Gezinti</h2>
+        <nav class="breadcrumbs" aria-label="Konum"><ol><li><a href="index.html">Ana sayfa</a></li><li><a href="ekonomi.html">Ekonomi</a></li><li aria-current="page">Enflasyon</li></ol></nav>
+        <div class="tabs">
+          <div role="tablist" aria-label="Anlatım düzeyi">
+            <button role="tab" id="s1" aria-controls="p1" aria-selected="true">Basitçe</button>
+            <button role="tab" id="s2" aria-controls="p2">Nasıl çalışır?</button>
+            <button role="tab" id="s3" aria-controls="p3">Daha derin</button>
+          </div>
+          <div role="tabpanel" id="p1" aria-labelledby="s1"><p class="govde">Fiyatların genel olarak yükselmesi.</p></div>
+          <div role="tabpanel" id="p2" aria-labelledby="s2" hidden><p class="govde">Talep, maliyet ve beklentiler fiyatları birlikte iter.</p></div>
+          <div role="tabpanel" id="p3" aria-labelledby="s3" hidden><p class="govde">TÜFE, temsili bir sepetin fiyat değişimini ağırlıklarla ölçer.</p></div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="acilir">
+        <h2>İpucu, açılır kutu, akordeon</h2>
+        <p>İpucu 150–250 ms'de belirir: ölçü, değer, tarih, bağlam.</p>
+        <div class="kat-satir">
+          <span class="ipucu"><button type="button" class="btn btn-ikincil btn-kucuk">Üzerine gel</button><span class="ipucu-balon" role="tooltip"><b>Politika faizi</b>Örnek değer<small>Kaynak: TCMB · örnek tarih</small></span></span>
+          <span style="position: relative"><button type="button" class="btn btn-ikincil btn-kucuk" data-popover="ornek-pop" aria-expanded="false">Açılır kutu</button>
+          <div class="popover" id="ornek-pop"><strong>Açılır kutu</strong><p class="govde-kucuk">Dışarı tıkla ya da Escape'e bas.</p></div></span>
+        </div>
+        <div class="accordion" style="max-width: 720px">
+          <details><summary>Akordeon başlığı</summary><div class="icerik">Katmanlı bilgi: ayrıntı yalnızca istendiğinde görünür.</div></details>
+          <details><summary>İkinci başlık</summary><div class="icerik">Tek seferde birden fazla açık kalabilir.</div></details>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="ilerleme">
+        <h2>İlerleme ve kontroller</h2>
+        <div class="kat-satir" style="gap: var(--s-48)">
+          <div style="width: 240px"><div class="progress" role="progressbar" aria-valuenow="42" aria-valuemin="0" aria-valuemax="100" aria-label="Finansal temeller"><span style="--deger: 42%"></span></div><span class="kat-ad">Finansal temeller · %42</span></div>
+          <div class="progress-ring"><svg viewBox="0 0 36 36"><circle class="iz" cx="18" cy="18" r="16"/><circle class="dolu" cx="18" cy="18" r="16" stroke-dasharray="100.5" stroke-dashoffset="58"/></svg><b>%42</b></div>
+          <label class="toggle"><input type="checkbox" checked><span class="toggle-ray"></span>Anahtar</label>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="ogrenme">
+        <h2>Öğrenme blokları</h2>
+        <p>Katmanlı anlatım: basitçe, nasıl çalışır, gerçek hayatta, daha derin, kaynaklar. Kullanıcı teknik ayrıntıya asla zorlanmaz.</p>
+        <div style="display: grid; gap: var(--s-32); max-width: var(--width-article)">
+          <dl class="concept-definition"><dt>Enflasyon</dt><dd>Fiyatların genel seviyesinin zaman içinde yükselmesi.</dd></dl>
+          <div class="simple-explanation"><span class="overline">Basitçe</span><p class="govde">Geçen yıl 100 TL olan sepet bu yıl 140 TL ise, paran eskisi kadar şey almaz.</p></div>
+          <div class="key-takeaway"><span class="overline">Akılda kalsın</span><p>Rakamın büyümesi değil, enflasyonu geçip geçmediği önemlidir.</p></div>
+          <details class="deep-dive"><summary>Daha derin</summary><div><p>Çekirdek enflasyon, enerji ve gıda gibi oynak kalemler çıkarılarak hesaplanır.</p></div></details>
+          <div class="ilgili"><h2>İlgili kavramlar</h2><div class="ilgili-liste"><a class="tag" href="sozluk.html#tufe">TÜFE</a><a class="tag" href="sozluk.html#reel-getiri">Reel getiri</a><a class="tag" href="sozluk.html#alim-gucu">Alım gücü</a></div></div>
+          <dl class="source"><div><dt>Kaynak</dt><dd>TÜİK</dd></div><div><dt>Güncelleme</dt><dd>örnek tarih</dd></div><div><dt>Veri dönemi</dt><dd>örnek dönem</dd></div></dl>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="durumlar">
+        <h2>Boş, hata ve yükleniyor</h2>
+        <div class="izgara">
+          <div class="card empty-state k-4"><svg viewBox="0 0 24 24"><path d="M7 4.5h10a1 1 0 0 1 1 1V20l-6-4-6 4V5.5a1 1 0 0 1 1-1z"/></svg><h3>Henüz kaydettiğin bir içerik yok.</h3><a class="btn btn-ikincil btn-kucuk" href="rehberler.html">İçerikleri keşfet</a></div>
+          <div class="card error-state k-4"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v5M12 16h.01"/></svg><h3>Bir şeyler ters gitti.</h3><button type="button" class="btn btn-ikincil btn-kucuk">Tekrar dene</button></div>
+          <div class="card k-4" aria-hidden="true" style="display: grid; gap: var(--s-12)"><div class="skeleton" style="height: 14px; width: 40%"></div><div class="skeleton" style="height: 22px; width: 80%"></div><div class="skeleton" style="height: 14px"></div><div class="skeleton" style="height: 14px; width: 60%"></div></div>
+        </div>
+      </section>
+
+      <section class="kat-bolum" id="simgeler">
+        <h2>Simgeler</h2>
+        <p>Tek aile: 24 piksel ızgara, 1,5 piksel çizgi, yuvarlak uç, tek renk. Emoji arayüz simgesi olarak kullanılmaz.</p>
+        <div class="simgeler">
+          <svg class="ikon" viewBox="0 0 24 24"><path d="M4.5 10.2 12 4l7.5 6.2V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><path d="M19.5 12a7.5 7.5 0 0 1-12.9 5.2"/><path d="M4.5 12a7.5 7.5 0 0 1 12.9-5.2"/><path d="M17.6 3.6v3.2h-3.2"/><path d="M6.4 20.4v-3.2h3.2"/><circle cx="12" cy="12" r="1.8"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg>
+          <svg class="ikon" viewBox="0 0 24 24"><path d="M7 4.5h10a1 1 0 0 1 1 1V20l-6-4-6 4V5.5a1 1 0 0 1 1-1z"/></svg>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <a href="index.html" class="logo footer-logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+        <nav class="footer-cols" aria-label="Alt menü">
+          <div><h2>Öğren</h2><a href="dersler.html">Dersler</a><a href="sozluk.html">Sözlük</a><a href="test.html">Kendini sına</a></div>
+          <div><h2>Ekonomi</h2><a href="ekonomi.html">Göstergeler</a><a href="ekonomi.html#kavramlar">Temel kavramlar</a></div>
+          <div><h2>Piyasalar</h2><a href="ogren.html">Mali tablolar</a><a href="analiz.html">Hisse analizi</a><a href="sektorler.html">Sektörler</a></div>
+          <div><h2>Rehberler</h2><a href="sorular.html">Aklına takılan</a><a href="hikaye.html">Paktolos'un hikâyesi</a></div>
+          <div><h2>Araçlar</h2><a href="araclar.html">Hesaplayıcılar</a><a href="lab.html">Şirket laboratuvarı</a><a href="checkup.html">Finansal check-up</a></div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
+        <div class="footer-meta">
+          <span>© 2026 Paktolos</span>
+          <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
+            <button type="button" role="radio" data-tema="auto">Otomatik</button>
+            <button type="button" role="radio" data-tema="light">Açık</button>
+            <button type="button" role="radio" data-tema="dark">Koyu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Katalog: renk ve boşluk örneklerini tokenlardan üret
+    (() => {
+      const RENK = ['--background', '--surface', '--surface-secondary', '--text-primary', '--text-secondary', '--text-muted', '--accent', '--positive', '--negative', '--caution', '--dark', '--brand', '--data-1', '--data-2', '--data-seq-1', '--data-seq-2', '--data-seq-3', '--data-seq-4', '--data-warm-1', '--data-neutral'];
+      document.getElementById('renkler').append(...RENK.map(ad => el('div', { className: 'renk' }, el('i', { style: `background: var(${ad})` }), el('span', { className: 'kat-ad' }, ad))));
+      document.getElementById('bosluklar').append(...[4, 8, 12, 16, 24, 32, 48, 64, 80, 96, 128, 160, 192].map(n => el('div', {}, el('code', {}, n), el('i', { style: `width: var(--s-${n})` }))));
+      document.getElementById('hareket-oynat').addEventListener('click', () => document.getElementById('hareket-kutu').classList.toggle('kat-oynat'));
+    })();
+  </script>
+
+</body>
+</html>

@@ -111,6 +111,56 @@ function initOkuma() {
 }
 
 // ============================================
+// BİLEŞENLER (tasarim/bilesenler.css, katalog: tasarim.html)
+// ============================================
+
+// Sekmeler: <div class="tabs"><div role="tablist"><button role="tab" aria-controls="p1">…
+// Ok tuşlarıyla gezilir; yalnızca seçili sekme Tab ile odaklanır.
+function initSekmeler() {
+  document.querySelectorAll('.tabs [role="tablist"]').forEach(liste => {
+    const sekmeler = [...liste.querySelectorAll('[role="tab"]')];
+    const sec = (hedef, odakla) => {
+      sekmeler.forEach(t => {
+        const secili = t === hedef;
+        t.setAttribute('aria-selected', secili);
+        t.tabIndex = secili ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls'));
+        if (panel) panel.hidden = !secili;
+      });
+      if (odakla) hedef.focus();
+    };
+    sekmeler.forEach((t, i) => {
+      t.addEventListener('click', () => sec(t));
+      t.addEventListener('keydown', e => {
+        const yon = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (yon) { e.preventDefault(); sec(sekmeler[(i + yon + sekmeler.length) % sekmeler.length], true); }
+      });
+    });
+    sec(sekmeler.find(t => t.getAttribute('aria-selected') === 'true') || sekmeler[0]);
+  });
+}
+
+// Açılır kutu: <button data-popover="kimlik" aria-expanded="false"> + <div class="popover" id="kimlik">
+// Dışarı tıklayınca ya da Escape ile kapanır.
+function initPopover() {
+  const kapat = (haric) => document.querySelectorAll('[data-popover][aria-expanded="true"]').forEach(b => {
+    if (b === haric) return;
+    b.setAttribute('aria-expanded', 'false');
+    document.getElementById(b.dataset.popover)?.removeAttribute('data-acik');
+  });
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-popover]');
+    if (!b) { if (!e.target.closest('.popover')) kapat(); return; }
+    const kutu = document.getElementById(b.dataset.popover);
+    const acik = b.getAttribute('aria-expanded') === 'true';
+    kapat(b);
+    b.setAttribute('aria-expanded', String(!acik));
+    kutu?.toggleAttribute('data-acik', !acik);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') kapat(); });
+}
+
+// ============================================
 // HESAPLAYICI
 // ============================================
 
@@ -286,7 +336,7 @@ function el(tag, props = {}, ...children) {
 }
 
 const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isPhone = () => window.matchMedia('(max-width: 734px)').matches;
+const isPhone = () => window.matchMedia('(max-width: 767px)').matches;
 
 function formatTL(n) {
   return Math.round(n).toLocaleString('tr-TR') + ' TL';
@@ -1379,6 +1429,8 @@ initSplash();
 initNav();
 initGecisNoktasi();
 initReveal();
+initSekmeler();
+initPopover();
 initOkuma();
 initCalculator();
 initHomeDaily();

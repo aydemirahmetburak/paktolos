@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F7F7F5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paktolos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="tasarim/tokenlar.css">
+<link rel="stylesheet" href="tasarim/bilesenler.css">
+<script src="tema.js"></script>
+<meta name="description" content="Enflasyon, faiz, kur ve büyüme: dört göstergenin ne ölçtüğü, nereden bakılacağı ve senin için ne anlama geldiği.">
+<title>Ekonomi — Paktolos</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+      <div class="nav-end">
+        <nav class="nav" aria-label="Ana menü">
+          <a href="dersler.html">Öğren</a>
+          <a href="ekonomi.html" aria-current="page">Ekonomi<span class="nav-hap" aria-hidden="true"></span></a>
+          <a href="piyasalar.html">Piyasalar</a>
+          <a href="rehberler.html">Rehberler</a>
+          <a href="araclar.html">Araçlar</a>
+        </nav>
+        <div class="nav-actions">
+          <button type="button" class="search-trigger" aria-label="Sitede ara (⌘K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><kbd class="nav-kbd">⌘K</kbd></button>
+          <a href="karnem.html" class="nav-profil" aria-label="Karnem: öğrenme ilerlemen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar" aria-label="Sekmeler">
+    <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.2 12 4l7.5 6.2V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z"/></svg>Ana sayfa</a>
+    <a href="dersler.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="ekonomi.html" aria-current="page"><span class="tab-hap" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 0 1-12.9 5.2"/><path d="M4.5 12a7.5 7.5 0 0 1 12.9-5.2"/><path d="M17.6 3.6v3.2h-3.2"/><path d="M6.4 20.4v-3.2h3.2"/><circle cx="12" cy="12" r="1.8"/></svg>Ekonomi</a>
+    <a href="piyasalar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>Piyasalar</a>
+    <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
+  </nav>
+
+  <main>
+    <section class="sayfa-hero sayfa-genis">
+      <span class="overline reveal">Ekonomi</span>
+      <h1 class="reveal">Ekonomi, günlük hayatının arka planıdır.</h1>
+      <p class="govde-giris reveal">Enflasyon, faiz, kur ve büyüme. Haberlerde her gün duyduğun dört göstergenin ne ölçtüğünü, nereden bakılacağını ve senin için ne anlama geldiğini öğren.</p>
+    </section>
+
+    <section class="bolum" id="gostergeler">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <span class="overline">Dört gösterge</span>
+          <h2 class="reveal">Rakamın kendisi değil, anlamı.</h2>
+          <p>Paktolos veri yayınlamaz. Güncel değeri resmî kaynağından al; burada o rakamı nasıl okuyacağını öğren.</p>
+        </header>
+        <div class="izgara">
+          <article class="card gosterge k-6">
+            <header class="gosterge-bas"><div><span class="overline">TÜFE, yıllık değişim</span><h3>Enflasyon</h3></div><a class="tag" href="sozluk.html#enflasyon">Kavram</a></header>
+            <p class="gosterge-ne"><span>Ne ölçer?</span> Fiyatların bir yıl öncesine göre ortalama ne kadar arttığını.</p>
+            <details class="anlam">
+              <summary>Enflasyon yükselirse, bu ne anlama gelir?</summary>
+              <ul><li>Aynı maaşla daha az mal ve hizmet alınır.</li><li>Birikimin reel getirisi düşebilir, hatta eksiye dönebilir.</li><li>Merkez Bankası faizi artırmayı değerlendirebilir.</li></ul>
+            </details>
+            <dl class="source"><div><dt>Kaynak</dt><dd>TÜİK</dd></div><div><dt>Sıklık</dt><dd>Aylık</dd></div><div><dt>Güncel değer</dt><dd><a href="https://www.tuik.gov.tr" rel="noopener" target="_blank">tuik.gov.tr</a></dd></div></dl>
+          </article>
+          <article class="card gosterge k-6">
+            <header class="gosterge-bas"><div><span class="overline">TCMB bir hafta vadeli repo faizi</span><h3>Politika faizi</h3></div><a class="tag" href="sozluk.html#politika-faizi">Kavram</a></header>
+            <p class="gosterge-ne"><span>Ne ölçer?</span> Merkez Bankası'nın bankalara borç verdiği temel faizi; ekonomideki diğer faizlerin çıpasıdır.</p>
+            <details class="anlam">
+              <summary>Politika faizi yükselirse, bu ne anlama gelir?</summary>
+              <ul><li>Kredi faizleri artabilir; borçlanmak pahalılaşır.</li><li>Mevduat getirileri yükselebilir.</li><li>Harcama ve talep yavaşlayabilir; hedeflenen de fiyat artışlarının frenlenmesidir.</li></ul>
+            </details>
+            <dl class="source"><div><dt>Kaynak</dt><dd>TCMB</dd></div><div><dt>Sıklık</dt><dd>Karar toplantılarında</dd></div><div><dt>Güncel değer</dt><dd><a href="https://www.tcmb.gov.tr" rel="noopener" target="_blank">tcmb.gov.tr</a></dd></div></dl>
+          </article>
+          <article class="card gosterge k-6">
+            <header class="gosterge-bas"><div><span class="overline">USD/TRY</span><h3>Döviz kuru</h3></div><a class="tag" href="sozluk.html#doviz-kuru">Kavram</a></header>
+            <p class="gosterge-ne"><span>Ne ölçer?</span> Bir ABD dolarının kaç Türk lirası ettiğini.</p>
+            <details class="anlam">
+              <summary>Kur yükselirse (TL değer kaybederse), bu ne anlama gelir?</summary>
+              <ul><li>İthal ürünler ve enerji pahalanabilir.</li><li>Dövizle borçlu şirketlerin yükü artar.</li><li>İhracat yapan şirketlerin TL cinsinden geliri artabilir.</li></ul>
+            </details>
+            <dl class="source"><div><dt>Kaynak</dt><dd>TCMB gösterge kurları</dd></div><div><dt>Sıklık</dt><dd>Her iş günü</dd></div><div><dt>Güncel değer</dt><dd><a href="https://www.tcmb.gov.tr" rel="noopener" target="_blank">tcmb.gov.tr</a></dd></div></dl>
+          </article>
+          <article class="card gosterge k-6">
+            <header class="gosterge-bas"><div><span class="overline">GSYH, yıllık değişim</span><h3>Büyüme</h3></div><a class="tag" href="sozluk.html#gsyh">Kavram</a></header>
+            <p class="gosterge-ne"><span>Ne ölçer?</span> Ekonominin ürettiği toplam mal ve hizmet değerinin bir yıl öncesine göre değişimini.</p>
+            <details class="anlam">
+              <summary>Büyüme hızlanırsa, bu ne anlama gelir?</summary>
+              <ul><li>İstihdam ve gelirler artma eğilimine girebilir.</li><li>Şirketlerin satış ve kârları desteklenebilir.</li><li>Talep çok hızlı artarsa enflasyon baskısı doğabilir.</li></ul>
+            </details>
+            <dl class="source"><div><dt>Kaynak</dt><dd>TÜİK</dd></div><div><dt>Sıklık</dt><dd>Çeyreklik</dd></div><div><dt>Güncel değer</dt><dd><a href="https://www.tuik.gov.tr" rel="noopener" target="_blank">tuik.gov.tr</a></dd></div></dl>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="bolum bolum-ayrac" id="kavramlar">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <span class="overline">Temel kavramlar</span>
+          <h2 class="reveal">Haberi anlamak için gereken kelimeler.</h2>
+          
+        </header>
+        <div class="izgara">
+          <a class="card concept-card k-4" href="sozluk.html#enflasyon"><span class="overline">Kavram</span><h3>Enflasyon</h3><p>Fiyatların genel olarak sürekli yükselmesi; paranın değer kaybetmesi.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#alim-gucu"><span class="overline">Kavram</span><h3>Alım gücü</h3><p>Paranın gerçekte ne kadar mal ve hizmet satın alabildiği.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#faiz"><span class="overline">Kavram</span><h3>Faiz</h3><p>Paranın kirası: borç alanın ödediği, parasını verenin kazandığı bedel.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#reel-getiri"><span class="overline">Kavram</span><h3>Nominal ve reel getiri</h3><p>Nominal getiri rakamdaki artış; reel getiri, enflasyondan arındırılmış gerçek kazançtır.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#politika-faizi"><span class="overline">Kavram</span><h3>Politika faizi</h3><p>Merkez Bankası&#x27;nın belirlediği ve ekonomideki tüm faizlere yön veren temel faiz.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#doviz-kuru"><span class="overline">Kavram</span><h3>Döviz kuru</h3><p>Bir para biriminin başka bir para birimi cinsinden fiyatı.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#gsyh"><span class="overline">Kavram</span><h3>GSYH ve büyüme</h3><p>Bir ülkede bir yılda üretilen tüm mal ve hizmetlerin toplam değeri.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#resesyon"><span class="overline">Kavram</span><h3>Resesyon</h3><p>Ekonomik faaliyetin belirgin ve yaygın şekilde daralması.</p><span class="ok">Tanımı oku</span></a>
+          <a class="card concept-card k-4" href="sozluk.html#cari-acik"><span class="overline">Kavram</span><h3>Cari açık</h3><p>Bir ülkenin dış dünyaya yaptığı ödemelerin, dış dünyadan aldıklarından fazla olması.</p><span class="ok">Tanımı oku</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bolum bolum-ayrac" id="dersler">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <span class="overline">Dersler</span>
+          <h2 class="reveal">Beş dakikada temeller.</h2>
+          
+        </header>
+        <div class="izgara">
+          <a class="card article-card k-6" href="dersler.html#enflasyon"><span class="overline">Ders · 5 dk</span><h3>Enflasyon ve alım gücü</h3><p>Paranın değeri neden sabit kalmaz ve bunu nasıl ölçeriz?</p><span class="meta">Etkileşimli, ara sorulu</span></a>
+          <a class="card article-card k-6" href="dersler.html#faiz"><span class="overline">Ders · 5 dk</span><h3>Faiz ve bileşik getiri</h3><p>Faizin faizi: zaman nasıl en güçlü yatırım aracına dönüşür?</p><span class="meta">Etkileşimli, ara sorulu</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bolum bolum-ayrac" id="haber">
+      <div class="sayfa-genis">
+        <header class="section-header">
+          <span class="overline">Haberi anla</span>
+          <h2 class="reveal">Manşetin arkasında ne var?</h2>
+          <p>Ekonomi haberlerinde sık geçen cümleler ve sana dokunan tarafları.</p>
+        </header>
+        <div class="izgara">
+          <a class="card article-card k-4" href="sorular.html#baz-puan"><span class="overline">Aklına takılan</span><h3>&quot;Merkez Bankası politika faizini 250 baz puan artırdı.&quot; Ne demek?</h3><p>100 baz puan, 1 puan demektir. Yani faiz 2,5 puan arttı; örneğin %40&#x27;tan %42,5&#x27;e çıktı. Bu karar genellikle kredileri pahalandırır, mevduat faizlerini yükseltir ve enflasyonu düşürmeyi amaçlar.</p></a>
+          <a class="card article-card k-4" href="sorular.html#enflasyon-dustu"><span class="overline">Aklına takılan</span><h3>&quot;Yıllık enflasyon düştü.&quot; Ama fiyatlar neden hâlâ artıyor?</h3><p>Enflasyonun düşmesi, fiyatların düşmesi değil, daha yavaş artması demektir. Yıllık enflasyon %60&#x27;tan %40&#x27;a düştüğünde fiyatlar hâlâ bir yıl öncesine göre %40 daha yüksektir.</p></a>
+          <a class="card article-card k-4" href="sorular.html#dolar-rekor"><span class="overline">Aklına takılan</span><h3>&quot;Dolar/TL rekor kırdı.&quot; Bu beni nasıl etkiler?</h3><p>Kur artışı, ithal ürünlerin ve dövize bağlı fiyatların TL karşılığını artırır; bu da zamanla enflasyona yansır. Döviz borcu olanlar zarar görürken, ihracat yapan şirketler ve dövizde birikimi olanlar TL bazında kazanır.</p></a>
+          <a class="card article-card k-4" href="sorular.html#resesyon-haberi"><span class="overline">Aklına takılan</span><h3>&quot;Ekonomi daraldı, resesyon kapıda.&quot; Ne demek?</h3><p>Ekonominin toplam üretimi (GSYH) bir önceki döneme göre küçüldü demektir. Arka arkaya iki çeyrek daralma yaygın olarak resesyon olarak adlandırılır. Bu dönemlerde işsizlik ve şirket kârları genellikle olumsuz etkilenir.</p></a>
+          <a class="card article-card k-4" href="sorular.html#zam-fakir"><span class="overline">Aklına takılan</span><h3>Zam aldım, ama neden daha fakir hissediyorum?</h3><p>Zam oranın, harcadığın şeylerin fiyat artışından düşükse, maaşının rakamı artsa bile alım gücün azalır. Buna ek olarak yıl içinde üst vergi dilimine geçmek de net maaşını düşürebilir.</p></a>
+          <a class="card article-card k-4" href="sorular.html#enflasyonda-birikim"><span class="overline">Aklına takılan</span><h3>Enflasyon yüksekken birikimimi nasıl korurum?</h3><p>Amaç, rakamın değil alım gücünün korunması; yani birikimin enflasyondan hızlı büyümesi. Bunu garanti eden tek bir araç yoktur; her birinin getirisi farklı bir riske dayanır.</p></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <a href="index.html" class="logo footer-logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+        <nav class="footer-cols" aria-label="Alt menü">
+          <div><h2>Öğren</h2><a href="dersler.html">Dersler</a><a href="sozluk.html">Sözlük</a><a href="test.html">Kendini sına</a></div>
+          <div><h2>Ekonomi</h2><a href="ekonomi.html">Göstergeler</a><a href="ekonomi.html#kavramlar">Temel kavramlar</a></div>
+          <div><h2>Piyasalar</h2><a href="ogren.html">Mali tablolar</a><a href="analiz.html">Hisse analizi</a><a href="sektorler.html">Sektörler</a></div>
+          <div><h2>Rehberler</h2><a href="sorular.html">Aklına takılan</a><a href="hikaye.html">Paktolos'un hikâyesi</a></div>
+          <div><h2>Araçlar</h2><a href="araclar.html">Hesaplayıcılar</a><a href="lab.html">Şirket laboratuvarı</a><a href="checkup.html">Finansal check-up</a></div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
+        <div class="footer-meta">
+          <span>© 2026 Paktolos</span>
+          <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
+            <button type="button" role="radio" data-tema="auto">Otomatik</button>
+            <button type="button" role="radio" data-tema="light">Açık</button>
+            <button type="button" role="radio" data-tema="dark">Koyu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
