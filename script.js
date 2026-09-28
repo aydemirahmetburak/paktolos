@@ -922,10 +922,22 @@ function initQuiz() {
       else b.classList.add('dim');
     });
 
+    // Doğru/yanlış yalnızca renkle değil, işaret ve yazıyla da söylenir
     const verdict = document.getElementById('quiz-verdict');
-    verdict.textContent = dogru ? 'Doğru.' : `Doğru cevap: ${HARFLER[q.dogru]}`;
+    verdict.replaceChildren(
+      el('span', { className: 'quiz-isaret', 'aria-hidden': 'true' }, dogru ? '✓' : '✕'),
+      el('strong', {}, dogru ? 'Doğru' : 'Yanlış'),
+      el('span', {}, ` · Cevabın: ${HARFLER[j]}` + (dogru ? '' : ` · Doğru cevap: ${HARFLER[q.dogru]}`)));
     verdict.className = 'quiz-verdict ' + (dogru ? 'ok' : 'no');
     document.getElementById('quiz-explain').textContent = q.aciklama;
+    const gercek = document.getElementById('quiz-real');
+    if (gercek) { gercek.textContent = q.gercek || ''; gercek.parentElement.hidden = !q.gercek; }
+    const kavramKap = document.getElementById('quiz-concepts');
+    if (kavramKap) {
+      const kavramlar = (q.kavramlar || []).map(id => typeof SOZLUK !== 'undefined' && SOZLUK.find(t => t.id === id)).filter(Boolean);
+      kavramKap.replaceChildren(...kavramlar.map(t => el('a', { className: 'tag', href: 'kavram.html?k=' + t.id }, t.terim)));
+      kavramKap.parentElement.hidden = !kavramlar.length;
+    }
     const lesson = document.getElementById('quiz-lesson');
     lesson.textContent = 'Tekrar bak: ' + q.ders.ad;
     lesson.href = q.ders.href;
@@ -1035,7 +1047,8 @@ const SPOT_SIMGE = {
   sayfa: '<path d="M7 3.5h7l4 4V19a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5z"/><path d="M14 3.5V8h4"/>',
   soru: '<path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5z"/><path d="M10 10a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.2"/><path d="M12 15h.01"/>'
 };
-const SPOT_GRUP = { kavram: 'Kavramlar', soru: 'Sorular', ders: 'Dersler', arac: 'Araçlar', sektor: 'Sektörler', sayfa: 'Sayfalar' };
+const SPOT_GRUP = { kavram: 'Kavramlar', sayfa: 'Rehberler ve sayfalar', ders: 'Dersler', soru: 'Sorular', arac: 'Araçlar', sektor: 'Sektörler' };
+const SPOT_KATEGORI = { sayfa: 'Sayfa', arac: 'Araç', sektor: 'Sektör' };
 const SPOT_ONERI = ['Enflasyon', 'F/K oranı', 'Kredi notu', 'Bileşik getiri', 'Temettü', 'Bilanço'];
 
 // Veri dosyası sayfada yoksa ilk aramada yüklenir
@@ -1067,12 +1080,12 @@ async function spotDiziniKur() {
   await Promise.all(bekle);
   spotDizin = [
     ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'kavram.html?k=' + t.id,
-      anahtar: KATEGORILER[t.kategori], metin: t.aciklama })),
+      anahtar: KATEGORILER[t.kategori], metin: t.aciklama, kategori: KATEGORILER[t.kategori] })),
     ...SORULAR_KUTUPHANE.map(q => ({ tur: 'soru', baslik: q.soru, aciklama: q.kisa, href: 'sorular.html#' + q.id,
-      anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' ') })),
-    ...DERSLER.map(d => ({ tur: 'ders', baslik: 'Ders: ' + d.baslik, aciklama: d.ozet, href: 'dersler.html#' + d.id,
-      anahtar: d.kartlar.map(k => k.baslik || '').join(' ') })),
-    ...ARAMA_DIZINI
+      anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' '), kategori: SORU_KATEGORILERI[q.kategori] })),
+    ...DERSLER.map(d => ({ tur: 'ders', baslik: d.baslik, aciklama: d.ozet, href: 'dersler.html#' + d.id,
+      anahtar: d.kartlar.map(k => k.baslik || '').join(' '), kategori: 'Ders · ' + d.sure + ' dk' })),
+    ...ARAMA_DIZINI.map(item => ({ ...item, kategori: item.kategori || SPOT_KATEGORI[item.tur] }))
   ].map(item => ({
     ...item,
     _baslik: sadelestir(item.baslik),
@@ -1184,7 +1197,8 @@ function initSpotlight() {
           el('span', { className: 'spot-icon' }, svg),
           el('span', { className: 'spot-text' },
             el('span', { className: 'spot-title' }, vurgula(it.baslik, q)),
-            el('span', { className: 'spot-sub' }, it.aciklama)));
+            el('span', { className: 'spot-sub' }, it.aciklama)),
+          it.kategori ? el('span', { className: 'spot-kat' }, it.kategori) : null);
       })
     ]));
     input.setAttribute('aria-activedescendant', 'spot-0');
