@@ -50,7 +50,7 @@ Canlı katalog: **`tasarim.html`**. Yeni bir şey tasarlamadan önce oraya bak.
 | Yazı tipleri | `tasarim/fontlar/` | Newsreader ve Inter (SIL OFL); yalnızca kullanılan ağırlık ve Türkçe harfler, toplam ~88 KB |
 | Bileşenler | `tasarim/bilesenler.css` | Menü, alt çubuk, alt bilgi, düğme, rozet, etiket, kartlar, sayı, bölüm başlığı, sekmeler, ipucu, akordeon, ilerleme, anahtar, öğrenme blokları, "Bu ne anlama geliyor?", boş/hata/yükleniyor durumları |
 | Sayfa stilleri | `style.css` | Sayfalara özel stiller; eski değişken adları yeni tokenlara bağlıdır |
-| Etkileşim | `script.js` → BİLEŞENLER | Sekmeler (ok tuşlarıyla), açılır kutu |
+| Etkileşim | `script.js` → BİLEŞENLER, HAREKET | Sekmeler (ok tuşlarıyla), açılır kutu, kelime kelime başlık, yüzen parçalar, sekmeli liste, kayan şerit |
 
 Kurallar:
 - Bileşenler yalnızca token kullanır; doğrudan renk ya da ölçek dışı boşluk yazılmaz.
@@ -69,6 +69,8 @@ Kurallar:
 | Piyasalar | `piyasalar.html` | Mali tablolar, hisse analizi, sektörler, şirket laboratuvarı |
 | Rehberler | `rehberler.html` | Uzun anlatımlar, "Aklına takılan" soru kütüphanesi, Paktolos'un hikâyesi |
 | Araçlar | `araclar.html` | Hesaplayıcılar, şirket laboratuvarı, finansal check-up |
+
+Ana sayfa akışı: ortada serif başlık ve çevresinde yüzen örnek parçalar → uygulama penceresinde ekonomi ağı → kaynak şeridi → "Finansı öğrenmenin yeni bir yolu" (şeftali kart + iki kart) → Öğren (sekmeli liste) → dört gösterge → sekiz temel kavram → koyu bölüm: ekonomi şeması → faiz zinciri → araçlar penceresi → veri hikâyesi → hikâye bandı → kapanış.
 
 Arama (⌘K) ve Karnem (öğrenme ilerlemesi) her sayfada menünün sağında. Telefonda alt çubuk: Ana sayfa, Öğren, Ekonomi, Piyasalar, Araçlar.
 
