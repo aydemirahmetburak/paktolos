@@ -21,8 +21,8 @@
 
   /* ---------- Renk: metin ---------- */
   --text-primary: #111214;
-  --text-secondary: #6F7175;
-  --text-muted: #9A9CA0;          /* yalnızca 14px üstü ya da süs metni */
+  --text-secondary: #5E6065;
+  --text-muted: #6A6C71;          /* ikincil bilgi: her zeminde en az 4.5:1 */
   --text-on-dark: #F5F5F2;
   --text-on-dark-secondary: #9B9DA2;
   --text-on-accent: #FFFFFF;
@@ -36,13 +36,14 @@
   --accent: #2457A6;              /* seyrek: bağlantı, birincil eylem, seçili */
   --accent-hover: #1D4988;
   --accent-soft: rgba(36, 87, 166, 0.08);
+  --accent-on-dark: #9CBDF0;      /* koyu zeminli bölümlerde vurgu metni */
   --accent-ring: rgba(36, 87, 166, 0.35);
-  --positive: #167A56;
-  --positive-soft: rgba(22, 122, 86, 0.1);
-  --negative: #B84A4A;
-  --negative-soft: rgba(184, 74, 74, 0.1);
-  --caution: #9A6A12;             /* "dikkat" durumu; yalnızca etiketle birlikte */
-  --caution-soft: rgba(154, 106, 18, 0.1);
+  --positive: #13704F;
+  --positive-soft: rgba(19, 112, 79, 0.1);
+  --negative: #A63E3E;
+  --negative-soft: rgba(166, 62, 62, 0.1);
+  --caution: #855A0C;             /* "dikkat" durumu; yalnızca etiketle birlikte */
+  --caution-soft: rgba(133, 90, 12, 0.1);
 
   /* Marka: yalnızca logo (ilk Lidya sikkesi) ve hikâye çizimleri */
   --brand: #FF6B35;
@@ -159,8 +160,8 @@
   --dark-surface: #111214;
 
   --text-primary: #F5F5F2;
-  --text-secondary: #9B9DA2;
-  --text-muted: #6E7075;
+  --text-secondary: #A6A8AD;
+  --text-muted: #85878C;
   --text-on-dark: #F5F5F2;
   --text-on-dark-secondary: #9B9DA2;
 

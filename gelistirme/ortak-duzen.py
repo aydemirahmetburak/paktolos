@@ -47,7 +47,8 @@ def header(current):
     hap = lambda f, sinif: f'<span class="{sinif}" aria-hidden="true"></span>' if f == tab else ''
     links = '\n'.join(f'          <a href="{f}"{cur(f)}>{t}{hap(f, "nav-hap")}</a>' for f, t in NAV)
     tabs = '\n'.join(f'    <a href="{f}"{cur(f)}>{hap(f, "tab-hap")}<svg viewBox="0 0 24 24" aria-hidden="true">{ICON[i]}</svg>{t}</a>' for f, t, i in TABS)
-    return f'''<header class="nav-bar">
+    return f'''<a class="atla" href="#icerik">İçeriğe geç</a>
+  <header class="nav-bar">
     <div class="container nav-inner">
       <a href="index.html" class="logo" aria-label="Paktolos ana sayfa">{LOGO_MARK}<span>PAKTOLOS</span></a>
       <div class="nav-end">
@@ -102,6 +103,8 @@ HEAD_EXTRA = '''<meta name="viewport" content="width=device-width, initial-scale
 
 for path in sys.argv[1:]:
     s = open(path).read()
+    s = re.sub(r'<a class="atla"[^>]*>[^<]*</a>\s*', '', s)
+    s = re.sub(r'<main(?![^>]*\bid=)', '<main id="icerik" tabindex="-1"', s, count=1)
     s = re.sub(r'<header class="nav-bar">.*?</header>(\s*<nav class="tabbar".*?</nav>)?', lambda m: header(path), s, count=1, flags=re.S)
     s = re.sub(r'<footer>.*?</footer>', lambda m: FOOTER, s, count=1, flags=re.S)
     # <head>: önce eski eklemeleri temizle, sonra tek blok olarak yaz

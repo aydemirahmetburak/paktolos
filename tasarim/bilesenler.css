@@ -24,6 +24,7 @@
     16. Durumlar: .empty-state, .error-state, .skeleton
     17. Simgeler
     18. Okuma listesi: .kaydet-btn, .sayfa-eylem, .okuma-listesi, .son-bakilan
+    19. Erişim: .atla (içeriğe geç)
    ============================================ */
 
 /* ---------- 1. Yerleşim ---------- */
@@ -438,6 +439,7 @@ a.card:hover { box-shadow: var(--shadow-hairline), var(--shadow); transform: tra
   position: absolute;
   z-index: var(--z-popover);
   padding: var(--s-12) var(--s-16);
+  max-width: min(320px, calc(100vw - 2 * var(--s-16)));
   border-radius: var(--radius-m);
   background: var(--surface-elevated);
   box-shadow: 0 0 0 1px var(--border), var(--shadow-raised);
@@ -622,6 +624,11 @@ a.card:hover { box-shadow: var(--shadow-hairline), var(--shadow); transform: tra
 .son-oge { display: flex; align-items: baseline; gap: var(--s-16); min-height: var(--touch); padding: var(--s-12) 0; border-bottom: 1px solid var(--border); color: var(--text-primary); text-decoration: none; }
 .son-oge .overline { flex: none; width: 96px; }
 .son-oge:hover { color: var(--accent); }
+
+/* ---------- 19. İçeriğe geç: yalnızca klavyeyle odaklanınca görünür ---------- */
+.atla { position: fixed; top: var(--s-8); left: var(--s-8); z-index: 1000; display: inline-flex; align-items: center; min-height: var(--touch); padding: 0 var(--s-16); border-radius: var(--radius-s); background: var(--text-primary); color: var(--background); font-weight: var(--weight-semibold); text-decoration: none; transform: translateY(-200%); }
+.atla:focus { transform: none; }
+main:focus { outline: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .skeleton { animation: none; }
