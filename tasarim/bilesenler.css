@@ -58,7 +58,7 @@
 }
 .bolum { padding-block: clamp(64px, 8vw, 128px); }
 .bolum + .bolum { padding-top: 0; }
-.bolum-ayrac { border-top: 1px solid var(--border); }
+.bolum-ayrac { border-top: 0; }  /* bölümler çizgiyle değil boşlukla ayrılır */
 
 /* ---------- 2. Menü ---------- */
 .nav-bar {
@@ -376,7 +376,7 @@ a.card:hover { background: var(--surface-secondary); }
 .card-sade { background: var(--background-alt); box-shadow: inset 0 0 0 1px var(--border); }
 /* Şeftali kart: sayfanın tek sıcak vurgusu; üzerinde kahve mürekkep */
 .card-seftali { background: var(--peach); color: var(--peach-ink); }
-.card-seftali p, .card-seftali .overline, .card-seftali h3 { color: var(--peach-ink); }
+.card-seftali p, .card-seftali .overline, .card-seftali h3, .card-seftali .meta { color: var(--peach-ink); }
 a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--peach-ink)); }
 /* Yüzen parça: başlık çevresinde duran küçük arayüz kesitleri; gölge
    taşıyan tek öğe */
@@ -547,8 +547,8 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 .concept-definition dt { font-size: var(--text-overline); font-weight: var(--weight-medium); letter-spacing: 0; color: var(--text-secondary); }
 .concept-definition dd { font-size: var(--text-subheading); line-height: 1.4; letter-spacing: var(--tracking-heading); }
 
-.simple-explanation { padding: var(--s-24); border-radius: var(--radius-l); background: var(--surface-secondary); }
-.simple-explanation .overline { color: var(--accent); }
+.simple-explanation { padding: var(--s-32) var(--s-24); border-radius: var(--radius-l); background: var(--peach); color: var(--peach-ink); }
+.simple-explanation .overline, .simple-explanation p { color: var(--peach-ink) !important; }
 
 .deep-dive { border-top: 1px solid var(--border); }
 .deep-dive > summary { display: flex; align-items: center; gap: var(--s-12); min-height: 56px; font-weight: var(--weight-medium); cursor: pointer; list-style: none; }

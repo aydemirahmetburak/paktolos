@@ -368,7 +368,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 
 .principle-number {
   display: block;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--color-accent);
   margin-bottom: var(--space-xs);
@@ -413,7 +414,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .path-card .step {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--color-accent);
   margin-bottom: var(--space-sm);
@@ -493,7 +495,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .demo-metric-value {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 17px;
   font-weight: 600;
 }
@@ -606,11 +609,13 @@ html[data-gecis="geri"]::view-transition-new(root) {
   border-top: 1px solid var(--color-border);
 }
 
+/* Bölüm etiketi ("01 — Kredi"): sessiz gri, büyük harf ya da renk yok */
 .chapter-number {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--color-accent);
+  font-size: var(--text-overline);
+  font-weight: var(--weight-book);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
   margin-bottom: var(--space-xs);
 }
 
@@ -668,7 +673,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
   display: block;
   margin: var(--space-xs) 0;
   padding: var(--space-xs) var(--space-sm);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   letter-spacing: 0;
   color: var(--color-text-primary);
@@ -800,7 +806,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .step-num {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 28px;
   font-weight: 600;
   color: var(--color-accent);
@@ -888,7 +895,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 .field input {
   width: 100%;
   padding: 12px 14px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 16px; /* iOS'ta yakınlaştırmayı önler */
   color: var(--color-secondary);
   background: rgba(245,245,240,0.06);
@@ -943,7 +951,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .result-value {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 20px;
   font-weight: 600;
   color: var(--color-text-secondary);
@@ -1027,7 +1036,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 
 .ticker {
   padding: 4px 10px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 600;
   background: var(--glass-bg);
@@ -1133,10 +1143,6 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 /* Koyu zeminde duran açık cam da aynı şekilde */
-.section-dark .calc-results {
-  background: rgba(245,245,240,0.95);
-}
-
 /* Işık kenarı: sol üstten vuran ışığın camın kenarında parlaması */
 .glass::after,
 .path-card::after,
@@ -1307,7 +1313,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 }
 
 .progress-text strong {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   color: var(--color-text-primary);
 }
 
@@ -1392,7 +1399,8 @@ html[data-gecis="geri"]::view-transition-new(root) {
 
 .search-kbd {
   padding: 2px 8px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   color: var(--color-text-tertiary);
   border: 1px solid var(--color-border);
@@ -1891,7 +1899,8 @@ body.glossary-in-view .letter-index {
 }
 
 .slider-head output {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 15px;
   font-weight: 600;
   color: var(--color-text-primary);
@@ -1960,7 +1969,8 @@ body.glossary-in-view .letter-index {
 }
 
 .calc-big {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 32px;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -2039,7 +2049,8 @@ body.glossary-in-view .letter-index {
 
 .quiz-count {
   flex-shrink: 0;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 14px;
   font-weight: 600;
   color: var(--color-text-secondary);
@@ -2099,18 +2110,20 @@ body.glossary-in-view .letter-index {
 
 .quiz-data div {
   padding: var(--space-xs) var(--space-sm);
-  background: rgba(28,28,30,0.9);
-  color: var(--color-secondary);
-  border-radius: var(--radius-md);
+  background: var(--surface-elevated);
+  box-shadow: var(--shadow-float);
+  color: var(--text-primary);
+  border-radius: var(--radius-m);
 }
 
 .quiz-data dt {
   font-size: 12px;
-  color: var(--color-dark-text-secondary);
+  color: var(--text-muted);
 }
 
 .quiz-data dd {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 18px;
   font-weight: 600;
 }
@@ -2305,7 +2318,8 @@ body.glossary-in-view .letter-index {
 }
 
 .ring-label strong {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 44px;
   font-weight: 600;
 }
@@ -2622,7 +2636,8 @@ body.glossary-in-view .letter-index {
 
 .spot-foot kbd {
   padding: 1px 6px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   border: 1px solid rgba(var(--ink),0.12);
   border-radius: 4px;
@@ -2859,7 +2874,8 @@ body.glossary-in-view .letter-index {
 
 .scene-label {
   display: block;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--color-accent);
   margin-bottom: var(--space-xs);
@@ -2895,18 +2911,17 @@ body.glossary-in-view .letter-index {
 }
 
 .story-moral .quote {
+  font-family: var(--font-serif);
   font-size: clamp(30px, 5.5vw, 56px);
-  font-weight: 600;
-  letter-spacing: -0.035em;
+  font-weight: 400;
+  letter-spacing: -0.015em;
   line-height: 1.1;
   max-width: 900px;
   margin: 0 auto var(--space-xl);
 }
 
-.story-moral .quote span,
-.section-dark .link-more {
-  color: var(--accent-on-dark);
-}
+.story-moral .quote span { font-style: italic; }
+.section-dark .link-more { color: var(--accent-on-dark); }
 
 .story-sources {
   max-width: var(--width-text);
@@ -2949,7 +2964,6 @@ body.glossary-in-view .letter-index {
    ============================================ */
 .tool {
   padding: var(--space-section) 0;
-  border-top: 1px solid rgba(var(--ink),0.08);
   scroll-margin-top: var(--nav-height);
 }
 
@@ -3012,7 +3026,8 @@ body.glossary-in-view .letter-index {
 .num-input input {
   align-self: stretch;
   width: 9ch;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 16px;
   font-weight: 600;
   text-align: right;
@@ -3531,7 +3546,8 @@ body.glossary-in-view .letter-index {
   place-items: center;
   width: 26px;
   height: 26px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 600;
   color: var(--color-accent);
@@ -3702,7 +3718,8 @@ body.glossary-in-view .letter-index {
 .lesson-card:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
 
 .lesson-num {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--color-accent);
 }
@@ -4469,7 +4486,8 @@ body.glossary-in-view .letter-index {
 
 .lab-equation {
   padding: 3px 10px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   font-weight: 600;
   color: var(--color-text-secondary);
@@ -5622,7 +5640,7 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
 .section-header > .btn { justify-self: start; }
 /* Koyu bölüm: tokenlar yerelde yeniden tanımlanır; içerideki bileşenler
    kendiliğinden koyu zemine uyar */
-.bolum-koyu {
+.bolum-koyu, .section-dark {
   --background: #17191C;
   --background-alt: #1D1F23;
   --surface: #222428;
@@ -5636,11 +5654,21 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
   --accent: #F2F2F3;
   --accent-soft: rgba(242, 242, 243, 0.08);
   --text-on-accent: #17191C;
+  /* eski adlar da yerel değerlere bağlansın (:root'ta bir kez çözülürler) */
+  --color-accent: var(--accent);
+  --color-bg: var(--background);
+  --color-surface: var(--surface-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-muted);
+  --color-border: var(--border);
+  --glass-bg: var(--surface);
+  --glass-bg-strong: var(--surface);
   background: var(--background);
   color: var(--text-primary);
   overflow: clip;
 }
-:root[data-theme="dark"] .bolum-koyu { --background: #0B0C0D; --background-alt: #121314; --surface: #1A1B1E; }
+:root[data-theme="dark"] :is(.bolum-koyu, .section-dark) { --background: #0B0C0D; --background-alt: #121314; --surface: #1A1B1E; }
 .bolum-koyu .section-header .btn { justify-self: start; }
 
 .sema {
@@ -5683,7 +5711,7 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
 .arac-girdi { display: grid; gap: var(--s-8); align-content: start; }
 .arac-girdi > span { display: flex; justify-content: space-between; align-items: center; min-height: 44px; padding: 0 var(--s-16); border-radius: var(--radius-m); background: var(--surface); font-size: var(--text-caption); }
 .arac-girdi i { font-style: normal; color: var(--text-secondary); }
-.arac-girdi b { font-family: var(--font-mono); font-weight: var(--weight-semibold); }
+.arac-girdi b { font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
 .arac-sonuc { display: grid; gap: var(--s-8); align-content: start; }
 .arac-taksit { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: var(--weight-semibold); letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .arac-sonuc > span { font-size: var(--text-caption); color: var(--text-muted); }
@@ -6076,14 +6104,6 @@ html:not(.js) .akis:not(.hazir) .akis-adim { min-height: 0; margin-bottom: var(-
   background: rgba(58,58,60,0.6);
 }
 
-[data-theme="dark"] .section-dark .calc-results {
-  background: rgba(44,44,46,0.7);
-}
-
-[data-theme="dark"] .quiz-data div {
-  background: rgba(255,255,255,0.08);
-}
-
 /* Bilanço çizimi */
 [data-theme="dark"] .balance-block.dv { background: #2C2C2E; }
 [data-theme="dark"] .balance-block.drv { background: #3A3A3C; }
@@ -6177,3 +6197,16 @@ h1:not(#_):not(.sans) { letter-spacing: -0.02em; }
   .serit-ic > [aria-hidden="true"] { display: none; }
   .serit-ic { justify-content: center; margin-inline: auto; row-gap: var(--s-16); }
 }
+
+/* ============================================
+   ÜRÜN EKRANI VE BANTLAR
+   Hesaplayıcı sonuçları, oran hesaplayıcı ve laboratuvar panelleri
+   beyaz, yüzen bir uygulama ekranı gibi durur; girişler sis grisinde
+   kalır. Araç bölümleri çizgiyle değil, dönüşümlü bantla ayrılır.
+   ============================================ */
+.tool-results, .calc-results, .lab-panel { background: var(--surface-elevated); box-shadow: var(--shadow-float); }
+.tool:nth-of-type(even) { background: var(--background-alt); }
+/* "Örnek A.Ş." satırları: koyu cam yerine yüzen beyaz parça, kahve etiket */
+.step-row.example:not(#_) { background: var(--surface-elevated); box-shadow: var(--shadow-float); color: var(--text-primary); }
+.step-row.example b:not(#_) { color: var(--peach-ink); }
+[data-theme="dark"] .step-row.example b:not(#_) { color: var(--peach-ink); }
