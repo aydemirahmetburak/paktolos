@@ -103,7 +103,7 @@ paktolos/
 ├── ogren.html           # Mali tablolar ve temel oranlar (ayrıntılı)
 ├── analiz.html          # Yedi adımda analiz ve oran hesaplayıcı
 ├── sektorler.html       # Sektöre göre farklı okuma
-├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
+├── araclar.html         # Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, bileşik büyüme, enflasyon, erken başlamak
 ├── lab.html             # Şirket laboratuvarı: hayali bir şirkette üç mali tabloyu canlı değiştir
 ├── checkup.html         # Finansal check-up: bütçe, acil durum fonu, borç yükü, birikim oranı
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
@@ -151,7 +151,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 
 - **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; kavram sayfası (`kavram.html?k=id`) kendiliğinden oluşur. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
 - **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer.
-- **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle.
+- **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle; "Neden?" (`aciklama`), "Gerçek hayatta" (`gercek`) ve ilgili kavramları (`kavramlar`) doldur.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
 - **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" rozeti senaryo sayısını kullanır.
@@ -188,7 +188,8 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Kavram sistemi: 67 kavram için katmanlı sayfa; 12 temel kavramda derin katman, kaynaklar ve etkileşimli görsel
 - [x] Makale deneyimi (künye, bölüm sonu "Akılda kalsın", ilgili kavramlar, kaynakça) ve ortak veri görselleştirme sistemi
 - [x] "Ekonomi nasıl çalışır?" etkileşimli haritası: altı kurum, para, kredi ve sermaye akışları, "Faiz artarsa" turu
-- [ ] Hesaplayıcılar, test ve arama yenilemesi; kaydedilenler ve ilerleme
+- [x] Hesaplayıcılar (bileşik büyüme, enflasyon), açıklamalı test geri bildirimi, kategorili arama paleti
+- [ ] Kaydedilenler ve öğrenme ilerlemesi
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme

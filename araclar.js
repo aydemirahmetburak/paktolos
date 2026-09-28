@@ -346,7 +346,114 @@ function hedefAraci(kok) {
 }
 
 // ============================================
-// 5. ERKEN BAŞLAMAK
+// 5. BİLEŞİK BÜYÜME
+// ============================================
+function bilesikAraci(kok) {
+  const baslangic = sayiAlani('Başlangıç tutarı', { min: 0, max: 5000000, step: 5000, value: 100000, birim: 'TL' });
+  const katki = sayiAlani('Aylık katkı', { min: 0, max: 200000, step: 500, value: 5000, birim: 'TL' });
+  const getiri = sayiAlani('Yıllık getiri', { min: 0, max: 80, step: 1, value: 30, birim: '%' });
+  const sure = sayiAlani('Süre', { min: 1, max: 40, step: 1, value: 10, birim: 'yıl' });
+  const alanlar = [baslangic, katki, getiri, sure];
+  const sonuc = aracIskeleti(kok, alanlar,
+    'Getiri garanti değildir. Hesap her yıl aynı getiri varsayımıyla yapılır; katkı ay sonunda eklenir. Vergi, masraf ve enflasyon dahil değildir.');
+  const grafikKap = el('div');
+
+  function hesapla() {
+    const PV = baslangic.get(), C = katki.get(), g = getiri.get() / 100, y = Math.max(1, Math.round(sure.get()));
+    const i = Math.pow(1 + g, 1 / 12) - 1;
+    const bakiye = ay => PV * Math.pow(1 + i, ay) + (i === 0 ? C * ay : C * (Math.pow(1 + i, ay) - 1) / i);
+    const yillar = Array.from({ length: y }, (_, k) => {
+      const ay = 12 * (k + 1), toplam = bakiye(ay), yatirilan = PV + C * ay;
+      return { toplam, yatirilan, getiri: Math.max(0, toplam - yatirilan) };
+    });
+    const son = yillar[y - 1];
+    // Toplam getirinin yarısı hangi yıldan sonra oluşuyor?
+    const yariYil = yillar.findIndex(v => v.getiri >= son.getiri / 2) + 1;
+    const katsayi = son.yatirilan > 0 ? son.toplam / son.yatirilan : 0;
+
+    sonuc.replaceChildren(
+      el('div', { className: 'hero-figure' }, formatTL(son.toplam)),
+      el('p', { className: 'hero-caption' }, `${y} yıl sonra birikimin`),
+      statSatiri([
+        ['Toplam yatırdığın', formatTL(son.yatirilan)],
+        ['Getiriden gelen', formatTL(son.getiri)],
+        ['Yatırdığının katı', sayiYaz(katsayi, 1) + ' kat']
+      ]),
+      grafikKap,
+      icgoru(
+        son.getiri > 0 && y > 1
+          ? el('span', {}, 'Toplam getirinin yarısı son ', el('b', {}, (y - yariYil + 1) + ' yılda'), ' oluşuyor. Bileşik büyüme zamana ihtiyaç duyar: en büyük artış en sonda gelir. ')
+          : el('span', {}, 'Getiri sıfırken birikim yalnızca yatırdığın kadar büyür. '),
+        'Bu rakam nominaldir; aynı sürede fiyatlar da artar. ', sozlukLink('reel-getiri', 'Reel getiri nedir? ›')),
+      tabloGorunumu(['Yıl', 'Yatırdığın', 'Getiri', 'Toplam'],
+        yillar.map((v, k) => [k + 1, formatTL(v.yatirilan), formatTL(v.getiri), formatTL(v.toplam)]))
+    );
+    grafik(grafikKap, {
+      tur: 'yigin',
+      etiketler: yillar.map((_, k) => (k + 1) + '. yıl'),
+      seriler: [
+        { ad: 'Yatırdığın', renk: SERI[0], degerler: yillar.map(v => v.yatirilan) },
+        { ad: 'Getiri', renk: SERI[1], degerler: yillar.map(v => v.getiri) }
+      ],
+      bicim: formatTL,
+      ipucuBaslik: k => `${k + 1}. yıl sonunda`,
+      baglam: k => 'Getirinin toplamdaki payı: %' + sayiYaz(yillar[k].toplam > 0 ? yillar[k].getiri / yillar[k].toplam * 100 : 0),
+      aciklama: 'Yıllara göre birikim: yatırdığın ve getiri'
+    });
+  }
+  alanlar.forEach(x => x.on(hesapla));
+  hesapla();
+}
+
+// ============================================
+// 6. ENFLASYON VE ALIM GÜCÜ
+// ============================================
+function enflasyonAraci(kok) {
+  const tutar = sayiAlani('Bugünkü tutar', { min: 1000, max: 10000000, step: 1000, value: 100000, birim: 'TL' });
+  const oran = sayiAlani('Yıllık enflasyon', { min: 1, max: 100, step: 1, value: 40, birim: '%' });
+  const sure = sayiAlani('Süre', { min: 1, max: 30, step: 1, value: 5, birim: 'yıl' });
+  const alanlar = [tutar, oran, sure];
+  const sonuc = aracIskeleti(kok, alanlar,
+    'Hesap her yıl aynı enflasyon varsayımıyla yapılır. Gerçek enflasyon yıldan yıla değişir; kişisel enflasyonun da resmî orandan farklı olabilir.');
+  const grafikKap = el('div');
+
+  function hesapla() {
+    const T = tutar.get(), e = oran.get() / 100, y = Math.max(1, Math.round(sure.get()));
+    const guc = Array.from({ length: y + 1 }, (_, k) => T / Math.pow(1 + e, k));
+    const kayip = (1 - guc[y] / T) * 100;
+    const gereken = T * Math.pow(1 + e, y);
+    const yarilanma = Math.log(2) / Math.log(1 + e);
+
+    sonuc.replaceChildren(
+      el('div', { className: 'hero-figure' }, formatTL(guc[y])),
+      el('p', { className: 'hero-caption' }, `${y} yıl sonra ${formatTL(T)} ile bugünkü fiyatlarla alabileceğin`),
+      statSatiri([
+        ['Alım gücü kaybı', '%' + sayiYaz(kayip)],
+        ['Aynı alım gücü için gereken', formatTL(gereken)],
+        ['Fiyatlar', sayiYaz(Math.pow(1 + e, y), 1) + ' katına çıkar']
+      ]),
+      grafikKap,
+      icgoru(
+        'Yıllık ', el('b', {}, '%' + sayiYaz(e * 100)), ' enflasyonda paranın alım gücü yaklaşık ', el('b', {}, sayiYaz(yarilanma, 1) + ' yılda'), ' yarıya iner. ',
+        'Kenarda bekleyen para rakam olarak değişmez, ama her yıl daha az şey alır. ', sozlukLink('enflasyon', 'Enflasyon nedir? ›')),
+      tabloGorunumu(['Yıl', 'Alım gücü', 'Gereken tutar'],
+        guc.map((v, k) => [k, formatTL(v), formatTL(T * Math.pow(1 + e, k))]))
+    );
+    grafik(grafikKap, {
+      tur: 'cizgi',
+      etiketler: guc.map((_, k) => k === 0 ? 'Bugün' : k + '. yıl'),
+      seriler: [{ ad: 'Alım gücü', renk: SERI[0], degerler: guc }],
+      bicim: formatTL,
+      baglam: k => k === 0 ? 'Başlangıç' : 'Bugüne göre kayıp: %' + sayiYaz((1 - guc[k] / T) * 100),
+      aciklama: 'Yıllara göre alım gücü'
+    });
+  }
+  alanlar.forEach(x => x.on(hesapla));
+  hesapla();
+}
+
+// ============================================
+// 7. ERKEN BAŞLAMAK
 // ============================================
 function erkenAraci(kok) {
   const tutar = sayiAlani('Aylık birikim', { min: 500, max: 50000, step: 500, value: 2000, birim: 'TL' });
@@ -409,5 +516,5 @@ function erkenAraci(kok) {
 }
 
 // ============================================
-const ARACLAR = { kredi: krediAraci, asgari: asgariAraci, taksit: taksitAraci, hedef: hedefAraci, erken: erkenAraci };
+const ARACLAR = { kredi: krediAraci, asgari: asgariAraci, taksit: taksitAraci, hedef: hedefAraci, bilesik: bilesikAraci, enflasyon: enflasyonAraci, erken: erkenAraci };
 document.querySelectorAll('[data-tool]').forEach(kok => ARACLAR[kok.dataset.tool](kok));

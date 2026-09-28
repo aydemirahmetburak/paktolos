@@ -8,7 +8,9 @@
 //   soru      sorulan şey
 //   secenekler dört yorum
 //   dogru     doğru seçeneğin sırası (0'dan başlar)
-//   aciklama  cevaptan sonra gösterilen açıklama
+//   aciklama  "Neden?" — cevaptan sonra gösterilen açıklama
+//   gercek    "Gerçek hayatta" — bu durum piyasada nasıl karşına çıkar
+//   kavramlar ilgili kavramların id'leri (kavram sayfalarına bağlanır)
 //   ders      ilgili ders { ad, href }
 
 const SORULAR = [
@@ -24,6 +26,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Düşük F/K bir ucuzluk işareti olabilir, ama tek başına kanıt değildir. Piyasa kârın düşeceğini, tek seferlik bir kârı ya da bir riski fiyatlıyor olabilir. Zarar eden bir şirketin F/K\'sı ise anlamlı değildir.',
+    gercek: 'Borsada düşük F/K\'lı hisseler sık sık "ucuz" diye paylaşılır. Böyle bir durumda KAP\'ta şirketin son bildirimlerine, kârın nereden geldiğine ve sektör haberlerine bakmak, rakamın arkasındaki hikâyeyi gösterir.',
+    kavramlar: ['fk', 'piyasa-degeri'],
     ders: { ad: 'F/K oranı', href: 'ogren.html#oranlar' }
   },
   {
@@ -38,6 +42,8 @@ const SORULAR = [
     ],
     dogru: 2,
     aciklama: 'ROE nominal bir orandır. Enflasyon %45 iken %30\'luk ROE, ortakların koyduğu sermayenin satın alma gücünü korumaya yetmeyebilir. Yüksek enflasyonda kârlılık her zaman enflasyonla karşılaştırılmalıdır.',
+    gercek: 'Yüksek enflasyon dönemlerinde birçok şirketin kârı rakam olarak rekor kırar; ama enflasyondan arındırıldığında büyümediği görülür. Enflasyon muhasebesiyle hazırlanan tablolar bu farkı görmeye yardım eder.',
+    kavramlar: ['roe', 'reel-getiri', 'enflasyon-muhasebesi'],
     ders: { ad: 'Özkaynak kârlılığı', href: 'ogren.html#oranlar' }
   },
   {
@@ -52,6 +58,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Market zincirleri ürünü kasada peşin satar, tedarikçiye ise haftalar sonra öder. Bu yüzden kısa vadeli borçları dönen varlıklarından fazla olabilir. Oranlar sektörüyle birlikte okunmalıdır.',
+    gercek: 'Büyük market zincirleri tedarikçilerine genellikle haftalar sonra öder; bu faizsiz finansman, hızlı büyümelerinin yakıtlarından biridir. Aynı oran bir sanayi şirketinde ise dikkat gerektirir.',
+    kavramlar: ['cari-oran', 'likidite'],
     ders: { ad: 'Perakende sektörü', href: 'sektorler.html#perakende' }
   },
   {
@@ -66,6 +74,8 @@ const SORULAR = [
     ],
     dogru: 2,
     aciklama: 'Net borç = finansal borçlar − nakit. Nakit borçtan fazlaysa net borç negatif çıkar. Bu, şirketin borç yükü açısından rahat olduğunu gösterir.',
+    gercek: 'Net nakit pozisyonundaki şirketler faiz artışlarından daha az etkilenir, hatta nakitlerinden faiz geliri elde edebilir. Borçlu rakipleri ise aynı dönemde yüksek faiz gideri öder.',
+    kavramlar: ['net-borc-favok', 'faiz'],
     ders: { ad: 'Net borç / FAVÖK', href: 'ogren.html#oranlar' }
   },
   {
@@ -80,6 +90,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Sağlıklı bir şirkette kâr, zamanla kasaya nakit olarak girer. Kâr artarken işletme nakit akışı sürekli negatifse, satışlar tahsil edilemiyor ya da stoklar birikiyor olabilir. Bu, kârın kalitesini sorgulatır.',
+    gercek: 'Birçok şirket krizi, kâğıt üzerinde kârlıyken kasası boşalan şirketlerde başlar. Nakit akış tablosu, gelir tablosundaki kârın kasaya girip girmediğini sınamanın yoludur.',
+    kavramlar: ['nakit-akisi', 'serbest-nakit-akisi'],
     ders: { ad: 'Nakit akışı', href: 'ogren.html#nakit-akis' }
   },
   {
@@ -94,6 +106,8 @@ const SORULAR = [
     ],
     dogru: 2,
     aciklama: 'Bankalar için borç, işin kendisidir: mevduat toplar, kredi verir. Bu yüzden borcu hesaba katan FD/FAVÖK ve net borç gibi oranlar bankalarda kullanılmaz. Bankalarda PD/DD ve ROE birlikte okunur.',
+    gercek: 'Banka hisselerini değerlendirenler genellikle PD/DD ile ROE\'yi birlikte okur; takipteki kredileri ve sermaye yeterliliğini izler. FD/FAVÖK bir banka raporunda neredeyse hiç görülmez.',
+    kavramlar: ['pddd', 'roe'],
     ders: { ad: 'Bankacılık', href: 'sektorler.html#banka' }
   },
   {
@@ -108,6 +122,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Ana işten gelen kâr değişmediyse, net kârdaki artış başka bir yerden gelmiştir: bir varlık satışı, kur farkı geliri ya da benzeri. Bu tür kârlar tekrarlanmayabilir; değerlemede dikkatli olunmalıdır.',
+    gercek: 'Bilanço dönemlerinde "net kâr üç katına çıktı" başlıkları sık görülür. Esas faaliyet kârı ile net kâr arasındaki kalemlere bakmak, artışın kalıcı olup olmadığını gösterir.',
+    kavramlar: ['gelir-tablosu', 'net-kar-marji'],
     ders: { ad: 'Gelir tablosu', href: 'ogren.html#gelir-tablosu' }
   },
   {
@@ -122,6 +138,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Fiyatlar %40 artarken satışlar %30 arttıysa, şirket muhtemelen daha az ürün satmıştır. Enflasyondan arındırıldığında satışlar yaklaşık %7 küçülmüş olur: 1,30 ÷ 1,40 ≈ 0,93.',
+    gercek: 'Yüksek enflasyonda şirket duyurularında "rekor ciro" ifadesi sıkça geçer. Satış adetlerine ya da enflasyondan arındırılmış büyümeye bakmak, gerçekten büyüyüp büyümediğini gösterir.',
+    kavramlar: ['enflasyon', 'reel-getiri'],
     ders: { ad: 'Adım adım analiz: Büyüyor mu?', href: 'analiz.html#adimlar' }
   },
   {
@@ -136,6 +154,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'PD/DD\'nin 1\'in altında olması, piyasanın şirkete özkaynağından daha düşük değer biçtiğini gösterir. Bu bir fırsat olabilir; ama piyasa varlıkların gerçek değerinden ya da şirketin kâr üretme gücünden şüphe ediyor da olabilir.',
+    gercek: 'Holdingler ve bankalar gibi bazı şirketler uzun süre PD/DD 1\'in altında işlem görebilir. Bu bazen gerçekten bir fırsattır, bazen de piyasanın haklı çıktığı bir uyarı.',
+    kavramlar: ['pddd', 'ozkaynak'],
     ders: { ad: 'PD/DD oranı', href: 'ogren.html#oranlar' }
   },
   {
@@ -150,6 +170,8 @@ const SORULAR = [
     ],
     dogru: 1,
     aciklama: 'Bedelsiz, pastayı daha çok dilime bölmektir. Pay sayısı ikiye katlanır, fiyat yarıya düzeltilir: 100 × 50 = 200 × 25 = 5.000 TL. Şirketin değeri, varlıkları ve kârı değişmez.',
+    gercek: 'Bedelsiz duyurularından sonra hisse fiyatında sert hareketler görülebilir. Ama bu hareket şirketin değerinin değiştiğini değil, piyasadaki beklenti ve ilgiyi yansıtır.',
+    kavramlar: ['bedelsiz', 'piyasa-degeri'],
     ders: { ad: 'Sözlük: Bedelsiz sermaye artırımı', href: 'sozluk.html#bedelsiz' }
   }
 ];

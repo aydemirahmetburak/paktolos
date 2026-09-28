@@ -2222,13 +2222,26 @@ body.glossary-in-view .letter-index {
 }
 
 .quiz-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-8);
   margin-top: var(--space-lg);
-  font-size: 17px;
-  font-weight: 600;
+  padding: var(--s-12) var(--s-16);
+  border-radius: var(--radius-m);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
 }
-
-.quiz-verdict.ok { color: var(--color-success); }
-.quiz-verdict.no { color: var(--color-danger); }
+.quiz-verdict strong { font-size: var(--text-body); font-weight: 600; }
+.quiz-verdict.ok { background: var(--positive-soft); }
+.quiz-verdict.ok strong, .quiz-verdict.ok .quiz-isaret { color: var(--positive); }
+.quiz-verdict.no { background: var(--negative-soft); }
+.quiz-verdict.no strong, .quiz-verdict.no .quiz-isaret { color: var(--negative); }
+.quiz-isaret { font-weight: 700; }
+.quiz-katman { margin-top: var(--s-16); }
+.quiz-katman h3 { margin-bottom: var(--s-4); font-size: var(--text-caption); font-weight: 600; letter-spacing: var(--tracking-overline); text-transform: uppercase; color: var(--text-muted); }
+.quiz-katman .quiz-explain { margin: 0; }
+.quiz-katman .ilgili-liste { margin-top: var(--s-4); }
 
 .quiz-explain {
   margin: var(--space-xxs) 0 var(--space-sm);
@@ -2431,7 +2444,7 @@ body.glossary-in-view .letter-index {
   height: 18px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -2454,26 +2467,24 @@ body.glossary-in-view .letter-index {
 }
 
 .spotlight::backdrop {
-  background: rgba(var(--shadow-rgb),0.22);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  animation: fade-in 0.3s var(--ease) both;
+  background: color-mix(in srgb, var(--background) 55%, transparent);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  animation: fade-in var(--motion-normal) var(--ease) both;
 }
 
 .spot-panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: min(640px, calc(100% - 32px));
-  max-height: min(70vh, 620px);
+  width: min(680px, calc(100% - 32px));
+  max-height: min(72vh, 640px);
   margin: 12vh auto 0;
-  background: rgba(var(--glass-rgb),0.78);
-  -webkit-backdrop-filter: saturate(180%) blur(40px);
-  backdrop-filter: saturate(180%) blur(40px);
-  border-radius: var(--radius-xl);
-  box-shadow: 0 30px 80px rgba(var(--shadow-rgb),0.25), 0 0 0 0.5px rgba(var(--ink),0.08);
+  background: var(--surface-elevated);
+  border-radius: var(--radius-l);
+  box-shadow: 0 0 0 1px var(--border), var(--shadow-raised);
   overflow: hidden;
-  animation: spot-in 0.35s var(--ease-out) both;
+  animation: spot-in var(--motion-normal) var(--ease) both;
 }
 
 .spotlight.closing .spot-panel { animation: spot-out 0.2s var(--ease) both; }
@@ -5680,6 +5691,10 @@ body.glossary-in-view .letter-index {
   .eh-svg { width: 640px; max-width: none; }
   .eh-figur::after { content: "Haritayı yana kaydırabilirsin"; display: block; padding: var(--s-8) var(--s-8) 0; font-size: var(--text-caption); color: var(--text-muted); position: sticky; left: 0; }
 }
+
+/* Arama sonucu kategorisi */
+.spot-kat { flex: none; align-self: center; margin-left: auto; padding-left: var(--s-12); font-size: var(--text-caption); color: var(--text-muted); white-space: nowrap; }
+@media (max-width: 767px) { .spot-kat { display: none; } }
 
 /* ============================================
    MOBİL

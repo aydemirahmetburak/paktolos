@@ -51,6 +51,10 @@ const ARAMA_DIZINI = [
     anahtar: 'taksit peşin vade farkı alışveriş indirim' },
   { tur: 'arac', baslik: 'Birikim hedefi', aciklama: 'Hedefe ulaşmak için her ay ne kadar ayırmalıyım?', href: 'araclar.html#hedef',
     anahtar: 'birikim hedef tasarruf ev peşinat araba aylık enflasyon' },
+  { tur: 'arac', baslik: 'Bileşik büyüme hesaplayıcı', aciklama: 'Başlangıç tutarı, aylık katkı ve getiriyle birikimin kaç yılda ne olur?', href: 'araclar.html#bilesik',
+    anahtar: 'bileşik getiri faiz hesaplama birikim büyüme aylık katkı yatırım getiri gelecek değer' },
+  { tur: 'arac', baslik: 'Enflasyon hesaplayıcı', aciklama: 'Param yıllar içinde ne kadar erir? Alım gücü ve gereken tutar', href: 'araclar.html#enflasyon',
+    anahtar: 'enflasyon hesaplama alım gücü paranın değeri erime fiyat artışı tüfe' },
   { tur: 'arac', baslik: 'Erken başlamanın gücü', aciklama: '25 ile 35 yaşında başlamanın farkı', href: 'araclar.html#erken',
     anahtar: 'erken başlamak bileşik getiri emeklilik birikim zaman' },
 
