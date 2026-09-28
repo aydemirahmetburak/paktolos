@@ -35,6 +35,14 @@
 (function () {
   var kok = document.documentElement;
 
+  // Oturumun ilk açılışı: menüdeki sikke bir kez "darp edilir" (style.css, ANA SAYFA)
+  try {
+    if (!sessionStorage.getItem('paktolos-acildi')) {
+      kok.classList.add('ilk-acilis');
+      sessionStorage.setItem('paktolos-acildi', '1');
+    }
+  } catch (_) { /* gizli sekme */ }
+
   window.addEventListener('pagereveal', function (e) {
     if (!e.viewTransition) return;
     var geri = false;
