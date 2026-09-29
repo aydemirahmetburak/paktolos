@@ -6210,3 +6210,28 @@ h1:not(#_):not(.sans) { letter-spacing: -0.02em; }
 .step-row.example:not(#_) { background: var(--surface-elevated); box-shadow: var(--shadow-float); color: var(--text-primary); }
 .step-row.example b:not(#_) { color: var(--peach-ink); }
 [data-theme="dark"] .step-row.example b:not(#_) { color: var(--peach-ink); }
+
+/* ============================================
+   BAŞLIK ÇİZİMLERİ
+   Merkez sayfalarının başlığında, sağda ince çizgi bir çizim.
+   Tek aile: 1.25 px mürekkep çizgi; şeftali dolgu ve sikke turuncusu
+   yalnızca birer vurgu. Telefonda metnin üstünde küçük durur.
+   ============================================ */
+.hero-cizimli { position: relative; }
+.hero-cizim { color: var(--text-primary); }
+.cizim .vurgu { fill: var(--peach); stroke: var(--peach-ink); }
+.cizim .akis-cizgi { stroke: var(--peach-ink); stroke-dasharray: 3 5; }
+.hero-cizim .akis-cizgi { animation: sema-ak 1.8s linear infinite; }
+@media (min-width: 900px) {
+  .hero-cizimli > :is(h1, p, .school-progress) { max-width: min(640px, 58%); }
+  .hero-cizim { position: absolute; right: var(--gutter); top: 0; width: min(340px, 30vw); max-width: none; margin: 0; }
+  .sayfa-hero.hero-cizimli > .hero-cizim { top: clamp(64px, 11vw, 144px); }
+}
+@media (max-width: 899px) {
+  .hero-cizim { display: block; width: 150px; margin: 0 0 var(--s-16); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cizim .akis-cizgi { animation: none; }
+}
+/* Laboratuvarın koyu hikâye kutusunda etiket açık gri */
+.lab-story .eyebrow { color: var(--text-on-dark-secondary); }

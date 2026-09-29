@@ -33,6 +33,8 @@ Paktolos bu boşluğu dolduruyor: **yatırım kararını vermiyor, kararı vereb
 - Başlıklar Newsreader serif, her boyutta 400 ağırlık; vurgu kalınlıkla değil, eğik bir kelimeyle. Gövde Inter.
 - Tek sıcak vurgu şeftali kart (#FBE1D1, kahve mürekkep #5D2A1A), sayfa başına en fazla bir kez. Başlıkların arkasında yumuşak ışık huzmeleri.
 - Gölgeyi yalnızca başlıkların çevresinde duran "yüzen" arayüz parçaları taşır. Markanın turuncusu yalnızca logoda ve hikâye çizimlerinde.
+- İnce çizgi çizimler (1,25 px mürekkep, şeftali dolgu ve sikke turuncusu yalnızca vurgu): merkez sayfalarının başlıklarında ve ana sayfada.
+- Hareket: kelime kelime beliren başlıklar, kaydırınca derinlik veren yüzen parçalar, kendiliğinden ilerleyen sekmeli liste, kayan şerit.
 - Katmanlı anlatım: önce basitçe, sonra nasıl çalıştığı, gerçek hayattaki karşılığı, daha derini ve kaynaklar.
 - "Bu ne anlama geliyor?": her gösterge, sana dokunan üç kısa sonuca açılır.
 - Grafikler süs değil, bir fikri anlatır: ince çizgiler, az ızgara, doğrulanmış iki renk. Arayüz renksiz olduğu için renk yalnızca veride konuşur.
@@ -198,6 +200,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] "Ekonomi nasıl çalışır?" etkileşimli haritası: altı kurum, para, kredi ve sermaye akışları, "Faiz artarsa" turu
 - [x] Hesaplayıcılar (bileşik büyüme, enflasyon), açıklamalı test geri bildirimi, kategorili arama paleti
 - [x] Kaydedilenler ve öğrenme ilerlemesi
+- [x] Yeni tasarım dili: sıcak kâğıt üzerinde serif (Newsreader + Inter), yeni ana sayfa, hareket bileşenleri, çizimler
 - [x] Kalite turu: kontrast (AA), 44 piksel dokunma alanları, "İçeriğe geç" bağlantısı, başlık sırası, 320 piksele kadar taşmasız düzen, yükleme sırasında kaymayan sayfalar
 - [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
