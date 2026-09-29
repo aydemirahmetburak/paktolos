@@ -6,6 +6,21 @@ const DERS_KEY = 'paktolos-dersler';
 const GUNLUK_KEY = 'paktolos-gunluk';
 const HARF = ['A', 'B', 'C', 'D'];
 
+// Şıkların gösterim sırası: soru metninden türetilen sabit bir karışım.
+// Aynı soru her açılışta aynı sırada görünür; doğru cevabın yeri ise
+// sorudan soruya değişir (veride hep aynı sırada yazılsa bile).
+function secenekSirasi(q) {
+  let h = 2166136261;
+  for (const c of q.soru) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+  const sira = q.secenekler.map((_, j) => j);
+  for (let i = sira.length - 1; i > 0; i--) {
+    h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0;
+    const k = h % (i + 1);
+    [sira[i], sira[k]] = [sira[k], sira[i]];
+  }
+  return sira;
+}
+
 const svgIkon = (d, attrs = '') => {
   const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   s.setAttribute('viewBox', '0 0 24 24');
@@ -84,9 +99,9 @@ function dersOynaticisi() {
     } else if (kart.tur === 'soru') {
       const secenekler = el('div', { className: 'quiz-options', role: 'group' });
       const geriBildirim = el('div', { className: 'lp-feedback', 'aria-live': 'polite' }, el('div', {}));
-      kart.secenekler.forEach((s, j) => {
-        secenekler.appendChild(el('button', { type: 'button', className: 'quiz-option', onclick: () => cevapla(k, j) },
-          el('span', { className: 'option-key' }, HARF[j]), el('span', {}, s)));
+      secenekSirasi(kart).forEach((j, n) => {
+        secenekler.appendChild(el('button', { type: 'button', className: 'quiz-option', dataset: { j }, onclick: () => cevapla(k, j) },
+          el('span', { className: 'option-key' }, HARF[n]), el('span', {}, kart.secenekler[j])));
       });
       c.append(el('span', { className: 'lp-kind' }, 'Soru'), el('h2', {}, kart.soru), secenekler, geriBildirim);
       if (cevaplar[k] !== undefined) isaretle(c, kart, cevaplar[k]);
@@ -123,7 +138,8 @@ function dersOynaticisi() {
   }
 
   function isaretle(c, kart, j) {
-    [...c.querySelectorAll('.quiz-option')].forEach((b, k) => {
+    [...c.querySelectorAll('.quiz-option')].forEach(b => {
+      const k = +b.dataset.j;
       b.disabled = true;
       if (k === kart.dogru) b.classList.add('correct');
       else if (k === j) b.classList.add('wrong');
@@ -131,7 +147,7 @@ function dersOynaticisi() {
     });
     const fb = c.querySelector('.lp-feedback');
     fb.firstChild.replaceChildren(el('p', {},
-      el('strong', { className: j === kart.dogru ? 'ok' : 'no' }, j === kart.dogru ? 'Doğru.' : 'Doğru cevap: ' + HARF[kart.dogru]),
+      el('strong', { className: j === kart.dogru ? 'ok' : 'no' }, j === kart.dogru ? 'Doğru.' : 'Doğru cevap: ' + HARF[secenekSirasi(kart).indexOf(kart.dogru)]),
       kart.aciklama));
     fb.classList.add('open');
   }
@@ -329,9 +345,10 @@ function initGununSorusu() {
         gunler[(t.getDay() + 6) % 7]);
     });
 
-    const secenekler = el('div', { className: 'quiz-options' }, ...q.secenekler.map((s, j) =>
-      el('button', { type: 'button', className: 'quiz-option', onclick: () => cevapla(j) },
-        el('span', { className: 'option-key' }, HARF[j]), el('span', {}, s))));
+    const sira = secenekSirasi(q);
+    const secenekler = el('div', { className: 'quiz-options' }, ...sira.map((j, n) =>
+      el('button', { type: 'button', className: 'quiz-option', dataset: { j }, onclick: () => cevapla(j) },
+        el('span', { className: 'option-key' }, HARF[n]), el('span', {}, q.secenekler[j]))));
 
     const alev = svgIkon('<path d="M12 2.5c.4 3-1.8 4.6-3.3 6.4C7.3 10.6 6.5 12.4 6.5 14.5a5.5 5.5 0 0 0 11 0c0-2.6-1.4-4.4-2.6-5.7-.2 1.4-.8 2.4-1.8 3 .3-3.2-.3-6.4-1.1-9.3z"/>');
     kok.replaceChildren(...[
@@ -344,12 +361,13 @@ function initGununSorusu() {
       secenekler,
       el('div', { className: 'lp-feedback' + (cevap !== undefined ? ' open' : ''), 'aria-live': 'polite' }, el('div', {},
         cevap !== undefined ? el('p', {},
-          el('strong', { className: cevap === q.dogru ? 'ok' : 'no' }, cevap === q.dogru ? 'Doğru. Yarın yeni bir soru seni bekliyor.' : 'Doğru cevap: ' + HARF[q.dogru]),
+          el('strong', { className: cevap === q.dogru ? 'ok' : 'no' }, cevap === q.dogru ? 'Doğru. Yarın yeni bir soru seni bekliyor.' : 'Doğru cevap: ' + HARF[sira.indexOf(q.dogru)]),
           q.aciklama, ' ', q.kaynak ? el('a', { className: 'link-more', href: q.kaynak.href }, q.kaynak.ad) : null) : '')),
       el('div', { className: 'dq-week', 'aria-label': 'Son 7 gün' }, ...hafta)
     ].filter(Boolean));
     if (cevap !== undefined) {
-      [...secenekler.children].forEach((b, k) => {
+      [...secenekler.children].forEach(b => {
+        const k = +b.dataset.j;
         b.disabled = true;
         b.classList.add(k === q.dogru ? 'correct' : k === cevap ? 'wrong' : 'dim');
       });
@@ -379,8 +397,8 @@ function initGununSorusu() {
 const ROZETLER = [
   { id: 'ilk-ders', ad: 'İlk adım', aciklama: 'İlk dersini bitir', ikon: '<path d="M8 20c0-4 1.5-7 4-9"/><path d="M12 11c0-4 3-7 7-7 0 4-3 7-7 7z"/><path d="M12 11C12 8 10 6 6.5 6c0 3 2 5 5.5 5z"/>',
     kosul: s => s.ders >= 1 },
-  { id: 'yari-yol', ad: 'Yarı yol', aciklama: 'Üç ders bitir', ikon: '<path d="M4 19h16"/><path d="M6 19V9l6-5 6 5v10"/><path d="M10 19v-5h4v5"/>',
-    kosul: s => s.ders >= 3 },
+  { id: 'yari-yol', ad: 'Yarı yol', aciklama: 'Altı ders bitir', ikon: '<path d="M4 19h16"/><path d="M6 19V9l6-5 6 5v10"/><path d="M10 19v-5h4v5"/>',
+    kosul: s => s.ders >= 6 },
   { id: 'mezun', ad: 'Paktolos mezunu', aciklama: 'Tüm dersleri bitir', ikon: '<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c0 1.5 2.5 3 5.5 3s5.5-1.5 5.5-3V11"/><path d="M21.5 9v5"/>',
     kosul: s => s.ders >= s.dersToplam },
   { id: 'kasif', ad: 'Sözlük kâşifi', aciklama: '20 kavram keşfet', ikon: '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>',
