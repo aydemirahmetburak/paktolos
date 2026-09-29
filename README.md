@@ -159,7 +159,7 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 ## İçerik Ekleme
 
 - **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; kavram sayfası (`kavram.html?k=id`) kendiliğinden oluşur. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
-- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer.
+- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer. Şıkları istediğin sırada yazabilirsin: ekranda soru metnine göre sabit bir karışımla gösterilir, böylece doğru cevap hep aynı harfte olmaz. Yeni bir yol için `DERS_YOLLARI`na ekle.
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle; "Neden?" (`aciklama`), "Gerçek hayatta" (`gercek`) ve ilgili kavramları (`kavramlar`) doldur.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
@@ -188,7 +188,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Site geneli arama, karanlık mod, uygulama olarak yükleme
 - [x] Araç kutusu: kredi, asgari ödeme, taksit/peşin, birikim hedefi, erken başlamak
 - [x] "Aklına takılan" soru kütüphanesi (25 soru, 5 konu)
-- [x] Paktolos Okulu (7 ders), Karnem, rozetler ve günün sorusu
+- [x] Paktolos Okulu (12 ders, üç yol), Karnem, kilometre taşları ve günün sorusu
 - [x] Okuma listesi: kavram, rehber, harita ve araçlarda "Kaydet"; Karnem'de finansal temeller ilerlemesi ve son baktıkların
 - [x] Şirket laboratuvarı: 8 senaryo, canlı gelir tablosu, bilanço ve nakit akışı
 - [x] Finansal check-up: dört göstergede kişisel finans durumu
@@ -202,7 +202,7 @@ Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 - [x] Kaydedilenler ve öğrenme ilerlemesi
 - [x] Yeni tasarım dili: sıcak kâğıt üzerinde serif (Newsreader + Inter), yeni ana sayfa, hareket bileşenleri, çizimler
 - [x] Kalite turu: kontrast (AA), 44 piksel dokunma alanları, "İçeriğe geç" bağlantısı, başlık sırası, 320 piksele kadar taşmasız düzen, yükleme sırasında kaymayan sayfalar
-- [ ] Yeni dersler: risk ve çeşitlendirme, nakit akışı, sektör analizi
+- [x] Yeni dersler: risk ve çeşitlendirme, yatırım araçları, düzenli yatırım, nakit akışı, sektör analizi
 - [ ] KAP'ta mali tablo bulma rehberi (ekran görüntüleriyle)
 - [ ] Sözlüğü genişletme
 

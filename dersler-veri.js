@@ -11,6 +11,7 @@
 
 const DERS_YOLLARI = [
   { id: 'kisisel', ad: 'Kişisel finans', aciklama: 'Paranın dili: enflasyon, faiz, borç ve bütçe.' },
+  { id: 'yatirim', ad: 'Yatırıma giriş', aciklama: 'Risk, getiri ve araçlar: birikimi nereye, neden?' },
   { id: 'borsa', ad: 'Borsa ve şirket analizi', aciklama: 'Bir şirketin rakamlarını okumaya giriş.' }
 ];
 
@@ -132,6 +133,97 @@ const DERSLER = [
     bag: { kavramlar: ['butce', 'acil-durum-fonu', 'likidite'], arac: { ad: 'Birikim hedefi aracı', href: 'araclar.html#hedef' } }
   },
   {
+    id: 'risk-cesitlendirme', yol: 'yatirim', sure: 6,
+    baslik: 'Risk ve çeşitlendirme',
+    ozet: 'Getiri neden riskle gelir ve yumurtalar neden ayrı sepetlere konur?',
+    kartlar: [
+      { tur: 'metin', baslik: 'Risk, belirsizliktir.',
+        metin: 'Yatırımda risk, sonucun beklediğinden farklı olma ihtimalidir. Bir fiyatın ne kadar sert ve sık iniş çıkış yaptığına oynaklık (volatilite) denir.' },
+      { tur: 'metin', baslik: 'Risk ve getiri birlikte gelir.',
+        metin: 'Daha yüksek beklenen getiri, neredeyse her zaman daha yüksek riskle gelir. Kimse sana yüksek getiriyi risksiz vermez; bu yüzden "risksiz yüksek getiri" vaadi en önemli uyarı işaretidir.' },
+      { tur: 'soru', soru: 'Biri sana "aylık %10 garanti getiri, hiç risk yok" diyor. En doğru tepki hangisi?',
+        secenekler: ['Hemen yatırırım', 'Yüksek ve garantili getiri bir arada çok nadirdir; kurumun SPK yetkisini ve paranın ne yapılacağını araştırırım', 'Önce az bir tutarla denerim', 'Arkadaşlarıma da haber veririm'],
+        dogru: 1,
+        aciklama: 'Yüksek ve garantili getiri vaadi, dolandırıcılıkların en yaygın işaretidir. Yatırım hizmeti sunan kurumların yetkili olup olmadığını SPK\'nın internet sitesinden kontrol edebilirsin.' },
+      { tur: 'metin', baslik: 'Çeşitlendirme: yumurtaları ayrı sepetlere koymak',
+        metin: 'Paranı birbirinden farklı davranan varlıklara dağıtırsan, birindeki düşüş diğerlerinin durumuyla dengelenebilir. Çeşitlendirme riski azaltır ama sıfırlamaz.' },
+      { tur: 'ornek', baslik: 'Tek şirket mi, on şirket mi?',
+        metin: '100.000 TL\'nin tamamı tek bir şirkette olsun. Şirket zor bir yıl geçirir ve hissesi %50 düşerse elinde 50.000 TL kalır. Aynı parayı on şirkete eşit dağıtsaydın ve yalnızca biri %50 düşseydi, toplam kaybın %5 olurdu: elinde 95.000 TL kalırdı.' },
+      { tur: 'soru', soru: 'Aşağıdakilerden hangisi daha iyi çeşitlendirilmiştir?',
+        secenekler: ['Aynı sektörden beş banka hissesi', 'Farklı sektörlerden hisseler, tahvil ve mevduat', 'Tek bir şirketin hem hissesi hem tahvili', 'Birikimin tamamı tek bir dövizde'],
+        dogru: 1,
+        aciklama: 'Aynı sektördeki ya da aynı şirkete bağlı varlıklar çoğu zaman aynı haberlerden birlikte etkilenir. Farklı sektörler ve farklı varlık türleri birbirinden daha bağımsız hareket eder.' },
+      { tur: 'metin', baslik: 'Ne zaman lazım olacak?',
+        metin: 'Ne kadar risk taşıyabileceğin, parayı ne zaman kullanacağına bağlıdır. Yakında lazım olacak para dalgalı araçlarda durmamalı; acil durum fonu bu yüzden ayrı tutulur.' },
+      { tur: 'ozet', maddeler: [
+        'Yüksek getiri beklentisi, yüksek riskle gelir.',
+        'Çeşitlendirme riski azaltır, sıfırlamaz.',
+        'Yakında lazım olacak parayı dalgalı araçlarda tutma.'
+      ] }
+    ],
+    bag: { kavramlar: ['risk-getiri', 'cesitlendirme', 'volatilite', 'portfoy'], arac: { ad: 'Finansal check-up', href: 'checkup.html' } }
+  },
+  {
+    id: 'yatirim-araclari', yol: 'yatirim', sure: 6,
+    baslik: 'Mevduattan hisseye: araçları tanı',
+    ozet: 'Mevduat, tahvil, hisse, fon ve altın neyi vaat eder, neyi riske eder?',
+    kartlar: [
+      { tur: 'metin', baslik: 'Her araç bir denge kurar.',
+        metin: 'Getiri, risk ve likidite (paraya ne kadar hızlı ve kayıpsız dönebildiğin) arasında her araç farklı bir denge kurar. Üçünde birden en iyi olan araç yoktur.' },
+      { tur: 'metin', baslik: 'Vadeli mevduat',
+        metin: 'Bankaya belirli bir süre için para yatırırsın; getirisi baştan bellidir ve faiz gelirinden stopaj kesilir. Belirli bir tutara kadar mevduat sigortası kapsamındadır. Getirisi enflasyonun altında kalırsa alım gücün yine erir.' },
+      { tur: 'metin', baslik: 'Tahvil ve bono',
+        metin: 'Devlete ya da bir şirkete borç verirsin; o da sana belirli tarihlerde faiz, vade sonunda anaparayı öder. Risk, borç verdiğin kurumun ödeme gücüne ve faizlerin değişmesine bağlıdır.' },
+      { tur: 'soru', soru: 'Elinde yıllık %30 faiz ödeyen bir tahvil var. Piyasada faizler %40\'a çıktı. Tahvili vadesinden önce satmak istersen ne olur?',
+        secenekler: ['Daha yüksek fiyata satarım', 'Daha düşük fiyata satmam gerekebilir', 'Fiyatı değişmez', 'Tahvil vadesinden önce satılamaz'],
+        dogru: 1,
+        aciklama: 'Yeni tahviller %40 öderken kimse %30 ödeyen tahvile aynı fiyatı vermez. Faizler yükselince elindeki tahvilin piyasa fiyatı düşer. Vadeye kadar tutarsan, ihraççı ödeme gücünü korudukça faizini ve anaparanı almaya devam edersin.' },
+      { tur: 'metin', baslik: 'Hisse senedi ve yatırım fonu',
+        metin: 'Hisseyle bir şirkete ortak olursun: şirket büyüdükçe değer ve temettü artabilir, ama fiyat kısa vadede sert dalgalanır. Yatırım fonunda paran başkalarınınkiyle bir havuzda toplanır ve izahnamede yazan stratejiye göre yönetilir; küçük tutarla çeşitlendirme sağlar, karşılığında yönetim ücreti ödersin.' },
+      { tur: 'ornek', baslik: 'Altın ve döviz',
+        metin: 'Türkiye\'de birikim için çok kullanılırlar. Faiz ya da temettü ödemezler; kazanç yalnızca fiyat değişiminden gelir ve bu fiyat TL cinsinden sert dalgalanabilir. Enflasyona karşı korunma arayanlar için bir seçenek olabilir, ama tek başına bir plan değildir.' },
+      { tur: 'soru', soru: 'Altı ay sonra ev peşinatı için kullanacağın para için en önemli özellik hangisi?',
+        secenekler: ['En yüksek beklenen getiri', 'Az dalgalanması ve vaktinde kayıpsız ulaşılabilmesi', 'Uzun vadede büyümesi', 'Döviz cinsinden olması'],
+        dogru: 1,
+        aciklama: 'Kısa sürede kullanılacak parada asıl risk, tam ihtiyaç anında değerin düşmüş olmasıdır. Bu yüzden getiri yerine güvenlik ve likidite öne çıkar.' },
+      { tur: 'ozet', maddeler: [
+        'Her araç getiri, risk ve likidite arasında farklı bir denge kurar.',
+        'Faizler yükselince elindeki tahvilin fiyatı düşer.',
+        'Fonun riski içinde ne olduğuna bağlıdır; izahnameyi oku.'
+      ] }
+    ],
+    bag: { kavramlar: ['vadeli-mevduat', 'tahvil-bono', 'hisse-senedi', 'yatirim-fonu', 'altin'], arac: { ad: 'Bileşik büyüme hesaplayıcı', href: 'araclar.html#bilesik' } }
+  },
+  {
+    id: 'duzenli-yatirim', yol: 'yatirim', sure: 5,
+    baslik: 'Düzenli yatırım ve zaman',
+    ozet: 'Piyasayı tahmin etmek yerine her ay aynı tutarı yatırmak.',
+    kartlar: [
+      { tur: 'metin', baslik: 'Zamanlamak zordur.',
+        metin: 'Fiyatın en dipte olduğu anı önceden bilmek neredeyse imkânsızdır; profesyoneller bile bunu düzenli olarak başaramaz.' },
+      { tur: 'metin', baslik: 'Her ay aynı tutar',
+        metin: 'Düzenli yatırımda fiyata bakmadan her ay aynı tutarı yatırırsın. Fiyat düşükken aynı parayla daha çok pay, yüksekken daha az pay alırsın.' },
+      { tur: 'ornek', baslik: 'Üç ay, her ay 1.000 TL',
+        metin: '1. ay fiyat 10 TL: 100 pay. 2. ay fiyat 5 TL: 200 pay. 3. ay fiyat yine 10 TL: 100 pay. 3.000 TL ile 400 pay aldın; pay başına ortalama maliyetin 7,50 TL. Fiyatların basit ortalaması ise yaklaşık 8,33 TL.' },
+      { tur: 'soru', soru: 'Aynı örnekte 3. ayın sonunda fiyat 10 TL. Elindeki payların değeri ne kadar?',
+        secenekler: ['3.000 TL', '3.500 TL', '4.000 TL', '2.500 TL'],
+        dogru: 2,
+        aciklama: '400 pay × 10 TL = 4.000 TL. Fiyat başladığı yere dönmesine rağmen, düşüşte daha çok pay aldığın için 1.000 TL kazançtasın.' },
+      { tur: 'metin', baslik: 'Sihir değil, disiplin.',
+        metin: 'Düzenli yatırım kaybı engellemez; fiyat sürekli düşerse sen de kaybedersin. Asıl faydası duyguları devreden çıkarmasıdır: düşüşte panikle satmayı, yükselişte heyecanla hepsini birden yatırmayı önler.' },
+      { tur: 'soru', soru: 'Piyasa sert düştü ve düzenli yatırım planındasın. Planın mantığına en uygun davranış hangisi?',
+        secenekler: ['Tüm payları satmak', 'Planı sürdürmek; aynı tutarla daha çok pay almak', 'Fiyat toparlanana kadar yatırımı durdurmak', 'Borç alıp daha çok yatırmak'],
+        dogru: 1,
+        aciklama: 'Düzenli yatırımın mantığı, fiyatı tahmin etmeye çalışmadan devam etmektir. Bu da planı, yakında ihtiyacın olmayacak ve riskini taşıyabileceğin bir tutarla yapmana dayanır.' },
+      { tur: 'ozet', maddeler: [
+        'Zamanlamak yerine düzenli yatırmak, duyguları devreden çıkarır.',
+        'Düşük fiyattan daha çok pay alırsın; ortalama maliyet düşer.',
+        'Kaybı engellemez; uzun vade ve uygun araç seçimi yine şarttır.'
+      ] }
+    ],
+    bag: { kavramlar: ['duzenli-yatirim', 'volatilite', 'bilesik-getiri'], arac: { ad: 'Erken başlamanın gücü', href: 'araclar.html#erken' } }
+  },
+  {
     id: 'bilanco', yol: 'borsa', sure: 6,
     baslik: 'Bilanço okumaya giriş',
     ozet: 'Bir şirketin sahip oldukları ve bunları nasıl finanse ettiği.',
@@ -219,5 +311,67 @@ const DERSLER = [
       ] }
     ],
     bag: { kavramlar: ['gelir-tablosu', 'nakit-akisi', 'bilanco', 'amortisman'], arac: { ad: 'Şirket laboratuvarı', href: 'lab.html' } }
+  },
+  {
+    id: 'nakit-akisi', yol: 'borsa', sure: 6,
+    baslik: 'Nakit akışı: kâr kasaya giriyor mu?',
+    ozet: 'İşletme, yatırım ve finansman: paranın üç yolu.',
+    kartlar: [
+      { tur: 'metin', baslik: 'Kâr bir hesap, nakit bir gerçek.',
+        metin: 'Muhasebe kârı, satış yapıldığı an yazılır. Nakit akışı tablosu ise kasaya gerçekten ne girip çıktığını gösterir. Uzun süre kâr edip nakit üretemeyen şirket zorlanır.' },
+      { tur: 'metin', baslik: 'Üç bölüm',
+        metin: 'İşletme faaliyetleri: şirketin ana işinden gelen nakit. Yatırım faaliyetleri: makine, fabrika ya da iştirak alım satımı. Finansman faaliyetleri: borç alıp ödeme, sermaye artırımı ve temettü.' },
+      { tur: 'soru', soru: 'Şirket yeni bir fabrika için 2 milyar TL ödedi. Bu, nakit akışı tablosunun hangi bölümünde görünür?',
+        secenekler: ['İşletme faaliyetleri', 'Yatırım faaliyetleri', 'Finansman faaliyetleri', 'Hiçbirinde'],
+        dogru: 1,
+        aciklama: 'Uzun süre kullanılacak varlıkların alımı, yatırım faaliyetlerinden nakit çıkışıdır. Fabrika için borç alınmışsa, o borç ayrıca finansman bölümünde giriş olarak görünür.' },
+      { tur: 'metin', baslik: 'Serbest nakit akışı',
+        metin: 'İşletme faaliyetlerinden gelen nakitten, işi sürdürmek için yapılan yatırım harcamaları çıkarılınca kalan paradır. Borç ödemek, temettü dağıtmak ya da büyümek için kullanılabilecek gerçek paradır.' },
+      { tur: 'ornek', baslik: 'Örnek A.Ş.',
+        metin: 'İşletme faaliyetlerinden nakit 1.400 milyon TL, yatırım harcaması 600 milyon TL. Serbest nakit akışı 800 milyon TL. Net kâr 1.000 milyon TL ise, kârın %80\'i serbest nakde dönmüş demektir.' },
+      { tur: 'soru', soru: 'Bir şirket üç yıldır kâr açıklıyor, ama işletme faaliyetlerinden nakit akışı her yıl eksi. Bu ne anlatabilir?',
+        secenekler: ['Şirket çok sağlıklıdır', 'Kâr tahsil edilemiyor olabilir; alacaklara ve stoklara bakmak gerekir', 'Nakit akışı önemsizdir', 'Şirket vergi ödemiyordur'],
+        dogru: 1,
+        aciklama: 'Kârın sürekli nakde dönmemesi, satışların tahsil edilemediğine ya da stokların biriktiğine işaret edebilir. Bu durumda şirket işini borçla finanse etmek zorunda kalır.' },
+      { tur: 'metin', baslik: 'Nerede bulurum?',
+        metin: 'KAP\'taki finansal raporlarda "Nakit Akış Tablosu" başlığıyla yer alır. Tek bir yıla değil, birkaç yılın eğilimine bak.' },
+      { tur: 'ozet', maddeler: [
+        'Kâr ile nakit aynı şey değildir.',
+        'İşletme, yatırım ve finansman: nakdin üç yolu.',
+        'Serbest nakit akışı = işletmeden gelen nakit − yatırım harcaması'
+      ] }
+    ],
+    bag: { kavramlar: ['nakit-akisi', 'serbest-nakit-akisi', 'amortisman', 'kap'], ders: { ad: 'Nakit akışı: ayrıntılı anlatım', href: 'ogren.html#nakit-akis' } }
+  },
+  {
+    id: 'sektor', yol: 'borsa', sure: 6,
+    baslik: 'Her sektör farklı okunur',
+    ozet: 'Bankada PD/DD, perakendede hacim ve marj, sanayide döngü.',
+    kartlar: [
+      { tur: 'metin', baslik: 'Aynı oran, farklı anlam.',
+        metin: 'Bir oranın iyi mi kötü mü olduğu, şirketin hangi işte olduğuna bağlıdır. Bu yüzden şirketler önce kendi sektöründeki benzerleriyle karşılaştırılır.' },
+      { tur: 'metin', baslik: 'Bankalar',
+        metin: 'Bankanın hammaddesi paradır; borç, işin kendisidir. Bu yüzden sanayi şirketlerinde kullanılan cari oran ya da net borç / FAVÖK bankalarda anlamlı değildir. Bankalara daha çok PD/DD ve özkaynak kârlılığıyla (ROE) bakılır.' },
+      { tur: 'soru', soru: 'Bir bankayı incelerken aşağıdakilerden hangisi en az anlamlıdır?',
+        secenekler: ['PD/DD', 'Özkaynak kârlılığı (ROE)', 'Net borç / FAVÖK', 'Takipteki kredilerin payı'],
+        dogru: 2,
+        aciklama: 'Bankalar borç alıp borç vererek kazanır; FAVÖK de bankalar için anlamlı bir ölçü değildir. Bu yüzden net borç / FAVÖK bankalarda kullanılmaz.' },
+      { tur: 'metin', baslik: 'Perakende',
+        metin: 'Marketler düşük marjla çok satarak kazanır. Net kâr marjının düşük tek haneli olması bu sektörde olağandır; önemli olan satış hacminin ve stokların ne kadar hızlı döndüğüdür.' },
+      { tur: 'ornek', baslik: 'Aynı marj, iki şirket',
+        metin: 'Net kâr marjı %3 olan bir market zinciri için bu, sektöre göre makul olabilir. Aynı %3, marjların genellikle çok daha yüksek olduğu bir yazılım şirketi için zayıf bir sonuçtur.' },
+      { tur: 'metin', baslik: 'Sanayi ve döngüsellik',
+        metin: 'Çelik, otomotiv gibi sektörlerde kâr, ekonomik döngüyle birlikte iniş çıkış yapar. Zirve kâr yılında hesaplanan düşük F/K yanıltıcı olabilir; kâr düştüğünde oran bir anda yükselir.' },
+      { tur: 'soru', soru: 'Döngüsel bir şirket, ekonominin zirvesinde rekor kâr açıkladı ve F/K oranı 4\'e düştü. En doğru yorum hangisi?',
+        secenekler: ['Hisse kesinlikle ucuzdur', 'Kâr zirvede olabilir; döngü dönerse kâr ve oran hızla değişebilir', 'Şirket zarar ediyordur', 'F/K döngüsel şirketlerde hesaplanamaz'],
+        dogru: 1,
+        aciklama: 'Düşük F/K, kârın kalıcı olduğu varsayımına dayanır. Döngüsel sektörlerde piyasa, zirve kârın süreceğine inanmadığı için oranı düşük tutabilir.' },
+      { tur: 'ozet', maddeler: [
+        'Oranları önce aynı sektördeki şirketlerle karşılaştır.',
+        'Bankada PD/DD ve ROE; perakendede hacim ve marj; sanayide döngü.',
+        'Zirve kârla hesaplanan düşük F/K yanıltabilir.'
+      ] }
+    ],
+    bag: { kavramlar: ['dongusellik', 'roe', 'net-kar-marji', 'net-borc-favok'], ders: { ad: 'Sektörlere göre analiz', href: 'sektorler.html' } }
   }
 ];
