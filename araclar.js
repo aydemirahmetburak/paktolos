@@ -517,4 +517,8 @@ function erkenAraci(kok) {
 
 // ============================================
 const ARACLAR = { kredi: krediAraci, asgari: asgariAraci, taksit: taksitAraci, hedef: hedefAraci, bilesik: bilesikAraci, enflasyon: enflasyonAraci, erken: erkenAraci };
-document.querySelectorAll('[data-tool]').forEach(kok => ARACLAR[kok.dataset.tool](kok));
+document.querySelectorAll('[data-tool]').forEach(kok => {
+  ARACLAR[kok.dataset.tool](kok);
+  // Ölçüm: aracın kullanıldığı bilgisi (girilen rakam değil), sayfa başına bir kez
+  kok.addEventListener('input', () => olc('arac_kullanildi', { arac: kok.dataset.tool }), { once: true });
+});

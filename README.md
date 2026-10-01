@@ -144,6 +144,7 @@ paktolos/
 ├── kavram.js            # Kavram sayfasını katmanlı olarak çizer
 ├── harita.js            # Ekonomi haritası: kurumlar, akışlar, senaryo turu
 ├── ekonomi-veri.js      # Göstergeler, faiz zinciri ve ekonomi ağı (içerik)
+├── olcum.js             # Anonim ölçüm olayları (şu an hiçbir yere gönderilmez)
 ├── tema.js              # Açık/koyu tema; sayfa çizilmeden önce çalışır
 ├── sw.js                # Çevrimdışı destek (service worker)
 ├── manifest.webmanifest # Uygulama olarak yükleme bilgileri
@@ -156,6 +157,26 @@ paktolos/
 ## Kullanıcı Verisi
 
 Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorular, test skoru, günlük seri, denenen laboratuvar senaryoları, okunan rehberler, okuma listesi ve son baktıkların) ve check-up'a girilen rakamlar yalnızca kullanıcının tarayıcısında, `localStorage`'da tutulur ve hiçbir yere gönderilmez. Karnem sayfasından sıfırlanabilir.
+
+### Ölçüm
+
+Sitede neyin işe yaradığını görmek için anonim olaylar tanımlıdır (`olcum.js`). **Şu an hiçbir ölçüm aracı bağlı değildir; hiçbir veri siteden dışarı çıkmaz.** Olaylar yalnızca açık olan sekmede tutulur; testler, hiçbir sayfanın dışarıya istek yapmadığını her PR'da denetler.
+
+| Olay | Ne zaman? | Gönderilen |
+|---|---|---|
+| `sayfa` | Bir sayfa açıldı | sayfanın dosya adı |
+| `ders_basladi` / `ders_bitti` / `ders_birakildi` | Ders açıldı / bitti / bitmeden kapatıldı | ders, doğru sayısı, bırakılan kart |
+| `kavram_acildi`, `rehber_bitti` | Kavram sayfası açıldı, uzun anlatımın sonuna gelindi | kavram, sayfa |
+| `arama_secildi` | Aramada bir sonuca gidildi | sonucun türü (yazılan metin **gönderilmez**) |
+| `arac_kullanildi`, `checkup_kullanildi`, `lab_senaryo` | Hesaplayıcı, check-up ya da laboratuvar kullanıldı | araç ya da senaryo adı (girilen rakam **gönderilmez**) |
+| `test_bitti`, `gunun_sorusu` | Test bitti, günün sorusu cevaplandı | skor, doğru mu |
+| `harita_oyuncu`, `harita_tur` | Ekonomi haritasında oyuncu seçildi, turda ilerlendi | oyuncu, adım |
+| `kaydet`, `tema` | Okuma listesine eklendi, görünüm değişti | içerik türü, tema |
+| `hata` | Yakalanmamış betik hatası | mesajın ilk 80 karakteri, dosya:satır |
+
+Kurallar: çerez yok, kullanıcı kimliği yok; kullanıcının girdiği rakamlar ve arama metni hiçbir zaman gönderilmez; katalogda olmayan olay gönderilmez (testler koddaki her `olc('…')` çağrısının katalogda olduğunu denetler). Olayları tarayıcı konsolunda görmek için adresin sonuna `?olcum=goster` ekle.
+
+**Bir araç bağlamak:** `olcum.js` başındaki `OLCUM_AYAR`'a sağlayıcıyı (`goatcounter`, `umami` ya da `plausible`) ve kimliği yaz. Hazır bağdaştırıcılar dosyadadır; aracın betiği yalnızca ilk olayda yüklenir. Bağlamadan önce bu bölümü ve sitedeki gizlilik açıklamasını güncelle; veri testi, araç bağlandığında bunu hatırlatmak için `OLCUM_BAGLI=1` ister. Testlerin "dışarıya istek yok" denetimi de o zaman aracın alan adına izin verecek şekilde güncellenmelidir.
 
 ## İçerik Ekleme
 

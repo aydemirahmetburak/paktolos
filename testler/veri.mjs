@@ -136,5 +136,20 @@ export default async function veri({ hata }) {
     }
   }
 
-  return `${V.SOZLUK.length} kavram, ${V.DERSLER.length} ders, ${V.SORULAR.length + V.SORULAR_KUTUPHANE.length} soru, ${liste.length} önbellek dosyası`;
+  // ---------- Ölçüm olayları katalogda mı? ----------
+  // olcum.js'teki OLAYLAR listesinde olmayan bir olay gönderilmez; koddaki her
+  // olc('…') çağrısı katalogda olmalı, katalogdaki her olay da kullanılmalı.
+  const olcum = oku('olcum.js');
+  const katalog = new Set([...olcum.match(/var OLAYLAR = \{([\s\S]*?)\n  \};/)[1].matchAll(/^\s+([a-z_]+):/gm)].map(m => m[1]));
+  const kullanilan = new Set();
+  for (const k of fs.readdirSync(KOK).filter(f => f.endsWith('.js'))) {
+    for (const m of oku(k).matchAll(/\bolc\('([a-z_]+)'/g)) {
+      kullanilan.add(m[1]);
+      if (!katalog.has(m[1])) hata(`${k}: "${m[1]}" ölçüm olayı olcum.js kataloğunda yok`);
+    }
+  }
+  katalog.forEach(o => { if (!kullanilan.has(o)) hata(`olcum.js: "${o}" olayı katalogda var ama hiçbir yerde gönderilmiyor`); });
+  if (!/saglayici: null/.test(olcum) && !process.env.OLCUM_BAGLI) hata('olcum.js: bir ölçüm sağlayıcısı bağlanmış; README "Kullanıcı Verisi" bölümünü güncelleyip OLCUM_BAGLI=1 ile çalıştır');
+
+  return `${katalog.size} ölçüm olayı, ${V.SOZLUK.length} kavram, ${V.DERSLER.length} ders, ${V.SORULAR.length + V.SORULAR_KUTUPHANE.length} soru, ${liste.length} önbellek dosyası`;
 }

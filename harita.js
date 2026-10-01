@@ -164,7 +164,7 @@
         el('div', { className: 'eh-tur' },
           el('button', { type: 'button', className: 'btn btn-ikincil btn-kucuk', disabled: adim === 0, onclick: () => { adim--; yenile(); } }, 'Önceki'),
           son ? el('button', { type: 'button', className: 'btn btn-birincil btn-kucuk', onclick: () => { adim = -1; yenile(); } }, 'Turu bitir')
-            : el('button', { type: 'button', className: 'btn btn-birincil btn-kucuk', onclick: () => { adim++; yenile(); } }, 'Sonraki'))
+            : el('button', { type: 'button', className: 'btn btn-birincil btn-kucuk', onclick: () => { adim++; olc('harita_tur', { adim: adim + 1 }); yenile(); } }, 'Sonraki'))
       ].filter(Boolean));
       return;
     }
@@ -194,6 +194,7 @@
   }
 
   function sec(id) {
+    if (id && id !== secili) olc('harita_oyuncu', { oyuncu: id });
     adim = -1;
     secili = secili === id ? null : id;
     yenile();

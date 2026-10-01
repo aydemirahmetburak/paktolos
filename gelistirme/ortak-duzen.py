@@ -102,7 +102,8 @@ HEAD_EXTRA = '''<meta name="viewport" content="width=device-width, initial-scale
 <link rel="preload" href="tasarim/fontlar/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="tasarim/tokenlar.css">
 <link rel="stylesheet" href="tasarim/bilesenler.css">
-<script src="tema.js"></script>'''
+<script src="tema.js"></script>
+<script src="olcum.js"></script>'''
 
 for path in sys.argv[1:]:
     s = open(path).read()
@@ -113,7 +114,7 @@ for path in sys.argv[1:]:
     # <head>: önce eski eklemeleri temizle, sonra tek blok olarak yaz
     s = re.sub(r'<meta name="viewport"[^>]*>\n', '', s)
     for pat in [r'<meta name="theme-color"[^>]*>\n', r'<meta name="apple-mobile-web-app-[^>]*>\n', r'<meta name="mobile-web-app-capable"[^>]*>\n',
-                r'<link rel="manifest"[^>]*>\n', r'<link rel="icon"[^>]*>\n', r'<link rel="apple-touch-icon"[^>]*>\n', r'<link rel="stylesheet" href="tasarim/[^"]*">\n', r'<link rel="preload" href="tasarim/fontlar/[^"]*"[^>]*>\n', r'<script src="tema.js"></script>\n']:
+                r'<link rel="manifest"[^>]*>\n', r'<link rel="icon"[^>]*>\n', r'<link rel="apple-touch-icon"[^>]*>\n', r'<link rel="stylesheet" href="tasarim/[^"]*">\n', r'<link rel="preload" href="tasarim/fontlar/[^"]*"[^>]*>\n', r'<script src="tema.js"></script>\n', r'<script src="olcum.js"></script>\n']:
         s = re.sub(pat, '', s)
     s = s.replace('<meta charset="UTF-8">\n', '<meta charset="UTF-8">\n' + HEAD_EXTRA + '\n', 1)
     open(path, 'w').write(s)
