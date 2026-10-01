@@ -4,6 +4,7 @@
 
 (function () {
   const kok = document.getElementById('checkup');
+  kok?.addEventListener('input', () => olc('checkup_kullanildi'), { once: true });
   if (!kok) return;
 
   const KEY = 'paktolos-checkup';

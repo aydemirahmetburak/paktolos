@@ -210,6 +210,7 @@ function kaydiDegistir(oge) {
   else liste.unshift({ ...oge, t: Date.now() });
   store.set(KAYIT_KEY, liste);
   document.dispatchEvent(new CustomEvent('paktolos:ilerleme'));
+  if (i < 0) olc('kaydet', { tur: oge.tur });
   return i < 0;
 }
 
@@ -284,6 +285,7 @@ function initOkuma() {
       const sayfa = location.pathname.split('/').pop();
       const okunan = new Set(store.get(MAKALE_KEY, []));
       if (!okunan.has(sayfa)) { okunan.add(sayfa); store.set(MAKALE_KEY, [...okunan]); }
+      olc('rehber_bitti', { sayfa });
     }
     sure.textContent = p > 0.98 ? 'Bitti' : kalan <= 1 ? '1 dk kaldı' : kalan + ' dk kaldı';
   };
@@ -1174,6 +1176,7 @@ function initQuiz() {
 
   function finish() {
     const skor = cevaplar.filter((c, i) => c === SORULAR[i].dogru).length;
+    olc('test_bitti', { skor, soru: SORULAR.length });
     const onceki = store.get(TEST_EN_IYI_KEY, null);
     if (onceki === null || skor > onceki) store.set(TEST_EN_IYI_KEY, skor);
 
@@ -1362,6 +1365,7 @@ function initSpotlight() {
   }
 
   function go(item) {
+    olc('arama_secildi', { tur: item.tur });
     close();
     location.href = item.href;
   }

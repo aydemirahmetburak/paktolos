@@ -175,4 +175,5 @@
     el('p', { className: 'kv-uyari govde-kucuk' }, 'Bu içerik eğitim amaçlıdır; yatırım tavsiyesi değildir.')
   ].filter(Boolean));
   gecmiseEkle({ baslik: t.terim, tur: 'Kavram', href: 'kavram.html?k=' + t.id });
+  olc('kavram_acildi', { kavram: t.id });
 })();

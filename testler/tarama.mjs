@@ -1,6 +1,7 @@
 // Tüm sayfalar × açık/koyu tema × telefon/tablet/masaüstü:
 // sayfa hatası, konsol hatası, eksik dosya (404), yatay taşma ve ekranda
-// "undefined / NaN / null" gibi bozuk yazı aranır. Ardından 67 kavram
+// "undefined / NaN / null" gibi bozuk yazı aranır; hiçbir sayfa dışarıya
+// istek yapmamalı (ölçüm aracı bağlı değilken). Ardından 67 kavram
 // sayfasının her biri açılır.
 import { SAYFALAR, veriYukle } from './ortak.mjs';
 
@@ -33,6 +34,8 @@ export default async function tarama({ taban, tarayici, hata }) {
       p.on('pageerror', e => hata(`${simdiki} [${tema} ${w}px]: sayfa hatası: ${e.message}`));
       p.on('console', m => { if (m.type() === 'error') hata(`${simdiki} [${tema} ${w}px]: konsol: ${m.text()}`); });
       p.on('response', r => { if (r.status() >= 400 && r.url().startsWith(taban)) hata(`${simdiki} [${tema} ${w}px]: ${r.status()} ${r.url().slice(taban.length)}`); });
+      // Gizlilik: ölçüm aracı bağlı değilken hiçbir sayfa dışarıya istek yapmamalı
+      p.on('request', r => { const u = r.url(); if (!u.startsWith(taban) && !u.startsWith('data:') && !u.startsWith('blob:')) hata(`${simdiki} [${tema} ${w}px]: dışarıya istek: ${u.slice(0, 80)}`); });
       for (const s of SAYFALAR) {
         simdiki = s;
         (await sayfaDenetle(p, taban + s)).forEach(x => hata(`${s} [${tema} ${w}px]: ${x}`));

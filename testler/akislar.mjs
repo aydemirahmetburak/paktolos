@@ -127,6 +127,52 @@ const AKISLAR = {
     if (once === sonra) throw new Error('panel değişmedi');
   },
 
+  async 'Ölçüm: olaylar kaydediliyor, rakam ve metin sızmıyor'(p, t) {
+    const olaylar = () => p.evaluate(() => window.__olcum.map(o => o.ad + JSON.stringify(o.oz)));
+    await p.goto(t + 'kavram.html?k=bilesik-getiri');
+    let o = await olaylar();
+    if (!o.includes('sayfa{"yol":"/kavram.html"}')) throw new Error('sayfa olayı yok: ' + o.join(' '));
+    if (!o.includes('kavram_acildi{"kavram":"bilesik-getiri"}')) throw new Error('kavram_acildi yok');
+
+    // Hesaplayıcı: kullanıldığı bilinir, girilen tutar gönderilmez
+    await p.goto(t + 'araclar.html');
+    const kutu = p.locator('[data-tool="kredi"] .num-input input').first();
+    await kutu.fill('987.654'); await kutu.press('Tab');
+    await kutu.fill('876.543'); await kutu.press('Tab');
+    o = await olaylar();
+    if (o.filter(x => x.startsWith('arac_kullanildi')).length !== 1) throw new Error('arac_kullanildi bir kez gelmeli: ' + o.join(' '));
+    if (o.some(x => /987|876/.test(x))) throw new Error('girilen tutar ölçüme sızdı');
+
+    // Arama: seçilen sonucun türü gelir, yazılan metin gelmez
+    await p.click('.search-trigger');
+    await p.fill('dialog.spotlight[open] input', 'gizlikelime enflasyon');
+    await p.fill('dialog.spotlight[open] input', 'enflasyon');
+    await p.waitForSelector('.spot-item');
+    await p.keyboard.press('Enter');
+    await p.waitForURL(/enflasyon/);
+
+    // Ders: başladı, bırakıldı (hangi kartta)
+    await p.goto(t + 'dersler.html#faiz');
+    await p.waitForSelector('dialog.lesson-player[open]');
+    await p.click('dialog[open] .lp-foot .button:not(.button-secondary)');
+    await p.click('dialog[open] .sheet-icon-button');
+    await p.waitForTimeout(400);
+    o = await olaylar();
+    if (!o.includes('ders_basladi{"ders":"faiz"}')) throw new Error('ders_basladi yok: ' + o.join(' '));
+    if (!o.some(x => x.startsWith('ders_birakildi{"ders":"faiz","kart":"2"'))) throw new Error('ders_birakildi (kart 2) yok: ' + o.join(' '));
+
+    // Yakalanmamış hata ölçülür
+    await p.evaluate(() => setTimeout(() => { throw new Error('olcum-deneme'); }));
+    await p.waitForTimeout(100);
+    o = await olaylar();
+    if (!o.some(x => x.startsWith('hata') && x.includes('olcum-deneme'))) throw new Error('hata olayı yakalanmadı');
+    if (o.some(x => x.includes('gizlikelime'))) throw new Error('arama metni ölçüme sızdı');
+
+    // Katalog dışı olay sessizce reddedilir
+    await p.evaluate(() => olc('uydurma_olay', { x: 1 }));
+    if ((await olaylar()).some(x => x.startsWith('uydurma'))) throw new Error('katalog dışı olay kaydedildi');
+  },
+
   async 'Ana sayfa: sekmeli liste ve arama kutusu'(p, t) {
     await p.goto(t + 'index.html');
     await p.click('#og-t3');
@@ -146,7 +192,8 @@ export default async function akislar({ taban, tarayici, hata }) {
     p.on('pageerror', e => sayfaHatalari.push(e.message));
     try {
       await akis(p, taban);
-      if (sayfaHatalari.length) throw new Error('sayfa hatası: ' + sayfaHatalari[0]);
+      const gercek = sayfaHatalari.filter(m => !m.includes('olcum-deneme'));
+      if (gercek.length) throw new Error('sayfa hatası: ' + gercek[0]);
       gecen++;
     } catch (e) {
       hata(`${ad}: ${e.message.split('\n')[0]}`);

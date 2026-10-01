@@ -140,6 +140,7 @@
 
   let aktifSenaryo = 'normal';
   function senaryoUygula(id, kullanici) {
+    if (kullanici) olc('lab_senaryo', { senaryo: id });
     const s = SENARYOLAR.find(x => x.id === id) || SENARYOLAR[0];
     Object.assign(ayar, LAB_BAZ, s.ayar);
     for (const [k, alan] of Object.entries(alanlar)) alan.set(ayar[k]);

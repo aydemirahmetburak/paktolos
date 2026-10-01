@@ -132,6 +132,7 @@ function dersOynaticisi() {
       const onceki = ilerleme[ders.id];
       ilerleme[ders.id] = { tamam: true, dogru: Math.max(dogru, onceki ? onceki.dogru : 0), toplam: sorular.length, tarih: gunAnahtari() };
       store.set(DERS_KEY, ilerleme);
+      olc('ders_bitti', { ders: ders.id, dogru, soru: sorular.length });
       document.dispatchEvent(new CustomEvent('paktolos:ilerleme'));
     }
     return c;
@@ -198,6 +199,7 @@ function dersOynaticisi() {
 
   function kapatDers({ gecmistenGeldi = false } = {}) {
     if (!dlg.open || dlg.classList.contains('closing')) return;
+    if (ders && kartlar()[i]?.tur !== 'bitis') olc('ders_birakildi', { ders: ders.id, kart: i + 1, toplam: ders.kartlar.length });
     if (!gecmistenGeldi) {
       if (pushed) { ignorePop = true; history.back(); }
       else history.replaceState(null, '', location.pathname + location.search);
@@ -237,6 +239,7 @@ function dersOynaticisi() {
     const yeni = DERSLER.find(d => d.id === id);
     if (!yeni) return;
     ders = yeni; cevaplar = {}; i = 0;
+    olc('ders_basladi', { ders: id });
     baslik.textContent = ders.baslik;
     sahne.replaceChildren();
     if (degistir) history.replaceState({ ders: id }, '', '#' + id);
@@ -378,6 +381,7 @@ function initGununSorusu() {
     const durum = gunlukDurum();
     if (durum.gecmis[bugun] !== undefined) return;
     durum.gecmis[bugun] = j;
+    olc('gunun_sorusu', { dogru: j === q.dogru });
     durum.seri = durum.son === gunEkle(-1) ? durum.seri + 1 : 1;
     durum.son = bugun;
     // Geçmişte yalnızca son 60 gün tutulur

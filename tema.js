@@ -24,6 +24,7 @@ document.documentElement.classList.add('js');
     get: function () { return tercih; },
     set: function (deger) {
       tercih = deger;
+      if (window.olc) window.olc('tema', { tema: deger });
       try {
         if (deger === 'auto') localStorage.removeItem(KEY);
         else localStorage.setItem(KEY, deger);
