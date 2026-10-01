@@ -120,7 +120,7 @@ function dersOynaticisi() {
         el('h2', {}, ders.baslik),
         el('p', {}, dogru === sorular.length ? 'Tüm soruları doğru cevapladın.' : 'Kaçırdığın soruları geri dönüp yeniden görebilirsin.'),
         el('div', { className: 'lp-links' },
-          ...(ders.bag.kavramlar || []).filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'kavram.html?k=' + id }, kavramlar.get(id))),
+          ...(ders.bag.kavramlar || []).filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'kavram/' + id + '.html' }, kavramlar.get(id))),
           ders.bag.arac ? el('a', { className: 'qa-chip', href: ders.bag.arac.href }, ders.bag.arac.ad + ' ›') : null,
           ders.bag.ders ? el('a', { className: 'qa-chip', href: ders.bag.ders.href }, ders.bag.ders.ad + ' ›') : null)
       );
@@ -495,7 +495,7 @@ function initKarnem() {
       el('div', { className: 'progress', role: 'progressbar', 'aria-valuenow': String(yuzde), 'aria-valuemin': '0', 'aria-valuemax': '100', 'aria-label': 'Finansal temeller' },
         el('span', { style: '--deger: ' + yuzde + '%' })),
       el('p', { className: 'govde-kucuk' }, temelBitti + ' / ' + temelToplam + ' · sekiz temel kavram ve kişisel finans dersleri',
-        eksikTerim ? el('span', {}, ' · Sıradaki: ', el('a', { href: 'kavram.html?k=' + eksikTerim.id }, eksikTerim.terim)) : null)
+        eksikTerim ? el('span', {}, ' · Sıradaki: ', el('a', { href: 'kavram/' + eksikTerim.id + '.html' }, eksikTerim.terim)) : null)
     ].filter(Boolean));
 
     // Okuma listesi

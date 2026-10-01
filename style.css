@@ -6235,3 +6235,17 @@ h1:not(#_):not(.sans) { letter-spacing: -0.02em; }
 }
 /* Laboratuvarın koyu hikâye kutusunda etiket açık gri */
 .lab-story .eyebrow { color: var(--text-on-dark-secondary); }
+
+/* ============================================
+   DERS SAYFASI (ders/<id>.html, statik)
+   Dersin okunabilir özeti; etkileşimli hali "Derse başla" ile açılır.
+   ============================================ */
+.ders-sayfa .kv-bas .govde-giris { margin-top: var(--s-16); }
+.ders-sayfa .kv-bas .hero-eylemler { margin-top: var(--s-24); }
+.ders-ornek, .ders-soru { margin-top: var(--s-32); }
+.ders-ornek h3 { margin: var(--s-4) 0 var(--s-8); font-size: var(--text-title); font-weight: var(--weight-semibold); }
+.ders-secenek { display: grid; gap: var(--s-8); margin: var(--s-12) 0; list-style: none; }
+.ders-secenek li { display: flex; gap: var(--s-12); padding: var(--s-12) var(--s-16); border-radius: var(--radius-m); background: var(--surface); font-size: var(--text-small); }
+.ders-secenek li span { font-weight: var(--weight-semibold); color: var(--text-muted); }
+.ders-secenek li.dogru { box-shadow: inset 0 0 0 1.5px var(--positive); background: var(--positive-soft); }
+.ders-sayfa .key-takeaway { margin-top: var(--s-48); }

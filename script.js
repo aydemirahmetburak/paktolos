@@ -358,7 +358,7 @@ function initGostergeler() {
     kap.replaceChildren(...GOSTERGELER.map(g => el('article', { className: 'card gosterge ' + (kompakt ? 'k-3' : 'k-6') },
       el('header', { className: 'gosterge-bas' },
         el('div', {}, el('span', { className: 'overline' }, g.olcu), el('h3', {}, g.ad)),
-        kompakt ? null : el('a', { className: 'tag', href: 'kavram.html?k=' + g.kavram }, 'Kavram')),
+        kompakt ? null : el('a', { className: 'tag', href: 'kavram/' + g.kavram + '.html' }, 'Kavram')),
       el('p', { className: 'gosterge-ne' }, el('span', {}, kompakt ? '' : 'Ne ölçer? '), kompakt ? g.kisa : g.neOlcer),
       el('details', { className: 'anlam' },
         el('summary', {}, kompakt ? 'Bu ne anlama geliyor?' : g.soru + ', bu ne anlama gelir?'),
@@ -378,7 +378,7 @@ function initKavramKartlari() {
     const numarali = kap.hasAttribute('data-numarali');
     const sinif = kap.dataset.sutun || 'k-3';
     kap.replaceChildren(...kap.dataset.kavramlar.split(',').map(id => SOZLUK.find(t => t.id === id.trim())).filter(Boolean).map((t, i) =>
-      el('a', { className: 'card concept-card ' + sinif, href: 'kavram.html?k=' + t.id },
+      el('a', { className: 'card concept-card ' + sinif, href: 'kavram/' + t.id + '.html' },
         el('span', { className: 'overline' }, numarali ? String(i + 1).padStart(2, '0') : 'Kavram'),
         el('h3', {}, t.terim), el('p', {}, t.kisa), el('span', { className: 'ok' }, 'Tanımı oku'))));
   });
@@ -833,7 +833,7 @@ function initGlossary() {
     if (t.hesap) calc.appendChild(MINI_HESAP[t.hesap]());
 
     const sayfa = document.getElementById('sheet-page');
-    if (sayfa) sayfa.href = 'kavram.html?k=' + t.id;
+    if (sayfa) sayfa.href = 'kavram/' + t.id + '.html';
 
     const learn = document.getElementById('sheet-learn');
     learn.hidden = !t.ogren;
@@ -1144,7 +1144,7 @@ function initQuiz() {
     const kavramKap = document.getElementById('quiz-concepts');
     if (kavramKap) {
       const kavramlar = (q.kavramlar || []).map(id => typeof SOZLUK !== 'undefined' && SOZLUK.find(t => t.id === id)).filter(Boolean);
-      kavramKap.replaceChildren(...kavramlar.map(t => el('a', { className: 'tag', href: 'kavram.html?k=' + t.id }, t.terim)));
+      kavramKap.replaceChildren(...kavramlar.map(t => el('a', { className: 'tag', href: 'kavram/' + t.id + '.html' }, t.terim)));
       kavramKap.parentElement.hidden = !kavramlar.length;
     }
     const lesson = document.getElementById('quiz-lesson');
@@ -1289,7 +1289,7 @@ async function spotDiziniKur() {
   if (typeof DERSLER === 'undefined') bekle.push(scriptYukle('dersler-veri.js'));
   await Promise.all(bekle);
   spotDizin = [
-    ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'kavram.html?k=' + t.id,
+    ...SOZLUK.map(t => ({ tur: 'kavram', baslik: t.terim, aciklama: t.kisa, href: 'kavram/' + t.id + '.html',
       anahtar: KATEGORILER[t.kategori], metin: t.aciklama, kategori: KATEGORILER[t.kategori] })),
     ...SORULAR_KUTUPHANE.map(q => ({ tur: 'soru', baslik: q.soru, aciklama: q.kisa, href: 'sorular.html#' + q.id,
       anahtar: SORU_KATEGORILERI[q.kategori], metin: q.adimlar.join(' '), kategori: SORU_KATEGORILERI[q.kategori] })),
@@ -1564,7 +1564,7 @@ function initQuestions() {
         q.dikkat ? el('div', { className: 'qa-caution' }, el('span', {}, el('b', {}, 'Dikkat: '), q.dikkat)) : null,
         el('div', { className: 'qa-foot' },
           el('span', { className: 'qa-label', style: 'width:100%' }, 'İlgili kavramlar'),
-          ...q.ilgili.filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'kavram.html?k=' + id }, kavramlar.get(id))),
+          ...q.ilgili.filter(id => kavramlar.has(id)).map(id => el('a', { className: 'qa-chip', href: 'kavram/' + id + '.html' }, kavramlar.get(id))),
           el('div', { className: 'qa-actions' },
             q.arac ? el('a', { className: 'button', href: q.arac.href }, q.arac.ad) : null,
             q.ders ? el('a', { className: 'link-more', href: q.ders.href }, q.ders.ad) : null,

@@ -117,10 +117,15 @@ paktolos/
 ├── checkup.html         # Finansal check-up: bütçe, acil durum fonu, borç yükü, birikim oranı
 ├── sorular.html         # "Aklına takılan": günlük hayattan para soruları
 ├── sozluk.html          # Finans sözlüğü
-├── kavram.html          # Kavram sayfası (kavram.html?k=enflasyon): katmanlı anlatım
+├── kavram.html          # Kavram sayfasının kabuğu; eski kavram.html?k=… adresi de çalışır
+├── kavram/             # 67 statik kavram sayfası (npm run uret üretir)
+├── ders/               # 12 statik ders sayfası (npm run uret üretir)
+├── paylas/             # Paylaşım önizleme görselleri, 1200×630 (npm run uret)
+├── sitemap.xml, 404.html  # Site haritası ve bulunamadı sayfası (npm run uret)
 ├── ekonomi-haritasi.html # "Ekonomi nasıl çalışır?" etkileşimli haritası
 ├── test.html            # Kendini sına
 ├── testler/            # Otomatik testler (npm test); CI: .github/workflows/testler.yml
+├── gelistirme/statik-uret.mjs  # Statik sayfa, görsel ve site haritası üretici (npm run uret)
 ├── karnem.html          # Karnem: ilerleme, finansal temeller, okuma listesi, son baktıkların
 │
 ├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
@@ -180,8 +185,8 @@ Kurallar: çerez yok, kullanıcı kimliği yok; kullanıcının girdiği rakamla
 
 ## İçerik Ekleme
 
-- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; kavram sayfası (`kavram.html?k=id`) kendiliğinden oluşur. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
-- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer. Şıkları istediğin sırada yazabilirsin: ekranda soru metnine göre sabit bir karışımla gösterilir, böylece doğru cevap hep aynı harfte olmaz. Yeni bir yol için `DERS_YOLLARI`na ekle.
+- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; ardından `npm run uret` ile statik sayfası (`kavram/id.html`) ve paylaşım görseli üretilir. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
+- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer. Şıkları istediğin sırada yazabilirsin: ekranda soru metnine göre sabit bir karışımla gösterilir, böylece doğru cevap hep aynı harfte olmaz. Yeni bir yol için `DERS_YOLLARI`na ekle. Ardından `npm run uret` (ders sayfası `ders/id.html`).
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle; "Neden?" (`aciklama`), "Gerçek hayatta" (`gercek`) ve ilgili kavramları (`kavramlar`) doldur.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
 - **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
@@ -194,6 +199,21 @@ Kurallar: çerez yok, kullanıcı kimliği yok; kullanıcının girdiği rakamla
 ## Yerelde Çalıştırma
 
 Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
+
+## Arama Motorları ve Paylaşım
+
+Arama motorları ve paylaşım önizlemeleri (WhatsApp, X, LinkedIn) JavaScript çalıştırmadan sayfayı okur. Bu yüzden içeriği önceden yazılmış statik sayfalar üretilir:
+
+```bash
+npm run uret   # ~1 dk: kavram/*.html, ders/*.html, paylas/*.jpg, sitemap.xml, 404.html
+```
+
+- **Kavram sayfaları** sitenin kendi `kavram.js`'i tarayıcıda çalıştırılarak üretilir (iki ayrı kopya yok); açılınca aynı betik etkileşimli kısımları canlandırır. Alt klasördeki sayfalar `<base href="../">` ile kökteki stilleri ve betikleri kullanır.
+- **Ders sayfaları** dersin okunabilir özetidir (kartlar, sorular ve cevapları); "Derse başla" etkileşimli oynatıcıyı açar.
+- Her sayfada asıl adres (`canonical`), paylaşım kartı (Open Graph) ve kavram/ders için yapılandırılmış veri (schema.org) vardır. Kök sayfaların etiketlerini `gelistirme/ortak-duzen.py` yazar.
+- **Ne zaman çalıştırılır?** Sözlük, ders verisi, `kavram.js` ya da menü değiştiğinde. Unutulursa testler hangi sayfanın eskidiğini söyler.
+
+**Google'a bildirmek (bir kez, elle):** [Google Search Console](https://search.google.com/search-console)'a `https://aydemirahmetburak.github.io/paktolos/` adresini "URL ön eki" olarak ekle, doğrula ve "Site haritaları" bölümüne `sitemap.xml` gönder. Site bir proje sayfası (`/paktolos/` alt yolu) olduğu için `robots.txt` arama motorlarınca okunmaz; site haritası bu yüzden Search Console'dan gönderilir.
 
 ## Testler
 

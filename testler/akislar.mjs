@@ -12,7 +12,7 @@ const AKISLAR = {
     const ilk = await p.textContent('.spot-item');
     if (!/enflasyon/i.test(ilk)) throw new Error(`ilk sonuç "${ilk.trim()}"`);
     await p.keyboard.press('Enter');
-    await p.waitForURL(/kavram\.html\?k=enflasyon|sozluk\.html#enflasyon|dersler\.html#enflasyon/);
+    await p.waitForURL(/kavram\/enflasyon\.html|sozluk\.html#enflasyon|dersler\.html#enflasyon/);
   },
 
   async 'Sözlük süzülüyor, boş sonuç uyarısı çıkıyor'(p, t) {
@@ -171,6 +171,22 @@ const AKISLAR = {
     // Katalog dışı olay sessizce reddedilir
     await p.evaluate(() => olc('uydurma_olay', { x: 1 }));
     if ((await olaylar()).some(x => x.startsWith('uydurma'))) throw new Error('katalog dışı olay kaydedildi');
+  },
+
+  async 'Statik sayfalar: bağlantılar alt klasörde doğru yere gidiyor'(p, t) {
+    await p.goto(t + 'kavram/bilesik-getiri.html');
+    if (!(await p.locator('#kavram input[type="range"]').count())) throw new Error('kavram sayfası etkileşimli hale gelmedi');
+    if ((await p.title()) !== 'Bileşik getiri nedir? — Paktolos') throw new Error(`başlık değişti: "${await p.title()}"`);
+    await p.click('#kavram .ilgili-liste a >> nth=0');
+    await p.waitForURL(/\/kavram\/[a-z0-9-]+\.html$/);
+    if (/kavram\/kavram\//.test(p.url())) throw new Error('göreli adres iç içe çözüldü: ' + p.url());
+    await p.goto(t + 'ders/sektor.html');
+    await p.click('.hero-eylemler .btn-birincil');
+    await p.waitForSelector('dialog.lesson-player[open]');
+    if (!p.url().endsWith('/dersler.html#sektor')) throw new Error('Derse başla yanlış adrese gitti: ' + p.url());
+    await p.goto(t + 'ders/sektor.html');
+    await p.click('.tabbar a[href="dersler.html"]'); // telefon genişliği: alt sekme çubuğu
+    await p.waitForURL(/\/dersler\.html$/);
   },
 
   async 'Ana sayfa: sekmeli liste ve arama kutusu'(p, t) {

@@ -105,8 +105,43 @@ HEAD_EXTRA = '''<meta name="viewport" content="width=device-width, initial-scale
 <script src="tema.js"></script>
 <script src="olcum.js"></script>'''
 
+# Sitenin yayın adresi (GitHub Pages). Asıl adres (canonical) ve paylaşım
+# önizlemesi (Open Graph) bu kökle yazılır; alan adı değişirse yalnızca burası.
+SITE = 'https://aydemirahmetburak.github.io/paktolos/'
+
+def html_kacis(m):
+    return m.replace('&', '&amp;').replace('"', '&quot;').replace('<', '&lt;')
+
+def paylasim(path, s):
+    """Sayfanın başlık ve açıklamasından asıl adres + paylaşım kartı etiketleri.
+    Görsel: paylas/<sayfa>.jpg (gelistirme/statik-uret.mjs üretir)."""
+    ad = path.rsplit('/', 1)[-1]
+    baslik = re.search(r'<title>([^<]*)</title>', s).group(1)
+    aciklama = re.search(r'<meta name="description" content="([^"]*)"', s).group(1)
+    adres = SITE + ('' if ad == 'index.html' else ad)
+    gorsel = SITE + 'paylas/' + ad.replace('.html', '.jpg')
+    satirlar = []
+    if ad != 'kavram.html':  # eski kavram adresi: asıl adresi kavram.js yazar
+        satirlar.append(f'<link rel="canonical" href="{adres}">')
+    satirlar += [
+        '<meta property="og:type" content="website">',
+        '<meta property="og:site_name" content="Paktolos">',
+        '<meta property="og:locale" content="tr_TR">',
+        f'<meta property="og:title" content="{baslik}">',
+        f'<meta property="og:description" content="{aciklama}">',
+        f'<meta property="og:url" content="{adres}">',
+        f'<meta property="og:image" content="{gorsel}">',
+        '<meta property="og:image:width" content="1200">',
+        '<meta property="og:image:height" content="630">',
+        '<meta name="twitter:card" content="summary_large_image">',
+    ]
+    return '<!-- paylasim -->\n' + '\n'.join(satirlar) + '\n<!-- /paylasim -->\n'
+
 for path in sys.argv[1:]:
+    if path.endswith('404.html'):  # gelistirme/statik-uret.mjs üretir
+        continue
     s = open(path).read()
+    s = re.sub(r'<!-- paylasim -->.*?<!-- /paylasim -->\n', '', s, flags=re.S)
     s = re.sub(r'<a class="atla"[^>]*>[^<]*</a>\s*', '', s)
     s = re.sub(r'<main(?![^>]*\bid=)', '<main id="icerik" tabindex="-1"', s, count=1)
     s = re.sub(r'<header class="nav-bar">.*?</header>(\s*<nav class="tabbar".*?</nav>)?', lambda m: header(path), s, count=1, flags=re.S)
@@ -117,5 +152,6 @@ for path in sys.argv[1:]:
                 r'<link rel="manifest"[^>]*>\n', r'<link rel="icon"[^>]*>\n', r'<link rel="apple-touch-icon"[^>]*>\n', r'<link rel="stylesheet" href="tasarim/[^"]*">\n', r'<link rel="preload" href="tasarim/fontlar/[^"]*"[^>]*>\n', r'<script src="tema.js"></script>\n', r'<script src="olcum.js"></script>\n']:
         s = re.sub(pat, '', s)
     s = s.replace('<meta charset="UTF-8">\n', '<meta charset="UTF-8">\n' + HEAD_EXTRA + '\n', 1)
+    s = re.sub(r'(<title>[^<]*</title>\n)', lambda m: m.group(1) + paylasim(path, s), s, count=1)
     open(path, 'w').write(s)
     print(path, 'ok')
