@@ -1,0 +1,14 @@
+{
+  "name": "paktolos",
+  "private": true,
+  "type": "module",
+  "description": "Paktolos: Türkçe finansal okuryazarlık sitesi. Yalnızca testler için bağımlılık içerir; sitenin kendisi derleme gerektirmez.",
+  "scripts": {
+    "test": "node testler/calistir.mjs",
+    "test:veri": "node testler/calistir.mjs veri",
+    "test:hizli": "node testler/calistir.mjs veri tarama"
+  },
+  "devDependencies": {
+    "playwright": "1.56.1"
+  }
+}
