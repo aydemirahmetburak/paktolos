@@ -120,6 +120,7 @@ paktolos/
 ├── kavram.html          # Kavram sayfası (kavram.html?k=enflasyon): katmanlı anlatım
 ├── ekonomi-haritasi.html # "Ekonomi nasıl çalışır?" etkileşimli haritası
 ├── test.html            # Kendini sına
+├── testler/            # Otomatik testler (npm test); CI: .github/workflows/testler.yml
 ├── karnem.html          # Karnem: ilerleme, finansal temeller, okuma listesi, son baktıkların
 │
 ├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
@@ -172,6 +173,30 @@ Paktolos'ta hesap yoktur. İlerleme (tamamlanan dersler, okunan kavram ve sorula
 ## Yerelde Çalıştırma
 
 Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
+
+## Testler
+
+Site derleme gerektirmez; Node.js yalnızca testler için kullanılır.
+
+```bash
+npm install                      # bir kez (Playwright)
+npx playwright install chromium  # bir kez
+npm test                         # tüm testler (~3 dk)
+npm run test:veri                # yalnızca veri ve bağlantılar (~1 sn)
+npm test -- akislar              # tek bir grup
+```
+
+| Grup | Dosya | Ne denetler? |
+|---|---|---|
+| Veri ve bağlantılar | `testler/veri.mjs` | Ders ve test sorularında doğru cevap geçerli mi, bağlı kavramlar sözlükte var mı; site içi her bağlantı var olan bir sayfaya ve bölüme gidiyor mu; `sw.js` önbellek listesi eksiksiz mi; menü ve alt bilgi `ortak-duzen.py` ile güncel mi; PR'da önbellekteki bir dosya değiştiyse `SURUM` artırılmış mı |
+| Tüm sayfalar | `testler/tarama.mjs` | 19 sayfa × açık/koyu × 320/390/820/1280 px ve 67 kavram sayfası: sayfa ve konsol hatası, eksik dosya, yatay taşma, ekranda "undefined/NaN" |
+| Erişilebilirlik | `testler/erisilebilirlik.mjs` | Kontrast (AA), 44 px dokunma alanı, tek h1 ve başlık sırası, tekrar eden kimlik, adsız düğme, alt metin, "İçeriğe geç" |
+| Kullanıcı akışları | `testler/akislar.mjs` | Arama, sözlük, ders oynatma, kredi hesaplayıcı, Kaydet → Karnem, test, günün sorusu, tema, ekonomi haritası, ana sayfa sekmeleri |
+| Yükleme kayması | `testler/kararlilik.mjs` | Her sayfada CLS ≤ 0,05 |
+
+Her PR'da ve `main`'e her gönderimde GitHub Actions tüm testleri çalıştırır (`.github/workflows/testler.yml`). Kontrol kırmızıysa PR birleştirilmemeli; hangi sayfada neyin bozulduğu "Testler" adımının çıktısında yazar.
+
+Yeni bir özellik eklerken en az bir akış testi (`testler/akislar.mjs`) ekle. Yeni bir veri alanı eklerken `testler/veri.mjs`'e doğrulamasını ekle.
 
 ## Yol Haritası
 
