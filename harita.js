@@ -188,7 +188,7 @@
         el('li', {}, el('button', { type: 'button', className: 'eh-hedef', onclick: () => sec(hedef) }, dugum[hedef].ad), ' ', metin))),
       el('div', { className: 'ilgili-liste' }, ...d.kavramlar.map(id => {
         const t = typeof SOZLUK !== 'undefined' && SOZLUK.find(x => x.id === id);
-        return t ? el('a', { className: 'tag', href: 'kavram.html?k=' + id }, t.terim) : null;
+        return t ? el('a', { className: 'tag', href: 'kavram/' + id + '.html' }, t.terim) : null;
       }).filter(Boolean)),
       el('button', { type: 'button', className: 'btn btn-sade btn-kucuk', onclick: () => sec(null) }, 'Tüm haritaya dön'));
   }

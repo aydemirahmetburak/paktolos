@@ -1,4 +1,8 @@
-// Kavram sayfası: kavram.html?k=enflasyon
+// Kavram sayfası. Her kavramın statik bir sayfası vardır: kavram/enflasyon.html
+// (gelistirme/statik-uret.mjs üretir; içerik arama motorları ve paylaşım
+// önizlemeleri için önceden yazılıdır). Bu betik aynı içeriği yeniden çizip
+// etkileşimli kısımları (grafik, kaydırıcı, Kaydet) canlandırır. Eski
+// kavram.html?k=enflasyon adresi de çalışır; asıl adres olarak statik sayfayı gösterir.
 //
 // Katmanlı anlatım (ilerledikçe derinleşir; teknik ayrıntı zorunlu değildir):
 //   Basitçe → Nasıl çalışır? → Beni neden ilgilendiriyor? → Gerçek hayattan →
@@ -9,7 +13,7 @@
   const kok = document.getElementById('kavram');
   if (!kok || typeof SOZLUK === 'undefined') return;
 
-  const parametre = new URLSearchParams(location.search).get('k') || location.hash.slice(1);
+  const parametre = kok.dataset.kavram || new URLSearchParams(location.search).get('k') || location.hash.slice(1);
   const t = SOZLUK.find(x => x.id === parametre);
 
   if (!t) {
@@ -24,8 +28,14 @@
   const d = (typeof KAVRAM_DERIN !== 'undefined' && KAVRAM_DERIN[t.id]) || {};
   const tr = (n, o = 0) => n.toLocaleString('tr-TR', { minimumFractionDigits: o, maximumFractionDigits: o });
 
-  document.title = `${t.terim} — Paktolos`;
-  document.querySelector('meta[name="description"]')?.setAttribute('content', `${t.terim}: ${t.kisa}`);
+  if (!kok.dataset.kavram) {
+    // Statik sayfanın başlığı ve açıklaması arama motoru için yazılıdır; dokunma
+    document.title = `${t.terim} — Paktolos`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content', `${t.terim}: ${t.kisa}`);
+    // Eski adres: arama motorlarına asıl (statik) sayfayı göster
+    const kanonik = document.querySelector('link[rel="canonical"]') || document.head.appendChild(el('link', { rel: 'canonical' }));
+    kanonik.href = new URL('kavram/' + t.id + '.html', location.href).href;
+  }
 
   // Okundu olarak işaretle (Karnem ve sözlük ilerlemesi)
   const okunan = new Set(store.get(OKUNAN_KEY, []));
@@ -153,7 +163,7 @@
     el('header', { className: 'kv-bas' },
       el('span', { className: 'overline' }, KATEGORILER[t.kategori]),
       el('h1', {}, t.terim),
-      el('div', { className: 'sayfa-eylem' }, kaydetDugmesi({ id: 'kavram:' + t.id, baslik: t.terim, tur: 'Kavram', aciklama: t.kisa, href: 'kavram.html?k=' + t.id }))),
+      el('div', { className: 'sayfa-eylem' }, kaydetDugmesi({ id: 'kavram:' + t.id, baslik: t.terim, tur: 'Kavram', aciklama: t.kisa, href: 'kavram/' + t.id + '.html' }))),
     el('div', { className: 'simple-explanation kv-basitce' },
       el('span', { className: 'overline' }, 'Basitçe'),
       el('p', {}, t.kisa)),
@@ -168,12 +178,12 @@
       el('li', {}, el('a', { href: k.url, rel: 'noopener', target: '_blank' }, k.ad), k.not ? el('span', {}, k.not) : null)))) : null,
     ilgililer.length || sitede.length ? el('div', { className: 'ilgili kv-ilgili' },
       el('h2', {}, 'İlgili kavramlar'),
-      el('div', { className: 'ilgili-liste' }, ...ilgililer.map(x => el('a', { className: 'tag', href: 'kavram.html?k=' + x.id }, x.terim)), ...sitede)) : null,
+      el('div', { className: 'ilgili-liste' }, ...ilgililer.map(x => el('a', { className: 'tag', href: 'kavram/' + x.id + '.html' }, x.terim)), ...sitede)) : null,
     el('nav', { className: 'kv-sirali', 'aria-label': 'Aynı kategoride' },
-      onceki ? el('a', { className: 'card kv-onceki', href: 'kavram.html?k=' + onceki.id }, el('span', { className: 'overline' }, 'Önceki'), el('strong', {}, onceki.terim)) : el('span'),
-      sonraki ? el('a', { className: 'card kv-sonraki', href: 'kavram.html?k=' + sonraki.id }, el('span', { className: 'overline' }, 'Sonraki'), el('strong', {}, sonraki.terim)) : el('span')),
+      onceki ? el('a', { className: 'card kv-onceki', href: 'kavram/' + onceki.id + '.html' }, el('span', { className: 'overline' }, 'Önceki'), el('strong', {}, onceki.terim)) : el('span'),
+      sonraki ? el('a', { className: 'card kv-sonraki', href: 'kavram/' + sonraki.id + '.html' }, el('span', { className: 'overline' }, 'Sonraki'), el('strong', {}, sonraki.terim)) : el('span')),
     el('p', { className: 'kv-uyari govde-kucuk' }, 'Bu içerik eğitim amaçlıdır; yatırım tavsiyesi değildir.')
   ].filter(Boolean));
-  gecmiseEkle({ baslik: t.terim, tur: 'Kavram', href: 'kavram.html?k=' + t.id });
+  gecmiseEkle({ baslik: t.terim, tur: 'Kavram', href: 'kavram/' + t.id + '.html' });
   olc('kavram_acildi', { kavram: t.id });
 })();

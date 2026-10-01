@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<base href="../">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F7F7F5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Paktolos">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preload" href="tasarim/fontlar/nr-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="tasarim/fontlar/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="tasarim/tokenlar.css">
+<link rel="stylesheet" href="tasarim/bilesenler.css">
+<script src="tema.js"></script>
+<script src="olcum.js"></script>
+<meta name="description" content="Nominal ve reel getiri: Nominal getiri rakamdaki artış; reel getiri, enflasyondan arındırılmış gerçek kazançtır. Basitçe, nasıl çalışır, gerçek hayattan örnek ve dikkat edilmesi gerekenler.">
+<title>Nominal ve reel getiri nedir? — Paktolos</title>
+<!-- paylasim -->
+<link rel="canonical" href="https://aydemirahmetburak.github.io/paktolos/kavram/reel-getiri.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Paktolos">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:title" content="Nominal ve reel getiri nedir? — Paktolos">
+<meta property="og:description" content="Nominal ve reel getiri: Nominal getiri rakamdaki artış; reel getiri, enflasyondan arındırılmış gerçek kazançtır. Basitçe, nasıl çalışır, gerçek hayattan örnek ve dikkat edilmesi gerekenler.">
+<meta property="og:url" content="https://aydemirahmetburak.github.io/paktolos/kavram/reel-getiri.html">
+<meta property="og:image" content="https://aydemirahmetburak.github.io/paktolos/paylas/kavram-reel-getiri.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- /paylasim -->
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"DefinedTerm","name":"Nominal ve reel getiri","description":"Nominal getiri rakamdaki artış; reel getiri, enflasyondan arındırılmış gerçek kazançtır.","inLanguage":"tr","url":"https://aydemirahmetburak.github.io/paktolos/kavram/reel-getiri.html","inDefinedTermSet":{"@type":"DefinedTermSet","name":"Paktolos Finans Sözlüğü","url":"https://aydemirahmetburak.github.io/paktolos/sozluk.html"}}</script>
+</head>
+<body>
+
+  <a class="atla" href="kavram/reel-getiri.html#icerik">İçeriğe geç</a>
+  <header class="nav-bar">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+      <div class="nav-end">
+        <nav class="nav" aria-label="Ana menü">
+          <a href="dersler.html" aria-current="page">Öğren<span class="nav-hap" aria-hidden="true"></span></a>
+          <a href="ekonomi.html">Ekonomi</a>
+          <a href="piyasalar.html">Piyasalar</a>
+          <a href="rehberler.html">Rehberler</a>
+          <a href="araclar.html">Araçlar</a>
+        </nav>
+        <div class="nav-actions">
+          <button type="button" class="search-trigger" aria-label="Sitede ara (⌘K)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><kbd class="nav-kbd">⌘K</kbd></button>
+          <a href="karnem.html" class="nav-profil" aria-label="Karnem: öğrenme ilerlemen"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.6 4-5.5 7-5.5s5.8 1.9 7 5.5"/></svg></a>
+          <a href="dersler.html" class="btn btn-birincil btn-kucuk nav-cta">Öğrenmeye başla</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar" aria-label="Sekmeler">
+    <a href="index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 10.2 12 4l7.5 6.2V19a1 1 0 0 1-1 1H15v-5.5H9V20H5.5a1 1 0 0 1-1-1z"/></svg>Ana sayfa</a>
+    <a href="dersler.html" aria-current="page"><span class="tab-hap" aria-hidden="true"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7 4.5 4 5v13c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V5c-3-.5-6 0-8 1.5z"/><path d="M12 6.5V19"/></svg>Öğren</a>
+    <a href="ekonomi.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 0 1-12.9 5.2"/><path d="M4.5 12a7.5 7.5 0 0 1 12.9-5.2"/><path d="M17.6 3.6v3.2h-3.2"/><path d="M6.4 20.4v-3.2h3.2"/><circle cx="12" cy="12" r="1.8"/></svg>Ekonomi</a>
+    <a href="piyasalar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16"/><path d="M5 15.5l4-4 3 3 6.5-7"/><path d="M14.5 7.5h4v4"/></svg>Piyasalar</a>
+    <a href="araclar.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01"/></svg>Araçlar</a>
+  </nav>
+
+  <main id="icerik" tabindex="-1">
+    <article class="okuma-genislik kavram" id="kavram" data-kavram="reel-getiri"><nav class="breadcrumbs" aria-label="Konum"><ol><li><a href="dersler.html">Öğren</a></li><li><a href="sozluk.html">Sözlük</a></li><li aria-current="page">Faiz ve kredi</li></ol></nav><header class="kv-bas"><span class="overline">Faiz ve kredi</span><h1>Nominal ve reel getiri</h1><div class="sayfa-eylem"><button type="button" class="btn btn-ikincil btn-kucuk kaydet-btn" aria-pressed="false"><svg viewBox="0 0 24 24" class="ikon" aria-hidden="true"><path d="M7 4.5h10a1 1 0 0 1 1 1V20l-6-4-6 4V5.5a1 1 0 0 1 1-1z"></path></svg><span>Kaydet</span></button></div></header><div class="simple-explanation kv-basitce"><span class="overline">Basitçe</span><p>Nominal getiri rakamdaki artış; reel getiri, enflasyondan arındırılmış gerçek kazançtır.</p></div><section class="kv-bolum" aria-labelledby="kv-nasil"><h2 id="kv-nasil">Nasıl çalışır?</h2><p>Paran %45 arttıysa nominal getirin %45'tir. Ama aynı dönemde fiyatlar da %35 arttıysa, satın alma gücün çok daha az artmıştır. Reel getiri bu farkı gösterir.</p></section><section class="kv-bolum" aria-labelledby="kv-neden"><h2 id="kv-neden">Beni neden ilgilendiriyor?</h2><ul class="kv-liste"><li>Bir yatırımın seni gerçekten zenginleştirip zenginleştirmediğini gösterir.</li><li>Yüksek enflasyonda yüksek görünen getiriler, reel olarak eksi olabilir.</li><li>Maaş zammını değerlendirmenin de doğru yoludur.</li></ul></section><section class="kv-bolum" aria-labelledby="kv-ornek"><h2 id="kv-ornek">Gerçek hayattan</h2><div class="kv-ornek"><p>Formül: (1 + nominal getiri) ÷ (1 + enflasyon) − 1. %45 faiz ve %35 enflasyonda reel getiri: 1,45 ÷ 1,35 − 1 ≈ %7,4. Basitçe çıkarmak (%10) yanıltıcıdır.</p></div></section><section class="kv-bolum" aria-labelledby="kv-gorsel"><h2 id="kv-gorsel">Kendin dene</h2><div class="kv-gorsel card"><div class="kv-girdiler"><label class="num-field slider"><span class="num-head">Nominal getiri (yıllık)<span class="num-input"><input type="text" inputmode="decimal" aria-label="Nominal getiri (yıllık)"><span>%</span></span></span><input type="range" min="0" max="100" step="1" aria-label="Nominal getiri (yıllık)" tabindex="-1" style="--p: 45%;"></label><label class="num-field slider"><span class="num-head">Enflasyon (yıllık)<span class="num-input"><input type="text" inputmode="decimal" aria-label="Enflasyon (yıllık)"><span>%</span></span></span><input type="range" min="0" max="100" step="1" aria-label="Enflasyon (yıllık)" tabindex="-1" style="--p: 40%;"></label></div><p class="kv-ozet" aria-live="polite">Yıllık reel getiri: <b class="degisim-artis">+%3,6</b>. Birikimin alım gücünü koruyup artırıyor.</p><div class="kv-grafik chart"><div class="chart-legend"><span><i class="key-line" style="background: var(--data-1);"></i>Birikimin</span><span><i class="key-line" style="background: var(--data-2);"></i>Aynı alım gücü için gereken</span></div><svg viewBox="0 0 672 250" width="672" height="250" tabindex="0" role="img" aria-label="Nominal birikim ile alım gücünü korumak için gereken tutar"><g class="grid"><line x1="48" x2="600" y1="226" y2="226"></line><line x1="48" x2="600" y1="154" y2="154"></line><line x1="48" x2="600" y1="82" y2="82"></line><line x1="48" x2="600" y1="10" y2="10"></line></g><g class="axis"><text x="40" y="230" text-anchor="end">0</text><text x="40" y="158" text-anchor="end">200 bin</text><text x="40" y="86" text-anchor="end">400 bin</text><text x="40" y="14" text-anchor="end">600 bin</text><text x="48" y="244" text-anchor="middle">Bugün</text><text x="158.4" y="244" text-anchor="middle">2. yıl</text><text x="268.8" y="244" text-anchor="middle">4. yıl</text><text x="379.2" y="244" text-anchor="middle">6. yıl</text><text x="489.6" y="244" text-anchor="middle">8. yıl</text><text x="600" y="244" text-anchor="middle">10. yıl</text></g><path class="series-line" stroke="var(--data-1)" d="M48.0,222.4L103.2,220.8L158.4,218.4L213.6,215.0L268.8,210.1L324.0,202.9L379.2,192.5L434.4,177.5L489.6,155.7L544.8,124.0L600.0,78.1"></path><path class="series-line" stroke="var(--data-2)" d="M48.0,222.4L103.2,221.0L158.4,218.9L213.6,216.1L268.8,212.2L324.0,206.6L379.2,198.9L434.4,188.1L489.6,172.9L544.8,151.6L600.0,121.9"></path><circle class="dot" cx="600" cy="78.09511329289813" r="4" fill="var(--data-1)"></circle><text class="end-label" x="608" y="82.09511329289813">411 bin</text><circle class="dot" cx="600" cy="121.86832420864006" r="4" fill="var(--data-2)"></circle><text class="end-label" x="608" y="125.86832420864006">289 bin</text><line class="crosshair" y1="10" y2="226" visibility="hidden"></line><circle class="dot" r="4" fill="var(--data-1)" visibility="hidden"></circle><circle class="dot" r="4" fill="var(--data-2)" visibility="hidden"></circle><rect x="48" y="10" width="552" height="216" fill="transparent"></rect></svg><div class="chart-tip" role="status"></div></div><div><details class="table-view"><summary>Tablo olarak gör</summary><div class="table-scroll"><table class="data-table"><thead><tr><th scope="col">Yıl</th><th scope="col">Birikimin</th><th scope="col">Gereken</th></tr></thead><tbody><tr><td>0</td><td>10.000 TL</td><td>10.000 TL</td></tr><tr><td>1</td><td>14.500 TL</td><td>14.000 TL</td></tr><tr><td>2</td><td>21.025 TL</td><td>19.600 TL</td></tr><tr><td>3</td><td>30.486 TL</td><td>27.440 TL</td></tr><tr><td>4</td><td>44.205 TL</td><td>38.416 TL</td></tr><tr><td>5</td><td>64.097 TL</td><td>53.782 TL</td></tr><tr><td>6</td><td>92.941 TL</td><td>75.295 TL</td></tr><tr><td>7</td><td>134.765 TL</td><td>105.414 TL</td></tr><tr><td>8</td><td>195.409 TL</td><td>147.579 TL</td></tr><tr><td>9</td><td>283.343 TL</td><td>206.610 TL</td></tr><tr><td>10</td><td>410.847 TL</td><td>289.255 TL</td></tr></tbody></table></div></details></div></div><p class="govde-kucuk">Rakamlar örnektir; vergi ve masraflar dahil değildir.</p></section><div class="key-takeaway"><span class="overline">Nelere dikkat?</span><p>Bir yatırımın gerçekten kazandırıp kazandırmadığını anlamak için her zaman reel getiriye bak. Reel getiri negatifse, hesabındaki rakam artsa bile aslında fakirleşiyorsun.</p></div><details class="deep-dive kv-derin"><summary>Daha derin</summary><div><p>Kesin hesap: reel getiri = (1 + nominal getiri) ÷ (1 + enflasyon) − 1.</p><p>Nominalden enflasyonu çıkarmak, oranlar düşükken yakın sonuç verir; oranlar yükseldikçe hata büyür. %50 nominal getiri ve %40 enflasyonda kısayol %10 derken kesin hesap yaklaşık %7,1'dir.</p><p>Vergi ve masraflar da düşülmelidir. Asıl önemli olan, vergi ve masraf sonrası reel getiridir.</p></div></details><section class="kv-bolum" aria-labelledby="kv-kaynak"><h2 id="kv-kaynak">Kaynaklar</h2><ul class="kaynakca"><li><a href="https://www.tuik.gov.tr" rel="noopener" target="_blank">TÜİK</a><span>Enflasyon verisi</span></li></ul></section><div class="ilgili kv-ilgili"><h2>İlgili kavramlar</h2><div class="ilgili-liste"><a class="tag" href="kavram/enflasyon.html">Enflasyon</a><a class="tag" href="kavram/faiz.html">Faiz</a><a class="tag" href="kavram/alim-gucu.html">Alım gücü</a><a class="tag" href="araclar.html#hedef">Birikim hedefi aracı ›</a></div></div><nav class="kv-sirali" aria-label="Aynı kategoride"><a class="card kv-onceki" href="kavram/faiz.html"><span class="overline">Önceki</span><strong>Faiz</strong></a><a class="card kv-sonraki" href="kavram/bilesik-getiri.html"><span class="overline">Sonraki</span><strong>Bileşik getiri</strong></a></nav><p class="kv-uyari govde-kucuk">Bu içerik eğitim amaçlıdır; yatırım tavsiyesi değildir.</p></article>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div class="footer-top">
+        <a href="index.html" class="logo footer-logo" aria-label="Paktolos ana sayfa"><svg class="logo-mark" viewBox="0 0 100 100" aria-hidden="true"><path fill-rule="evenodd" d="M50 8C75 7 93 26 92 50C93 75 74 93 50 92C25 93 7 74 8 50C7 25 26 9 50 8ZM31 30H45A4 4 0 0 1 49 34V66A4 4 0 0 1 45 70H31A4 4 0 0 1 27 66V34A4 4 0 0 1 31 30ZM58 38H70A4 4 0 0 1 74 42V60A4 4 0 0 1 70 64H58A4 4 0 0 1 54 60V42A4 4 0 0 1 58 38Z"/></svg><span>PAKTOLOS</span></a>
+        <nav class="footer-cols" aria-label="Alt menü">
+          <div><h2>Öğren</h2><a href="dersler.html">Dersler</a><a href="sozluk.html">Sözlük</a><a href="test.html">Kendini sına</a></div>
+          <div><h2>Ekonomi</h2><a href="ekonomi-haritasi.html">Ekonomi nasıl çalışır?</a><a href="ekonomi.html">Göstergeler</a><a href="ekonomi.html#kavramlar">Temel kavramlar</a></div>
+          <div><h2>Piyasalar</h2><a href="ogren.html">Mali tablolar</a><a href="analiz.html">Hisse analizi</a><a href="sektorler.html">Sektörler</a></div>
+          <div><h2>Rehberler</h2><a href="sorular.html">Aklına takılan</a><a href="hikaye.html">Paktolos'un hikâyesi</a></div>
+          <div><h2>Araçlar</h2><a href="araclar.html">Hesaplayıcılar</a><a href="lab.html">Şirket laboratuvarı</a><a href="checkup.html">Finansal check-up</a></div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>Paktolos yalnızca eğitim amaçlıdır. Bu sitedeki hiçbir içerik yatırım tavsiyesi değildir; örneklerdeki şirket ve rakamlar hayalidir.</p>
+        <div class="footer-meta">
+          <span>© 2026 Paktolos</span>
+          <div class="segmented theme-switch" role="radiogroup" aria-label="Görünüm">
+            <button type="button" role="radio" data-tema="auto">Otomatik</button>
+            <button type="button" role="radio" data-tema="light">Açık</button>
+            <button type="button" role="radio" data-tema="dark">Koyu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="sozluk-veri.js"></script>
+  <script src="kavramlar-veri.js"></script>
+  <script src="ekonomi-veri.js"></script>
+  <script src="script.js"></script>
+  <script src="grafik.js"></script>
+  <script src="araclar.js"></script>
+  <script src="kavram.js"></script>
+  <script src="ekonomi.js"></script>
+
+</body>
+</html>

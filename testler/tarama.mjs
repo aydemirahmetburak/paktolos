@@ -3,7 +3,7 @@
 // "undefined / NaN / null" gibi bozuk yazı aranır; hiçbir sayfa dışarıya
 // istek yapmamalı (ölçüm aracı bağlı değilken). Ardından 67 kavram
 // sayfasının her biri açılır.
-import { SAYFALAR, veriYukle } from './ortak.mjs';
+import { SAYFALAR, STATIK, veriYukle } from './ortak.mjs';
 
 const GENISLIKLER = [320, 390, 820, 1280];
 const BOZUK = /\b(undefined|NaN|null|Infinity|\[object Object\])\b/;
@@ -45,19 +45,26 @@ export default async function tarama({ taban, tarayici, hata }) {
     }
   }
 
-  // Kavram sayfaları: her biri ayrı bir adres
-  const { SOZLUK } = veriYukle(['sozluk-veri.js'], ['SOZLUK']);
+  // Üretilen statik sayfalar: 67 kavram + 12 ders (alt klasörde, <base href="../">)
+  const { SOZLUK, DERSLER } = veriYukle(['sozluk-veri.js', 'dersler-veri.js'], ['SOZLUK', 'DERSLER']);
   const ctx = await tarayici.newContext({ viewport: { width: 390, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
   const p = await ctx.newPage();
   let simdiki = '';
   p.on('pageerror', e => hata(`${simdiki}: sayfa hatası: ${e.message}`));
-  for (const t of SOZLUK) {
-    simdiki = 'kavram.html?k=' + t.id;
-    (await sayfaDenetle(p, taban + simdiki)).forEach(x => hata(`${simdiki}: ${x}`));
-    const baslik = await p.textContent('#kavram h1').catch(() => null);
-    if (baslik?.trim() !== t.terim) hata(`${simdiki}: başlık "${t.terim}" olmalı, "${baslik}" görünüyor`);
+  p.on('response', r => { if (r.status() >= 400 && r.url().startsWith(taban)) hata(`${simdiki}: ${r.status()} ${r.url().slice(taban.length)}`); });
+  for (const f of STATIK) {
+    simdiki = f;
+    (await sayfaDenetle(p, taban + f)).forEach(x => hata(`${f}: ${x}`));
+    const beklenen = f.startsWith('kavram/') ? SOZLUK.find(t => 'kavram/' + t.id + '.html' === f)?.terim : DERSLER.find(d => 'ders/' + d.id + '.html' === f)?.baslik;
+    const baslik = (await p.textContent('main h1').catch(() => null))?.trim();
+    if (baslik !== beklenen) hata(`${f}: başlık "${beklenen}" olmalı, "${baslik}" görünüyor`);
     sayac++;
   }
+  // Eski adres (kaydedilmiş bağlantılar için) hâlâ çalışıyor ve asıl adresi gösteriyor
+  simdiki = 'kavram.html?k=faiz';
+  (await sayfaDenetle(p, taban + simdiki)).forEach(x => hata(`${simdiki}: ${x}`));
+  const kanonik = await p.getAttribute('link[rel="canonical"]', 'href').catch(() => null);
+  if (!kanonik?.endsWith('kavram/faiz.html')) hata(`${simdiki}: asıl adres kavram/faiz.html olmalı, "${kanonik}"`);
   await ctx.close();
   return `${sayac} sayfa görünümü`;
 }

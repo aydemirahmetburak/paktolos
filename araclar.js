@@ -74,7 +74,7 @@ function icgoru(...parcalar) {
 }
 
 function sozlukLink(id, metin) {
-  return el('a', { className: 'kavram-baglanti', href: 'kavram.html?k=' + id }, metin);
+  return el('a', { className: 'kavram-baglanti', href: 'kavram/' + id + '.html' }, metin);
 }
 
 // Seri renkleri grafik.js'teki SERI'den: [0] temel tutar (mavi), [1] faiz, maliyet ya da ek (kiremit)

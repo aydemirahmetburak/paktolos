@@ -7,7 +7,7 @@
 // Yeni bir sayfa ya da dosya eklendiğinde DOSYALAR listesine ekle ve
 // SURUM değerini bir artır.
 
-const SURUM = 'paktolos-v21';
+const SURUM = 'paktolos-v22';
 const DOSYALAR = [
   './',
   'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html', 'araclar.html', 'sorular.html', 'dersler.html', 'karnem.html', 'lab.html', 'checkup.html', 'ekonomi.html', 'piyasalar.html', 'rehberler.html', 'tasarim.html', 'kavram.html', 'ekonomi-haritasi.html',

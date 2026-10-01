@@ -9,7 +9,11 @@ import { fileURLToPath } from 'node:url';
 export const KOK = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 // Kökteki tüm HTML sayfaları (ör. 'index.html')
-export const SAYFALAR = fs.readdirSync(KOK).filter(f => f.endsWith('.html')).sort();
+// (404.html üretilir ve site köküne mutlak adresle bağlıdır; ayrıca denetlenir)
+export const SAYFALAR = fs.readdirSync(KOK).filter(f => f.endsWith('.html') && f !== '404.html').sort();
+
+// Üretilen statik sayfalar: kavram/<id>.html ve ders/<id>.html
+export const STATIK = ['kavram', 'ders'].flatMap(k => fs.existsSync(path.join(KOK, k)) ? fs.readdirSync(path.join(KOK, k)).filter(f => f.endsWith('.html')).sort().map(f => k + '/' + f) : []);
 
 const TURLER = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8',

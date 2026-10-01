@@ -86,13 +86,13 @@ function denetle() {
 
   // Yapı
   if (document.documentElement.lang !== 'tr') out.push('<html lang="tr"> yok');
-  if (!document.querySelector('a.atla[href="#icerik"]')) out.push('"İçeriğe geç" bağlantısı yok');
+  if (![...document.querySelectorAll('a.atla')].some(a => a.getAttribute('href').endsWith('#icerik') && new URL(a.href).pathname === location.pathname)) out.push('"İçeriğe geç" bağlantısı bu sayfanın #icerik bölümüne gitmiyor');
   if (!document.querySelector('main#icerik')) out.push('<main id="icerik"> yok');
   return out;
 }
 
 export default async function erisilebilirlik({ taban, tarayici, hata }) {
-  const adresler = [...SAYFALAR, 'kavram.html?k=faiz'];
+  const adresler = [...SAYFALAR, 'kavram/faiz.html', 'kavram/bilesik-getiri.html', 'ders/sektor.html'];
   const bulunan = new Map();
   for (const [tema, w] of [['light', 390], ['dark', 390], ['light', 1280]]) {
     const ctx = await tarayici.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block' });

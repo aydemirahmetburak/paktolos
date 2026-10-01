@@ -6,7 +6,7 @@ import { SAYFALAR } from './ortak.mjs';
 const SINIR = 0.05;
 
 export default async function kararlilik({ taban, tarayici, hata }) {
-  const adresler = [...SAYFALAR.filter(s => s !== 'tasarim.html'), 'kavram.html?k=faiz'];
+  const adresler = [...SAYFALAR.filter(s => s !== 'tasarim.html'), 'kavram/faiz.html', 'kavram/bilesik-getiri.html', 'ders/sektor.html'];
   let enKotu = 0;
   for (const w of [390, 1280]) {
     for (const a of adresler) {

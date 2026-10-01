@@ -116,7 +116,11 @@
 
   // Sayfa görüntüleme: yalnızca dosya adı (sorgu ve kişisel bilgi yok);
   // kavram sayfalarında hangi kavram olduğu ayrıca kavram_acildi ile gelir.
-  window.olc('sayfa', { yol: '/' + (location.pathname.split('/').pop() || 'index.html') });
+  // Yol, sitenin köküne göre: '/index.html', '/kavram/faiz.html'. Kök, bu
+  // betiğin adresinden bulunur (alt klasördeki sayfalarda da doğru çalışır).
+  var kok = (document.currentScript && document.currentScript.src || '').replace(/olcum\.js.*$/, '');
+  var yol = kok && location.href.indexOf(kok) === 0 ? location.href.slice(kok.length).split(/[?#]/)[0] : location.pathname.split('/').pop();
+  window.olc('sayfa', { yol: '/' + (yol || 'index.html') });
 
   // Yakalanmamış hatalar: mesajın ilk 80 karakteri ve dosya:satır
   window.addEventListener('error', function (e) {

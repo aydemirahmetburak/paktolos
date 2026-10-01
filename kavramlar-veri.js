@@ -1,4 +1,4 @@
-// Kavram sayfalarının derin katmanları (kavram.html?k=…)
+// Kavram sayfalarının derin katmanları (kavram/<id>.html)
 //
 // Her kavramın temel katmanları sozluk-veri.js'te:
 //   kisa → Basitçe · aciklama → Nasıl çalışır? · ornek → Gerçek hayattan

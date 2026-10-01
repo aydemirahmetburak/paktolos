@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { KOK, SAYFALAR, veriYukle, oku, varMi } from './ortak.mjs';
+import { KOK, SAYFALAR, STATIK, veriYukle, oku, varMi } from './ortak.mjs';
 
 export default async function veri({ hata }) {
   const V = veriYukle(
@@ -75,6 +75,10 @@ export default async function veri({ hata }) {
     const [yolSorgu, bolum] = hedef.split('#');
     const [dosya, sorgu] = yolSorgu.split('?');
     if (!dosya) return; // yalnızca "#bolum": aynı sayfa, aşağıda ayrıca bakılmaz
+    if (dosya.startsWith('kavram/') || dosya.startsWith('ders/')) {
+      if (!varMi(dosya)) hata(`${kaynak}: "${hedef}" statik sayfası yok (npm run uret)`);
+      return;
+    }
     if (!varMi(dosya)) return hata(`${kaynak}: "${hedef}" sayfası yok`);
     if (dosya === 'kavram.html' && sorgu) {
       const k = new URLSearchParams(sorgu).get('k');
@@ -84,8 +88,8 @@ export default async function veri({ hata }) {
       hata(`${kaynak}: "${hedef}" bölümü sayfada yok`);
     }
   };
-  const BAG = /["'`](?:\.\/)?([a-z0-9-]+\.html(?:[?#][^"'`\s<>]*)?)["'`]/g;
-  const kaynaklar = [...SAYFALAR, ...fs.readdirSync(KOK).filter(f => f.endsWith('.js') && f !== 'sw.js')];
+  const BAG = /["'`](?:\.\/)?((?:kavram\/|ders\/)?[a-z0-9-]+\.html(?:[?#][^"'`\s<>]*)?)["'`]/g;
+  const kaynaklar = [...SAYFALAR, ...STATIK, ...fs.readdirSync(KOK).filter(f => f.endsWith('.js') && f !== 'sw.js')];
   for (const k of kaynaklar) {
     for (const m of oku(k).matchAll(BAG)) {
       if (m[1].includes('${')) continue; // şablonla kurulan adresler çalışma anında denetlenir
@@ -136,6 +140,51 @@ export default async function veri({ hata }) {
     }
   }
 
+  // ---------- Statik sayfalar güncel mi? (gelistirme/statik-uret.mjs) ----------
+  // Veri ya da menü değişip "npm run uret" unutulursa burada yakalanır.
+  const kabuk = oku('kavram.html');
+  const parca = (html, ac, kapa) => { const i = html.indexOf(ac); return i < 0 ? null : html.slice(i, html.indexOf(kapa, i)); };
+  const menu = parca(kabuk, '<header class="nav-bar">', '</header>');
+  const altBilgi = parca(kabuk, '<footer>', '</footer>');
+  const esc = m => String(m).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const beklenen = new Set([...V.SOZLUK.map(t => `kavram/${t.id}.html`), ...V.DERSLER.map(d => `ders/${d.id}.html`)]);
+  STATIK.forEach(f => { if (!beklenen.has(f)) hata(`${f}: artık karşılığı olmayan statik sayfa (npm run uret)`); });
+  for (const f of beklenen) {
+    if (!varMi(f)) { hata(`${f} yok (npm run uret)`); continue; }
+    const h = oku(f);
+    if (parca(h, '<header class="nav-bar">', '</header>') !== menu || parca(h, '<footer>', '</footer>') !== altBilgi) hata(`${f}: menü/alt bilgi kavram.html ile aynı değil (npm run uret)`);
+    if (!h.includes('<base href="../">')) hata(`${f}: <base href="../"> yok`);
+  }
+  V.SOZLUK.forEach(t => {
+    const f = `kavram/${t.id}.html`; if (!varMi(f)) return;
+    const h = oku(f);
+    if (!h.includes(`<h1>${esc(t.terim)}</h1>`) || !h.includes(esc(t.kisa)) || !h.includes(`data-kavram="${t.id}"`)) hata(`${f}: içerik sözlükle uyuşmuyor (npm run uret)`);
+  });
+  V.DERSLER.forEach(d => {
+    const f = `ders/${d.id}.html`; if (!varMi(f)) return;
+    const h = oku(f);
+    const metinler = [d.baslik, d.ozet, ...d.kartlar.flatMap(k => [k.baslik, k.metin, k.soru].filter(Boolean))];
+    const eksik = metinler.find(m => !h.includes(esc(m)));
+    if (eksik) hata(`${f}: "${eksik.slice(0, 40)}" sayfada yok; ders verisi değişmiş (npm run uret)`);
+  });
+
+  // Paylaşım görselleri ve asıl adresler
+  for (const f of [...SAYFALAR, ...STATIK, '404.html']) {
+    if (!varMi(f)) { hata(`${f} yok (npm run uret)`); continue; }
+    const h = oku(f);
+    const gorsel = h.match(/<meta property="og:image" content="[^"]*\/(paylas\/[^"]+)">/);
+    if (!gorsel) hata(`${f}: paylaşım görseli (og:image) yok`);
+    else if (!varMi(gorsel[1])) hata(`${f}: ${gorsel[1]} dosyası yok (npm run uret)`);
+    if (!/<meta property="og:title" content="[^"]+">/.test(h) || !/<meta property="og:description" content="[^"]+">/.test(h)) hata(`${f}: og:title / og:description yok`);
+    if (!['kavram.html', '404.html'].includes(f) && !/<link rel="canonical" href="https:\/\/[^"]+">/.test(h)) hata(`${f}: asıl adres (canonical) yok`);
+  }
+
+  // Site haritası: kök sayfalar (Karnem, katalog ve eski kavram adresi hariç) + statik sayfalar
+  const harita = varMi('sitemap.xml') ? [...oku('sitemap.xml').matchAll(/<loc>[^<]*\/paktolos\/([^<]*)<\/loc>/g)].map(m => m[1] || 'index.html') : [];
+  const haritaBeklenen = [...SAYFALAR.filter(f => !['karnem.html', 'tasarim.html', 'kavram.html'].includes(f)), ...beklenen];
+  haritaBeklenen.forEach(f => { if (!harita.includes(f)) hata(`sitemap.xml: ${f} yok (npm run uret)`); });
+  harita.forEach(f => { if (!haritaBeklenen.includes(f)) hata(`sitemap.xml: ${f} fazladan`); });
+
   // ---------- Ölçüm olayları katalogda mı? ----------
   // olcum.js'teki OLAYLAR listesinde olmayan bir olay gönderilmez; koddaki her
   // olc('…') çağrısı katalogda olmalı, katalogdaki her olay da kullanılmalı.
@@ -151,5 +200,5 @@ export default async function veri({ hata }) {
   katalog.forEach(o => { if (!kullanilan.has(o)) hata(`olcum.js: "${o}" olayı katalogda var ama hiçbir yerde gönderilmiyor`); });
   if (!/saglayici: null/.test(olcum) && !process.env.OLCUM_BAGLI) hata('olcum.js: bir ölçüm sağlayıcısı bağlanmış; README "Kullanıcı Verisi" bölümünü güncelleyip OLCUM_BAGLI=1 ile çalıştır');
 
-  return `${katalog.size} ölçüm olayı, ${V.SOZLUK.length} kavram, ${V.DERSLER.length} ders, ${V.SORULAR.length + V.SORULAR_KUTUPHANE.length} soru, ${liste.length} önbellek dosyası`;
+  return `${STATIK.length} statik sayfa, ${harita.length} adreslik site haritası, ${katalog.size} ölçüm olayı, ${V.SOZLUK.length} kavram, ${V.DERSLER.length} ders, ${V.SORULAR.length + V.SORULAR_KUTUPHANE.length} soru, ${liste.length} önbellek dosyası`;
 }
