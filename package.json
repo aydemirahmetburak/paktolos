@@ -7,7 +7,9 @@
     "test": "node testler/calistir.mjs",
     "test:veri": "node testler/calistir.mjs veri",
     "test:hizli": "node testler/calistir.mjs veri tarama",
-    "uret": "node gelistirme/statik-uret.mjs"
+    "uret": "node gelistirme/statik-uret.mjs",
+    "gorsel": "node gelistirme/gorsel-fark.mjs",
+    "hazirla": "node gelistirme/hazirla.mjs"
   },
   "devDependencies": {
     "playwright": "1.56.1"

@@ -7,6 +7,10 @@ const AKISLAR = {
     await p.goto(t + 'index.html');
     await p.click('.search-trigger');
     await p.waitForSelector('dialog.spotlight[open] input');
+    // Pencere ekranı kaplar; başka bir bileşenin kuralları ona bulaşmamalı
+    // (eski hata: .spotlight adlı kartın hover kaydırması ve iç boşluğu)
+    const pencere = await p.evaluate(() => { const c = getComputedStyle(document.querySelector('dialog.spotlight')); return `${c.position} ${c.transform} ${c.padding}`; });
+    if (pencere !== 'fixed none 24px') throw new Error('arama penceresi kaymış: ' + pencere);
     await p.fill('dialog.spotlight[open] input', 'enflasyon');
     await p.waitForSelector('.spot-item');
     const ilk = await p.textContent('.spot-item');

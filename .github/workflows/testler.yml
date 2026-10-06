@@ -20,8 +20,6 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0   # sw.js sürüm kontrolü için temel dalla karşılaştırma
 
       - uses: actions/setup-node@v4
         with:
@@ -35,6 +33,4 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Testler
-        env:
-          TABAN_REF: ${{ github.event_name == 'pull_request' && format('origin/{0}', github.base_ref) || '' }}
         run: npm test

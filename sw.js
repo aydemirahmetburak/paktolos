@@ -4,16 +4,23 @@
 // önbellek güncellenir; internet yoksa en son görülen sürüm açılır.
 // Böylece yeni bir sürüm yayınlandığında kullanıcı eski dosyada kalmaz.
 //
-// Yeni bir sayfa ya da dosya eklendiğinde DOSYALAR listesine ekle ve
-// SURUM değerini bir artır.
+// SURUM ve DOSYALAR elle yazılmaz: "npm run hazirla" kökteki dosyalardan
+// listeyi kurar, sürümü de içeriklerinin özetinden hesaplar
+// (gelistirme/onbellek.mjs). Bir dosya değişince sürüm kendiliğinden değişir.
 
-const SURUM = 'paktolos-v22';
+const SURUM = 'paktolos-70bdb599ca';
 const DOSYALAR = [
-  './',
-  'index.html', 'ogren.html', 'analiz.html', 'sektorler.html', 'sozluk.html', 'test.html', 'hikaye.html', 'araclar.html', 'sorular.html', 'dersler.html', 'karnem.html', 'lab.html', 'checkup.html', 'ekonomi.html', 'piyasalar.html', 'rehberler.html', 'tasarim.html', 'kavram.html', 'ekonomi-haritasi.html',
-  'style.css', 'tasarim/tokenlar.css', 'tasarim/bilesenler.css',
-  'tasarim/fontlar/nr-normal-latin.woff2', 'tasarim/fontlar/nr-normal-tr.woff2', 'tasarim/fontlar/nr-italic-latin.woff2', 'tasarim/fontlar/nr-italic-tr.woff2', 'tasarim/fontlar/inter-latin.woff2', 'tasarim/fontlar/inter-tr.woff2', 'script.js', 'tema.js', 'olcum.js', 'sozluk-veri.js', 'test-veri.js', 'arama-veri.js', 'grafik.js', 'araclar.js', 'sorular-veri.js', 'dersler-veri.js', 'okul.js', 'lab-model.js', 'lab.js', 'checkup.js', 'akis.js', 'ekonomi-veri.js', 'ekonomi.js', 'kavram.js', 'kavramlar-veri.js', 'harita.js',
-  'manifest.webmanifest', 'icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png'
+  './', 'analiz.html', 'araclar.html', 'checkup.html', 'dersler.html', 'ekonomi-haritasi.html',
+  'ekonomi.html', 'hikaye.html', 'index.html', 'karnem.html', 'kavram.html', 'lab.html', 'ogren.html',
+  'piyasalar.html', 'rehberler.html', 'sektorler.html', 'sorular.html', 'sozluk.html', 'tasarim.html',
+  'test.html', 'style.css', 'tasarim/bilesenler.css', 'tasarim/tokenlar.css',
+  'tasarim/fontlar/inter-latin.woff2', 'tasarim/fontlar/inter-tr.woff2',
+  'tasarim/fontlar/nr-italic-latin.woff2', 'tasarim/fontlar/nr-italic-tr.woff2',
+  'tasarim/fontlar/nr-normal-latin.woff2', 'tasarim/fontlar/nr-normal-tr.woff2', 'akis.js', 'araclar.js',
+  'arama-veri.js', 'checkup.js', 'dersler-veri.js', 'ekonomi-veri.js', 'ekonomi.js', 'grafik.js', 'harita.js',
+  'kavram.js', 'kavramlar-veri.js', 'lab-model.js', 'lab.js', 'okul.js', 'olcum.js', 'script.js',
+  'sorular-veri.js', 'sozluk-veri.js', 'tema.js', 'test-veri.js', 'manifest.webmanifest', 'icon.svg',
+  'icons/apple-touch-icon.png', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png'
 ];
 
 self.addEventListener('install', event => {

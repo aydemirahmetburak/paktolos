@@ -34,7 +34,6 @@
 
 /* ---------- 1. Yerleşim ---------- */
 .sayfa-genis { max-width: calc(var(--width-page) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
-.sayfa-veri { max-width: calc(var(--width-data) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
 .okuma-genislik { max-width: calc(var(--width-article) + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
 
 .izgara {
@@ -226,10 +225,7 @@ footer {
 .footer-cols { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--s-32); }
 .footer-cols h2 {
   margin: 0 0 var(--s-12);
-  font-family: var(--font-sans);
   font-size: var(--text-caption);
-  font-weight: var(--weight-semibold);
-  letter-spacing: 0;
   color: var(--text-primary);
 }
 .footer-cols a {
@@ -278,7 +274,6 @@ a.overline:hover { color: var(--text-primary); }
 .govde-giris { font-size: var(--text-lead); line-height: 1.5; color: var(--text-secondary); letter-spacing: var(--tracking-body); }
 .govde { font-size: var(--text-body); line-height: var(--leading-body); }
 .govde-kucuk { font-size: var(--text-small); line-height: 1.55; color: var(--text-secondary); }
-.sayisal { font-variant-numeric: tabular-nums; }
 
 /* ---------- 5. Düğmeler ---------- */
 .btn {
@@ -404,7 +399,7 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 .gosterge-bas { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s-16); }
 .gosterge-bas .overline { margin-bottom: var(--s-4); }
 .gosterge-bas h3 { margin: 0; font-size: var(--text-subheading); letter-spacing: var(--tracking-heading); }
-.gosterge-ne { font-size: var(--text-body) !important; line-height: 1.5 !important; color: var(--text-primary) !important; }
+p.gosterge-ne { font-size: var(--text-body); line-height: 1.5; color: var(--text-primary); }
 .gosterge-ne span { color: var(--text-secondary); }
 .gosterge .source { margin-top: auto; }
 
@@ -421,13 +416,13 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 /* ---------- 9. Bölüm başlığı ve hero ---------- */
 .section-header { display: grid; gap: var(--s-16); max-width: 760px; margin-bottom: var(--s-48); }
 .section-header.orta { margin-inline: auto; text-align: center; justify-items: center; }
-.section-header h2 { font-family: var(--font-serif); font-size: var(--text-heading); font-weight: var(--weight-regular); line-height: var(--leading-tight); letter-spacing: var(--tracking-heading); }
+.section-header h2 { font-size: var(--text-heading); }
 .section-header p { font-size: var(--text-lead); line-height: 1.5; color: var(--text-secondary); }
 .section-header .overline { margin: 0; }
 .section-header-satir { display: flex; align-items: end; justify-content: space-between; gap: var(--s-24); max-width: none; }
 
 .sayfa-hero { padding-top: clamp(64px, 11vw, 144px); padding-bottom: clamp(48px, 7vw, 96px); }
-.sayfa-hero h1 { max-width: 18ch; font-family: var(--font-serif); font-size: var(--text-article); font-weight: var(--weight-regular); line-height: var(--leading-tight); letter-spacing: var(--tracking-heading); }
+.sayfa-hero h1 { max-width: 18ch; font-size: var(--text-article); }
 .sayfa-hero .govde-giris { max-width: 40ch; margin-top: var(--s-24); }
 .hero-eylemler { display: flex; flex-wrap: wrap; gap: var(--s-12); margin-top: var(--s-32); }
 
@@ -548,7 +543,7 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 .concept-definition dd { font-size: var(--text-subheading); line-height: 1.4; letter-spacing: var(--tracking-heading); }
 
 .simple-explanation { padding: var(--s-32) var(--s-24); border-radius: var(--radius-l); background: var(--peach); color: var(--peach-ink); }
-.simple-explanation .overline, .simple-explanation p { color: var(--peach-ink) !important; }
+.simple-explanation .overline, .simple-explanation p { color: var(--peach-ink); }
 
 .deep-dive { border-top: 1px solid var(--border); }
 .deep-dive > summary { display: flex; align-items: center; gap: var(--s-12); min-height: 56px; font-weight: var(--weight-medium); cursor: pointer; list-style: none; }
@@ -558,7 +553,7 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 .deep-dive > div { padding-bottom: var(--s-24); color: var(--text-secondary); }
 
 .ilgili { display: grid; gap: var(--s-12); }
-.ilgili h2 { font-size: var(--text-small); font-weight: var(--weight-semibold); letter-spacing: 0; color: var(--text-secondary); }
+.ilgili h2 { font-size: var(--text-small); color: var(--text-secondary); }
 .ilgili-liste { display: flex; flex-wrap: wrap; gap: var(--s-8); }
 
 .source > div { display: inline; }
@@ -574,7 +569,7 @@ a.card-seftali:hover { background: color-mix(in srgb, var(--peach) 88%, var(--pe
 .makale-meta dd { margin: 0; font-size: var(--text-small); font-weight: var(--weight-medium); color: var(--text-primary); font-variant-numeric: tabular-nums; }
 .makale-son { padding: var(--s-64) 0 var(--s-96); border-top: 1px solid var(--border); }
 .makale-son > div { display: grid; gap: var(--s-48); }
-.makale-son h2 { font-size: var(--text-small); font-weight: var(--weight-semibold); letter-spacing: 0; color: var(--text-secondary); margin-bottom: var(--s-12); }
+.makale-son h2 { font-size: var(--text-small); color: var(--text-secondary); margin-bottom: var(--s-12); }
 .makale-uyari { font-size: var(--text-caption); color: var(--text-muted); }
 .bolum-akil { margin-top: var(--s-48); }
 .kaynakca { display: grid; list-style: none; }
@@ -687,7 +682,6 @@ main:focus { outline: none; }
 }
 @keyframes isik-nefes { to { transform: translate3d(2%, -2%, 0) scale(1.06); opacity: 0.8; } }
 
-
 /* ---------- 21. Kelime kelime başlık ----------
    script.js başlığı kelimelere böler (.kelimeli). Her kelime soluk griden,
    hafif bulanık ve biraz aşağıdan sırayla yerine oturur. Metin hep
@@ -712,8 +706,6 @@ main:focus { outline: none; }
    data-yuzen="0.12": kaydırdıkça sayfadan farklı hızda kayar (script.js).
    .salinim: yerinde çok yavaş, belli belirsiz bir salınım. */
 [data-yuzen] { translate: 0 var(--kay, 0); will-change: translate; }
-.salinim { animation: salinim 9s var(--ease-in-out) infinite alternate; animation-delay: var(--gecikme, 0s); }
-@keyframes salinim { from { transform: translateY(-5px); } to { transform: translateY(5px); } }
 
 /* ---------- 23. Sekmeli liste ----------
    Solda başlıklar; seçili olanın altında ince bir çizgi dolar, dolunca
@@ -787,7 +779,6 @@ main:focus { outline: none; }
   .isikli::before, .ana-hero::before, .page-hero::before, .sayfa-hero::before { animation: none; }
   .kelimeli .kelime { opacity: 1 !important; filter: none !important; transform: none !important; transition: none !important; }
   [data-yuzen] { translate: none; }
-  .salinim { animation: none; }
   .sekmeli-liste [role="tab"][aria-selected="true"]::after { animation: none; }
   .serit-ic { animation: none; flex-wrap: wrap; width: auto; }
   a.card:hover { transform: none; }
