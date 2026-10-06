@@ -208,11 +208,18 @@ if (!KAPSAM.length || KAPSAM.includes('sayfa')) {
 if (!KAPSAM.length || KAPSAM.includes('gorsel')) {
   fs.rmSync(path.join(KOK, 'paylas'), { recursive: true, force: true });
   fs.mkdirSync(path.join(KOK, 'paylas'));
-  const gp = await (await tarayici.newContext({ viewport: { width: 1200, height: 630 } })).newPage();
+  const gctx = await tarayici.newContext({ viewport: { width: 1200, height: 630 } });
+  // Sitede yazı tipleri 'optional'/'swap': geç yüklenirse yedek yazı tipi kalır.
+  // Görsel her seferinde aynı çıksın diye burada asıl yazı tipi beklenir.
+  await gctx.route('**/tasarim/tokenlar.css', async r => {
+    const y = await r.fetch();
+    await r.fulfill({ response: y, body: (await y.text()).replace(/font-display: (optional|swap)/g, 'font-display: block') });
+  });
+  const gp = await gctx.newPage();
   for (const g of gorseller) {
     await gp.goto(sunucu.taban + 'index.html');
     await gp.setContent(gorselHtml(g), { waitUntil: 'load' });
-    await gp.evaluate(() => document.fonts.ready);
+    await gp.evaluate(async () => { await Promise.all([...document.fonts].map(f => f.load().catch(() => {}))); await document.fonts.ready; });
     await gp.screenshot({ path: path.join(KOK, 'paylas', g.ad + '.jpg'), type: 'jpeg', quality: 82 });
   }
 }

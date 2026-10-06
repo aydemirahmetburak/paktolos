@@ -126,6 +126,9 @@ paktolos/
 ├── test.html            # Kendini sına
 ├── testler/            # Otomatik testler (npm test); CI: .github/workflows/testler.yml
 ├── gelistirme/statik-uret.mjs  # Statik sayfa, görsel ve site haritası üretici (npm run uret)
+├── gelistirme/hazirla.mjs      # Yayından önce tek komut (npm run hazirla)
+├── gelistirme/onbellek.mjs     # sw.js önbellek listesi ve içerik özetinden sürüm
+├── gelistirme/gorsel-fark.mjs  # CSS değişikliği öncesi/sonrası ekran görüntüsü karşılaştırma (npm run gorsel)
 ├── karnem.html          # Karnem: ilerleme, finansal temeller, okuma listesi, son baktıkların
 │
 ├── dersler-veri.js      # Dersler (kartlar ve ara sorular)
@@ -185,14 +188,15 @@ Kurallar: çerez yok, kullanıcı kimliği yok; kullanıcının girdiği rakamla
 
 ## İçerik Ekleme
 
-- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; ardından `npm run uret` ile statik sayfası (`kavram/id.html`) ve paylaşım görseli üretilir. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
-- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer. Şıkları istediğin sırada yazabilirsin: ekranda soru metnine göre sabit bir karışımla gösterilir, böylece doğru cevap hep aynı harfte olmaz. Yeni bir yol için `DERS_YOLLARI`na ekle. Ardından `npm run uret` (ders sayfası `ders/id.html`).
+- **Yeni kavram:** `sozluk-veri.js` içindeki `SOZLUK` listesine ekle; ardından `npm run hazirla` ile statik sayfası (`kavram/id.html`) ve paylaşım görseli üretilir. Derin katman, kaynak ve görsel için `kavramlar-veri.js`'e aynı id ile ekle. Kaynak olarak yalnızca resmî kurum ve yayın adı yazılır. `ilgili` alanındaki kimliklerin var olan kavramlara ait olması gerekir. Kavramlar aramaya otomatik girer.
+- **Yeni ders:** `dersler-veri.js` içindeki `DERSLER` listesine ekle. Kart türleri: `metin`, `ornek`, `soru`, `ozet`. Dersteki sorular günün sorusu havuzuna da otomatik girer. Şıkları istediğin sırada yazabilirsin: ekranda soru metnine göre sabit bir karışımla gösterilir, böylece doğru cevap hep aynı harfte olmaz. Yeni bir yol için `DERS_YOLLARI`na ekle. Ardından `npm run hazirla` (ders sayfası `ders/id.html`).
 - **Yeni test sorusu:** `test-veri.js` içindeki `SORULAR` listesine ekle; "Neden?" (`aciklama`), "Gerçek hayatta" (`gercek`) ve ilgili kavramları (`kavramlar`) doldur.
 - **Yeni "Aklına takılan" sorusu:** `sorular-veri.js` içindeki `SORULAR_KUTUPHANE` listesine ekle. Cevap tavsiye değil, düşünme yolu olmalı. Soru aramaya otomatik girer.
-- **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Sayfanın ortak menü ve alt bilgisini `python3 gelistirme/ortak-duzen.py *.html` ile oluştur. Dosyayı `sw.js` içindeki `DOSYALAR` listesine ekleyip `SURUM`'u bir artır.
+- **Yeni sayfa ya da bölüm:** `arama-veri.js`'e ekle ki aramada çıksın. Ardından `npm run hazirla`: ortak menü ve alt bilgi yazılır, sayfa çevrimdışı önbelleğe kendiliğinden girer.
 - **Yeni laboratuvar senaryosu:** `lab.js` içindeki `SENARYOLAR` listesine ekle; `ayar` yalnızca başlangıçtan farklı kolları içerir, `anlat(m)` modelin sonucuna göre hikâyeyi yazar. Modelin kuralları `lab-model.js` başındaki açıklamada. Karnem'deki "Şirket doktoru" kilometre taşı senaryo sayısını kullanır.
 - **Yeni kaydırmalı infografik:** HTML'de `<section class="akis" data-akis="ad">` içine boş bir `.akis-sahne` ve her adım için bir `.akis-adim` yaz. `akis.js` içindeki `SAHNELER`'e aynı adla, verilen kaba görseli çizip adım numarasına göre güncelleyen bir fonksiyon ekle. Sahne her adımda durumu baştan çizmeli; kullanıcı adım atlayabilir. Metin HTML'de durduğu için JS kapalıyken de okunur.
 - **Yeni bileşen:** önce `tasarim/bilesenler.css`'e, sonra `tasarim.html` kataloğuna ekle.
+- **CSS kuralları:** Bir kural başka bir kuralı yenemiyorsa `!important` ya da `:not(#_)` gibi özgüllük hileleri yerine çakışan eski kuralı düzelt; testler bunları reddeder. Kullanılmayan kural, animasyon ya da değişken de kalmamalı (`node testler/css-tara.mjs` listeler). CSS'te büyük bir değişiklikten önce `npm run gorsel -- kaydet`, sonra `npm run gorsel -- karsilastir`: her sayfa açık/koyu, telefon/masaüstü fotoğraflanır ve tek bir piksel bile değiştiyse farkı kırmızıyla işaretlenmiş resim `testler/cikti/gorsel/fark/` altına yazılır.
 - **Grafikler:** `grafik.js` içindeki `grafik()` ya da başlık, not ve kaynakla sarılmış `grafikFigur()` bileşenini kullan; `baglam(i)` ile ipucuna anlam satırı ekle. Seri renkleri `SERI[0]` (`--data-1`) ve `SERI[1]` (`--data-2`); renk körlüğü dahil ayırt edilebilirlikleri doğrulandı. İkiden fazla seri gerekirse yeni renk doğrulanmadan eklenmemeli.
 - **Renkler:** Doğrudan renk yazma; `tasarim/tokenlar.css` değişkenlerini kullan. Böylece karanlık mod kendiliğinden çalışır.
 
@@ -200,12 +204,20 @@ Kurallar: çerez yok, kullanıcı kimliği yok; kullanıcının girdiği rakamla
 
 Kurulum gerekmez: `index.html` dosyasını tarayıcıda açmak yeterli.
 
+## Yayından Önce: tek komut
+
+```bash
+npm run hazirla   # ~40 sn
+```
+
+Sırasıyla: ortak menü, alt bilgi ve `<head>` etiketleri (`gelistirme/ortak-duzen.py`); statik kavram/ders sayfaları, paylaşım görselleri ve site haritası (`gelistirme/statik-uret.mjs`); çevrimdışı önbellek listesi ve sürümü (`sw.js`, `gelistirme/onbellek.mjs`). Önbellek sürümü dosyaların içeriğinden hesaplanır: bir dosya değişince kendiliğinden değişir, elle artırılmaz. Biri unutulursa testler neyin eskidiğini söyler.
+
 ## Arama Motorları ve Paylaşım
 
 Arama motorları ve paylaşım önizlemeleri (WhatsApp, X, LinkedIn) JavaScript çalıştırmadan sayfayı okur. Bu yüzden içeriği önceden yazılmış statik sayfalar üretilir:
 
 ```bash
-npm run uret   # ~1 dk: kavram/*.html, ders/*.html, paylas/*.jpg, sitemap.xml, 404.html
+npm run uret   # yalnızca bu adım (npm run hazirla zaten çalıştırır): kavram/*.html, ders/*.html, paylas/*.jpg, sitemap.xml, 404.html
 ```
 
 - **Kavram sayfaları** sitenin kendi `kavram.js`'i tarayıcıda çalıştırılarak üretilir (iki ayrı kopya yok); açılınca aynı betik etkileşimli kısımları canlandırır. Alt klasördeki sayfalar `<base href="../">` ile kökteki stilleri ve betikleri kullanır.
@@ -229,7 +241,7 @@ npm test -- akislar              # tek bir grup
 
 | Grup | Dosya | Ne denetler? |
 |---|---|---|
-| Veri ve bağlantılar | `testler/veri.mjs` | Ders ve test sorularında doğru cevap geçerli mi, bağlı kavramlar sözlükte var mı; site içi her bağlantı var olan bir sayfaya ve bölüme gidiyor mu; `sw.js` önbellek listesi eksiksiz mi; menü ve alt bilgi `ortak-duzen.py` ile güncel mi; PR'da önbellekteki bir dosya değiştiyse `SURUM` artırılmış mı |
+| Veri ve bağlantılar | `testler/veri.mjs` | Ders ve test sorularında doğru cevap geçerli mi, bağlı kavramlar sözlükte var mı; site içi her bağlantı var olan bir sayfaya ve bölüme gidiyor mu; `sw.js` önbellek listesi ve sürümü dosyalarla uyumlu mu; menü, alt bilgi ve statik sayfalar güncel mi; CSS'te kullanılmayan kural, animasyon ya da değişken, `:not(#_)` hilesi ya da izinsiz `!important` var mı |
 | Tüm sayfalar | `testler/tarama.mjs` | 19 sayfa × açık/koyu × 320/390/820/1280 px ve 67 kavram sayfası: sayfa ve konsol hatası, eksik dosya, yatay taşma, ekranda "undefined/NaN" |
 | Erişilebilirlik | `testler/erisilebilirlik.mjs` | Kontrast (AA), 44 px dokunma alanı, tek h1 ve başlık sırası, tekrar eden kimlik, adsız düğme, alt metin, "İçeriğe geç" |
 | Kullanıcı akışları | `testler/akislar.mjs` | Arama, sözlük, ders oynatma, kredi hesaplayıcı, Kaydet → Karnem, test, günün sorusu, tema, ekonomi haritası, ana sayfa sekmeleri |

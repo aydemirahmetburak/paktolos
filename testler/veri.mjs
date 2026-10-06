@@ -2,14 +2,17 @@
 //
 // - Dersler, test ve günün sorusu: doğru cevap geçerli, kavramlar sözlükte var
 // - Site içi her bağlantı var olan bir sayfaya ve bölüme gider
-// - Çevrimdışı önbellek listesi (sw.js) eksiksiz
+// - Çevrimdışı önbellek listesi ve sürümü (sw.js) dosyalarla uyumlu
 // - Menü ve alt bilgi güncel (gelistirme/ortak-duzen.py ile aynı)
-// - Önbelleğe giren bir dosya değiştiyse sw.js sürümü de artırılmış
+// - CSS'te kullanılmayan kural, animasyon ya da değişken yok; özgüllük
+//   hilesi (:not(#_)) yok, !important yalnızca izinli yerlerde
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { KOK, SAYFALAR, STATIK, veriYukle, oku, varMi } from './ortak.mjs';
+import { cssTara, cssKurallari, CSS_DOSYALARI } from './css-tara.mjs';
+import { onbellekListesi, onbellekSurumu } from '../gelistirme/onbellek.mjs';
 
 export default async function veri({ hata }) {
   const V = veriYukle(
@@ -98,17 +101,16 @@ export default async function veri({ hata }) {
   }
   V.ARAMA_DIZINI.forEach(x => bagKontrol(x.href, `Arama dizini "${x.baslik}"`));
 
-  // ---------- Çevrimdışı önbellek listesi ----------
+  // ---------- Çevrimdışı önbellek listesi ve sürümü ----------
+  // Liste ve sürüm dosyalardan hesaplanır (gelistirme/onbellek.mjs); sw.js'teki
+  // değerler farklıysa biri "npm run hazirla" çalıştırmayı unutmuştur.
   const sw = oku('sw.js');
   const liste = new Function(sw.match(/const DOSYALAR = (\[[\s\S]*?\]);/)[0] + '; return DOSYALAR;')();
-  liste.filter(d => d !== './').forEach(d => { if (!varMi(d)) hata(`sw.js: önbellek listesindeki "${d}" dosyası yok`); });
-  const gerekli = [
-    ...SAYFALAR,
-    ...fs.readdirSync(KOK).filter(f => /\.(js|css)$/.test(f) && f !== 'sw.js'),
-    ...fs.readdirSync(path.join(KOK, 'tasarim')).filter(f => f.endsWith('.css')).map(f => 'tasarim/' + f),
-    ...fs.readdirSync(path.join(KOK, 'tasarim/fontlar')).filter(f => f.endsWith('.woff2')).map(f => 'tasarim/fontlar/' + f)
-  ];
-  gerekli.forEach(d => { if (!liste.includes(d)) hata(`sw.js: "${d}" çevrimdışı önbellek listesinde yok`); });
+  const swBeklenen = onbellekListesi();
+  const eksik = swBeklenen.filter(d => !liste.includes(d)), fazla = liste.filter(d => !swBeklenen.includes(d));
+  if (eksik.length || fazla.length) hata(`sw.js: önbellek listesi güncel değil (eksik: ${eksik.join(', ') || '-'}; fazla: ${fazla.join(', ') || '-'}); "npm run hazirla" çalıştır`);
+  const surum = sw.match(/const SURUM = '([^']*)'/)?.[1];
+  if (surum !== onbellekSurumu()) hata(`sw.js: SURUM (${surum}) dosyaların içeriğiyle uyuşmuyor; "npm run hazirla" çalıştır`);
 
   // ---------- Menü ve alt bilgi güncel mi? ----------
   // ortak-duzen.py geçici bir kopyada çalıştırılır; sonuç dosyalardan farklıysa
@@ -124,20 +126,6 @@ export default async function veri({ hata }) {
     hata('gelistirme/ortak-duzen.py çalıştırılamadı: ' + (e.stderr?.toString() || e.message));
   } finally {
     fs.rmSync(gecici, { recursive: true, force: true });
-  }
-
-  // ---------- Önbellek sürümü artırıldı mı? (yalnızca PR'da) ----------
-  // CI, TABAN_REF ortam değişkenine karşılaştırılacak dalı (ör. origin/main) yazar.
-  const taban = process.env.TABAN_REF;
-  if (taban) {
-    try {
-      const degisen = execFileSync('git', ['diff', '--name-only', `${taban}...HEAD`], { cwd: KOK }).toString().split('\n').filter(Boolean);
-      const onbellekte = degisen.filter(d => liste.includes(d));
-      const surumDegisti = execFileSync('git', ['diff', `${taban}...HEAD`, '--', 'sw.js'], { cwd: KOK }).toString().includes("SURUM = '");
-      if (onbellekte.length && !surumDegisti) hata(`sw.js: önbellekteki dosyalar değişti (${onbellekte.slice(0, 4).join(', ')}${onbellekte.length > 4 ? '…' : ''}) ama SURUM artırılmamış`);
-    } catch (e) {
-      hata('Sürüm kontrolü için git karşılaştırması yapılamadı: ' + e.message);
-    }
   }
 
   // ---------- Statik sayfalar güncel mi? (gelistirme/statik-uret.mjs) ----------
@@ -199,6 +187,30 @@ export default async function veri({ hata }) {
   }
   katalog.forEach(o => { if (!kullanilan.has(o)) hata(`olcum.js: "${o}" olayı katalogda var ama hiçbir yerde gönderilmiyor`); });
   if (!/saglayici: null/.test(olcum) && !process.env.OLCUM_BAGLI) hata('olcum.js: bir ölçüm sağlayıcısı bağlanmış; README "Kullanıcı Verisi" bölümünü güncelleyip OLCUM_BAGLI=1 ile çalıştır');
+
+  // ---------- CSS borcu birikmesin ----------
+  // Kullanılmayan kural kalırsa dosya şişer, kimse silmeye cesaret edemez.
+  // Ayrıntılı rapor: node testler/css-tara.mjs
+  const css = cssTara();
+  css.olu.forEach(k => hata(`${k.dosya}:${k.satir}: kullanılmayan kural "${k.secici.slice(0, 60)}" (${k.neden} hiçbir sayfada yok)`));
+  css.oluSecici.forEach(k => hata(`${k.dosya}:${k.satir}: kullanılmayan seçici "${k.secici.slice(0, 60)}" (${k.neden} hiçbir sayfada yok)`));
+  css.oluKare.forEach(k => hata(`${k.dosya}:${k.satir}: kullanılmayan animasyon @keyframes ${k.ad}`));
+  // tokenlar.css tasarım sisteminin ölçeğidir (boşluk, katman…); kullanılmayan
+  // basamakları olabilir. Diğer dosyalarda okunmayan değişken artık kalmamalı.
+  css.oluDegisken.filter(k => k.dosya !== 'tasarim/tokenlar.css').forEach(k => hata(`${k.dosya}:${k.satir}: ${k.ad} tanımlı ama hiçbir yerde okunmuyor`));
+  // Özgüllük yarışı yerine kuralın kendisi düzeltilir. !important yalnızca:
+  // hareket azaltma, bulanıklık desteklemeyen tarayıcı yedeği ve her şeyin
+  // önüne geçmesi gereken üç yardımcı sınıf.
+  const IZINLI_ONEMLI = new Set(['.gizli', '.negative', '.kelimeli']);
+  for (const dosya of CSS_DOSYALARI) {
+    const metin = oku(dosya);
+    if (metin.includes(':not(#_)')) hata(`${dosya}: ":not(#_)" özgüllük hilesi kullanılmış; çakışan eski kuralı düzelt`);
+    for (const k of cssKurallari(metin).kurallar) {
+      if (!k.govde.includes('!important')) continue;
+      if (k.ust.some(u => /prefers-reduced-motion|@supports not/.test(u)) || IZINLI_ONEMLI.has(k.secici.trim())) continue;
+      hata(`${dosya}:${k.satir}: "${k.secici.trim().slice(0, 50)}" içinde !important; çakışan kuralı bul ve özgüllüğü düzelt`);
+    }
+  }
 
   return `${STATIK.length} statik sayfa, ${harita.length} adreslik site haritası, ${katalog.size} ölçüm olayı, ${V.SOZLUK.length} kavram, ${V.DERSLER.length} ders, ${V.SORULAR.length + V.SORULAR_KUTUPHANE.length} soru, ${liste.length} önbellek dosyası`;
 }
